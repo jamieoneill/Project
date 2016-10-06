@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "328679977403",
+    "firebase_url": "https://now-yourre-talking.firebaseio.com",
+    "project_id": "now-yourre-talking",
+    "storage_bucket": "now-yourre-talking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328679977403:android:261cdeaa56c9f646",
+        "android_client_info": {
+          "package_name": "com.mismatched.nowyouretalking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328679977403-40g6hvci633grqacqj55ahn5qn4u47no.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mismatched.nowyouretalking",
+            "certificate_hash": "53475DCDEC9A789601E9D16496361B5C2EDC92B1"
+          }
+        },
+        {
+          "client_id": "328679977403-08pa67gisgsrpj0p8on9c5m218okt60p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtudBDfM7qWE1OU5mAHI_mcI6R6v0VFCs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328679977403-08pa67gisgsrpj0p8on9c5m218okt60p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
