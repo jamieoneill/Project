@@ -70,6 +70,9 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Toast.makeText(SignInActivity.this, "Signed In", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                    startActivity(intent);
 
                 } else {
                     // User is signed out
