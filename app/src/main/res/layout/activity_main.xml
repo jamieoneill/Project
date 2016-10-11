@@ -16,12 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign in activity"
-            />
 
         <Button
             android:text="Database test"
@@ -34,6 +28,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button3" />
+
+        <Button
+            android:text="User Profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button4" />
 
     </LinearLayout>
 

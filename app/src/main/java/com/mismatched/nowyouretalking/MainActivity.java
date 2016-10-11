@@ -24,22 +24,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.button1);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-                startActivity(intent);
-            }
-        });
-
         Button button2 = (Button) findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Write a message to the database
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("message");
+                DatabaseReference myRef = database.getReference("Users");
 
-                myRef.setValue("DB Entry 1");
+                myRef.child("Name").setValue("test name");
+
+                //myRef.setValue("DB Entry test");
             }
         });
 
@@ -67,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
                         Log.w(TAG, "Failed to read value.", error.toException());
                     }
                 });
+            }
+        });
+
+        Button button4 = (Button) findViewById(R.id.button4);
+        button4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
+                startActivity(intent);
             }
         });
 
