@@ -22,6 +22,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by jamie on 06/10/2016.
@@ -71,6 +73,27 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     Toast.makeText(SignInActivity.this, "Signed In", Toast.LENGTH_SHORT).show();
+
+                    //set userprofile info
+
+                    // set User table as reference
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("Users");
+
+                    // get uid
+                    String uid = user.getUid();
+
+                    //set...
+                    //name
+                    myRef.child(uid).child("Name").setValue(user.getDisplayName());
+                    //email
+                    myRef.child(uid).child("Email").setValue(user.getEmail());
+                    //level
+                    myRef.child(uid).child("Level").setValue("test");
+                    //language i want to learn
+                    myRef.child(uid).child("Language").setValue("test");
+
+
                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                     startActivity(intent);
 
