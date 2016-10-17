@@ -1,8 +1,10 @@
 package com.mismatched.nowyouretalking;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
@@ -22,8 +24,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by jamie on 06/10/2016.
@@ -78,10 +83,10 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
 
                     // set User table as reference
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("Users");
+                    final DatabaseReference myRef = database.getReference("Users");
 
                     // get uid
-                    String uid = user.getUid();
+                    final String uid = user.getUid();
 
                     //set...
                     //name
@@ -91,11 +96,49 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                     //level
                     myRef.child(uid).child("Level").setValue("test");
                     //language i want to learn
-                    myRef.child(uid).child("Language").setValue("test");
+                    //myRef.child(uid).child("Language").setValue("test");
+
+                    final String[] result = new String[1];
+
+                    // check if a language is selected
+                    myRef.child(uid).child("Language").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                             result[0] = dataSnapshot.getValue(String.class);
+                            Log.d(TAG, "FIRST result is:" + result[0]);
+
+                            if(result[0] == null){
+                                final CharSequence languages[] = new CharSequence[] {"French", "Spanish", "German"};
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(SignInActivity.this);
+                                builder.setTitle("Pick a Language to Learn");
+                                builder.setItems(languages, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        myRef.child(uid).child("Language").setValue(languages[which]);
+
+                                        //start main after user picks
+                                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                                builder.show();
+                            }
+                            else{
+                                //start main if they have a language
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
 
 
-                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                    startActivity(intent);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            System.out.println("The read failed: " + databaseError.getCode());
+                        }
+                    });
+
 
                 } else {
                     // User is signed out
