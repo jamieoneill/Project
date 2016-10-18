@@ -58,14 +58,43 @@ public class MainActivity extends AppCompatActivity {
 
                 //get user id
                 String uid = user.getUid();
-
+                String host = user.getDisplayName();
 
                 // Write a message to the database
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("Users");
+                DatabaseReference myRef = database.getReference("Meetings");
 
-               // myRef.child(uid).child("Name").setValue("1");
-                myRef.child(uid).child("Level").setValue("1");
+                //set unique meeting id
+                DatabaseReference meeting = myRef.push();
+
+
+                meeting.child("Host").setValue(host);
+                meeting.child("Title").setValue("test");
+                meeting.child("Location").setValue("google map location");
+                meeting.child("Date").setValue("13:00 18/10/2016");
+                meeting.child("Language").setValue("German");
+                meeting.child("MinLevel").setValue("1");
+                meeting.child("MaxLevel").setValue("5");
+                meeting.child("NumGuests").setValue("3");
+                meeting.child("Attending").setValue(uid);
+                meeting.child("Note").setValue("This is a test");
+
+                Toast.makeText(MainActivity.this, "unique test meeting created in DB",
+                        Toast.LENGTH_SHORT).show();
+
+
+                /*
+                host
+                Title
+                location
+                date
+                Language
+                min level
+                max level
+                Guests
+                note
+
+                 */
 
 
                 //myRef.setValue("DB Entry test");
@@ -76,7 +105,10 @@ public class MainActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("message");
+                DatabaseReference myRef = database.getReference("Meetings");
+
+               // String[] lsit  = new String[0];
+                 //       myRef.orderByChild("");
 
                 // Read from the database
                 myRef.addValueEventListener(new ValueEventListener() {
@@ -84,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
+
                         String value = dataSnapshot.getValue(String.class);
                         Log.d(TAG, "Value is: " + value);
                         Toast.makeText(MainActivity.this, value,
@@ -102,11 +135,20 @@ public class MainActivity extends AppCompatActivity {
         Button button4 = (Button) findViewById(R.id.button4);
         button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
+               Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
+
                 startActivity(intent);
             }
         });
 
+        Button button5 = (Button) findViewById(R.id.button5);
+        button5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MeetingActivity.class);
+
+                startActivity(intent);
+            }
+        });
 
 
     }
