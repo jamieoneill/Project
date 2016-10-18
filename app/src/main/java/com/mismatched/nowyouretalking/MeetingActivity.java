@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,7 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.R.attr.host;
+
 
 /**
  * Created by jamie on 18/10/2016.
@@ -33,6 +35,17 @@ public class MeetingActivity extends AppCompatActivity {
     //set unique meeting id
     DatabaseReference meeting = myRef.push();
 
+    //inputs
+    private TextView TitleText;
+    private TextView LocationText;
+    private TextView DateText;
+    private TextView LanguageText;
+    private NumberPicker MinLevelNP;
+    private NumberPicker MaxLevelNP;
+    private NumberPicker GuestsNP;
+    private TextView NoteText;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +56,41 @@ public class MeetingActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
 
+        TitleText = (TextView) findViewById(R.id.TitleText);
+        LocationText = (TextView) findViewById(R.id.LocationText);
+        DateText = (TextView) findViewById(R.id.DateText);
+        LanguageText = (TextView) findViewById(R.id.LanguageText);
+        MinLevelNP = (NumberPicker) findViewById(R.id.MinLevelNP);
+        MinLevelNP.setMinValue(0);
+        MinLevelNP.setMaxValue(100);
+        MinLevelNP.setWrapSelectorWheel(false);
+        MaxLevelNP = (NumberPicker) findViewById(R.id.MaxLevelNP);
+        MaxLevelNP.setMinValue(0);
+        MaxLevelNP.setMaxValue(100);
+        MaxLevelNP.setWrapSelectorWheel(false);
+        GuestsNP = (NumberPicker) findViewById(R.id.GuestsNP);
+        GuestsNP.setMinValue(0);
+        GuestsNP.setMaxValue(10);
+        GuestsNP.setWrapSelectorWheel(false);
+        NoteText = (TextView) findViewById(R.id.NoteText);
+
+
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                String host = "name";
-                String title = "test";
-                String location = "location";
-                String timedate = "11";
-                int minLevel = 1;
-                int maxLevel = 5;
-                int NumGuests = 3;
-                String attending = "test";
-                String note = "test note 222";
+                String Host = user.getDisplayName();
+                String Title = TitleText.getText().toString();
+                String Loaction = LocationText.getText().toString();
+                String MeetingDate = DateText.getText().toString();
+                String Language = LanguageText.getText().toString();
+                int MinLevel =  MinLevelNP.getValue();
+                int MaxLevel = MaxLevelNP.getValue();
+                int NumGuests = GuestsNP.getValue();
+                String Attending = "test";
+                String Note = NoteText.getText().toString();
 
-                writeNewPost(host,title, location, timedate, minLevel, maxLevel, NumGuests, attending, note);
+                writeNewPost(Host, Title, Loaction, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Attending, Note);
 
 
             }
@@ -67,13 +100,13 @@ public class MeetingActivity extends AppCompatActivity {
 
 
 
-    private void writeNewPost(String host, String title, String location, String timedate, int minLevel, int maxLevel, int NumGuests, String attending, String note) {
+    private void writeNewPost(String Host, String Title, String Loaction, String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Attending, String Note) {
 
         //unique ID
         String key =  meeting.getKey();
 
         //take values
-        Meet meet = new Meet(host,location, title, timedate, minLevel, maxLevel, NumGuests, attending, note);
+        Meet meet = new Meet(Host, Title, Loaction, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Attending, Note);
         Map<String, Object> postValues = meet.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
@@ -90,44 +123,48 @@ public class MeetingActivity extends AppCompatActivity {
     @IgnoreExtraProperties
     public class Meet {
 
-        public String host;
-        public String title;
-        public String location;
-        public String timedate;
-        public int minLevel;
-        public int maxLevel;
+        public String Host;
+        public String Title;
+        public String Loaction;
+        public String Language;
+        public String MeetingDate;
+        public int MinLevel;
+        public int MaxLevel;
         public int NumGuests;
-        public String attending;
-        public String note;
+        public String Attending;
+        public String Note;
        // public Map<String, Boolean> stars = new HashMap<>();
 
-        public Meet(String host, String title, Date timedate, int minLevel, int maxLevel, int numGuests, String attending, String note) {
+        public Meet(String Host, String Title, String Loaction, String Language, Date MeetingDate, int MinLevel, int MaxLevel, int numGuests, String Attending, String Note) {
             // Default constructor required for calls to DataSnapshot.getValue(Meet.class)
         }
 
-        public Meet(String host, String title, String location, String timedate, int minLevel, int maxLevel, int NumGuests, String attending, String note) {
-            this.host = host;
-            this.title = title;
-            this.location = location;
-            this.timedate = timedate;
-            this.minLevel = minLevel;
-            this.maxLevel = maxLevel;
+        public Meet(String Host, String Title, String Loaction,String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Attending, String Note) {
+            this.Host = Host;
+            this.Title = Title;
+            this.Loaction = Loaction;
+            this.Language = Language;
+            this.MeetingDate = MeetingDate;
+            this.MinLevel = MinLevel;
+            this.MaxLevel = MaxLevel;
             this.NumGuests = NumGuests;
-            this.attending = attending;
-            this.note = note;
+            this.Attending = Attending;
+            this.Note = Note;
         }
 
         @Exclude
         public Map<String, Object> toMap() {
             HashMap<String, Object> result = new HashMap<>();
-            result.put("host", host);
-            result.put("title", title);
-            result.put("timedate", timedate);
-            result.put("minLevel", minLevel);
-            result.put("maxLevel", maxLevel);
+            result.put("Host", Host);
+            result.put("Title", Title);
+            result.put("Loaction", Loaction);
+            result.put("Language", Language);
+            result.put("MeetingDate", MeetingDate);
+            result.put("MinLevel", MinLevel);
+            result.put("MaxLevel", MaxLevel);
             result.put("NumGuests", NumGuests);
-            result.put("attending", attending);
-            result.put("note", note);
+            result.put("Attending", Attending);
+            result.put("Note", Note);
 
             return result;
         }
