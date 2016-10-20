@@ -107,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Meetings");
 
-               // String[] lsit  = new String[0];
-                 //       myRef.orderByChild("");
 
                 // Read from the database
                 myRef.addValueEventListener(new ValueEventListener() {
@@ -150,6 +148,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button button6 = (Button) findViewById(R.id.button6);
+        button6.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+
+                startActivity(intent);
+            }
+        });
 
     }
 

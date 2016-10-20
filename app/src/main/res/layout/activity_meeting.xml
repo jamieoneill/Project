@@ -76,6 +76,7 @@
                 android:ems="10"
                 android:id="@+id/DateText"
                 android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -201,15 +202,6 @@
                 android:id="@+id/button1"
                 android:layout_weight="1" />
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
 
     </LinearLayout>
 
