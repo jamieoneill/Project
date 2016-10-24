@@ -1,11 +1,9 @@
 package com.mismatched.nowyouretalking;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,11 +19,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -105,20 +107,40 @@ public class MainActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("Meetings");
+                final DatabaseReference myRef = database.getReference("Meetings");
 
 
                 // Read from the database
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
 
-                        String value = dataSnapshot.getValue(String.class);
-                        Log.d(TAG, "Value is: " + value);
-                        Toast.makeText(MainActivity.this, value,
-                                Toast.LENGTH_SHORT).show();
+                        //retrieves all in meeting database
+                        Map<String,Object> dbRead=(Map<String,Object>)dataSnapshot.getValue();
+                        //String result = dbRead.values().toString();
+                        //Set val = dbRead.keySet();
+
+                        List<String> myList = new ArrayList<String>();
+
+                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                            Log.i("each entry", child.getValue().toString());
+                            myList.add(child.child("Note").getValue(String.class));
+                        }
+                        Log.i("all notes", myList.toString());
+
+                        /*
+                        Log.d(TAG, "Value is: " + result);
+                        Log.d(TAG, "children: " + dataSnapshot.getChildren().iterator().toString());
+                        Log.d(TAG, "key is: " + val);
+                        Log.d(TAG, "key is: " + dbRead.get("-KUOJLRjalFx29GoMZuU"));
+
+                        Map<String,Object>  test = (Map<String,Object>)dbRead.get("-KUOJLRjalFx29GoMZuU");
+
+                        Log.d(TAG, "key is: " + test.get("Note"));
+
+                        */
+
+                        Toast.makeText(MainActivity.this, "reading in. see log for details",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

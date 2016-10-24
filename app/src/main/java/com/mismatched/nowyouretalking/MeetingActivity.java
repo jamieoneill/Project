@@ -81,7 +81,7 @@ public class MeetingActivity extends AppCompatActivity {
 
                 String Host = user.getDisplayName();
                 String Title = TitleText.getText().toString();
-                String Loaction = LocationText.getText().toString();
+                String Location = LocationText.getText().toString();
                 String MeetingDate = DateText.getText().toString();
                 String Language = LanguageText.getText().toString();
                 int MinLevel =  MinLevelNP.getValue();
@@ -90,7 +90,7 @@ public class MeetingActivity extends AppCompatActivity {
                 String Attending = "test";
                 String Note = NoteText.getText().toString();
 
-                writeNewPost(Host, Title, Loaction, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Attending, Note);
+                writeNewPost(Host, Title, Location, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Attending, Note);
 
 
             }
@@ -100,13 +100,13 @@ public class MeetingActivity extends AppCompatActivity {
 
 
 
-    private void writeNewPost(String Host, String Title, String Loaction, String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Attending, String Note) {
+    private void writeNewPost(String Host, String Title, String Location, String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Attending, String Note) {
 
         //unique ID
         String key =  meeting.getKey();
 
         //take values
-        Meet meet = new Meet(Host, Title, Loaction, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Attending, Note);
+        Meet meet = new Meet(Host, Title, Location, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Attending, Note);
         Map<String, Object> postValues = meet.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
@@ -125,7 +125,7 @@ public class MeetingActivity extends AppCompatActivity {
 
         public String Host;
         public String Title;
-        public String Loaction;
+        public String Location;
         public String Language;
         public String MeetingDate;
         public int MinLevel;
@@ -135,14 +135,14 @@ public class MeetingActivity extends AppCompatActivity {
         public String Note;
        // public Map<String, Boolean> stars = new HashMap<>();
 
-        public Meet(String Host, String Title, String Loaction, String Language, Date MeetingDate, int MinLevel, int MaxLevel, int numGuests, String Attending, String Note) {
+        public Meet(String Host, String Title, String Location, String Language, Date MeetingDate, int MinLevel, int MaxLevel, int numGuests, String Attending, String Note) {
             // Default constructor required for calls to DataSnapshot.getValue(Meet.class)
         }
 
-        public Meet(String Host, String Title, String Loaction,String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Attending, String Note) {
+        public Meet(String Host, String Title, String Location,String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Attending, String Note) {
             this.Host = Host;
             this.Title = Title;
-            this.Loaction = Loaction;
+            this.Location = Location;
             this.Language = Language;
             this.MeetingDate = MeetingDate;
             this.MinLevel = MinLevel;
@@ -157,7 +157,7 @@ public class MeetingActivity extends AppCompatActivity {
             HashMap<String, Object> result = new HashMap<>();
             result.put("Host", Host);
             result.put("Title", Title);
-            result.put("Loaction", Loaction);
+            result.put("Location", Location);
             result.put("Language", Language);
             result.put("MeetingDate", MeetingDate);
             result.put("MinLevel", MinLevel);
