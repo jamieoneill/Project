@@ -39,6 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
     }
 
     //Convert to get address
@@ -82,14 +83,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
-        LatLng address = getLocationFromAddress(this, "27, Flemington Park, Balbriggan, Dublin");
-        mMap.addMarker(new MarkerOptions().position(address).title("home").snippet("this is a snippet"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(address, 10));
+        //LatLng address = getLocationFromAddress(this, "27, Flemington Park, Balbriggan, Dublin");
+        //mMap.addMarker(new MarkerOptions().position(address).title("home").snippet("this is a snippet"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(address, 10));
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();

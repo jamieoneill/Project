@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +40,9 @@ public class MeetingActivity extends AppCompatActivity {
     private TextView TitleText;
     private TextView LocationText;
     private TextView DateText;
-    private TextView LanguageText;
-    private NumberPicker MinLevelNP;
-    private NumberPicker MaxLevelNP;
+    private Spinner LanguageSpinner;
+    private Spinner MinLevelSpinner;
+    private Spinner MaxLevelSpinner;
     private NumberPicker GuestsNP;
     private TextView NoteText;
 
@@ -59,15 +60,9 @@ public class MeetingActivity extends AppCompatActivity {
         TitleText = (TextView) findViewById(R.id.TitleText);
         LocationText = (TextView) findViewById(R.id.LocationText);
         DateText = (TextView) findViewById(R.id.DateText);
-        LanguageText = (TextView) findViewById(R.id.LanguageText);
-        MinLevelNP = (NumberPicker) findViewById(R.id.MinLevelNP);
-        MinLevelNP.setMinValue(0);
-        MinLevelNP.setMaxValue(100);
-        MinLevelNP.setWrapSelectorWheel(false);
-        MaxLevelNP = (NumberPicker) findViewById(R.id.MaxLevelNP);
-        MaxLevelNP.setMinValue(0);
-        MaxLevelNP.setMaxValue(100);
-        MaxLevelNP.setWrapSelectorWheel(false);
+        LanguageSpinner = (Spinner) findViewById(R.id.LanguageSpinner);
+        MinLevelSpinner = (Spinner) findViewById(R.id.MinLevelSpinner);
+        MaxLevelSpinner = (Spinner) findViewById(R.id.MaxLevelSpinner);
         GuestsNP = (NumberPicker) findViewById(R.id.GuestsNP);
         GuestsNP.setMinValue(0);
         GuestsNP.setMaxValue(10);
@@ -83,9 +78,9 @@ public class MeetingActivity extends AppCompatActivity {
                 String Title = TitleText.getText().toString();
                 String Location = LocationText.getText().toString();
                 String MeetingDate = DateText.getText().toString();
-                String Language = LanguageText.getText().toString();
-                int MinLevel =  MinLevelNP.getValue();
-                int MaxLevel = MaxLevelNP.getValue();
+                String Language = String.valueOf(LanguageSpinner.getSelectedItem());
+                int MinLevel =  Integer.parseInt(String.valueOf(MinLevelSpinner.getSelectedItem()));
+                int MaxLevel = Integer.parseInt(String.valueOf(MaxLevelSpinner.getSelectedItem()));
                 int NumGuests = GuestsNP.getValue();
                 String Attending = "test";
                 String Note = NoteText.getText().toString();
