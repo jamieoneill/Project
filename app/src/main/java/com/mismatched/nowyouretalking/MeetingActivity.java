@@ -1,5 +1,6 @@
 package com.mismatched.nowyouretalking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -82,7 +83,7 @@ public class MeetingActivity extends AppCompatActivity {
                 int MinLevel =  Integer.parseInt(String.valueOf(MinLevelSpinner.getSelectedItem()));
                 int MaxLevel = Integer.parseInt(String.valueOf(MaxLevelSpinner.getSelectedItem()));
                 int NumGuests = GuestsNP.getValue();
-                String Attending = "test";
+                int Attending = 0;
                 String Note = NoteText.getText().toString();
 
                 writeNewPost(Host, Title, Location, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Attending, Note);
@@ -95,7 +96,7 @@ public class MeetingActivity extends AppCompatActivity {
 
 
 
-    private void writeNewPost(String Host, String Title, String Location, String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Attending, String Note) {
+    private void writeNewPost(String Host, String Title, String Location, String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, int Attending, String Note) {
 
         //unique ID
         String key =  meeting.getKey();
@@ -113,6 +114,10 @@ public class MeetingActivity extends AppCompatActivity {
 
         Toast.makeText(MeetingActivity.this,myRef +"/"+ key + postValues.toString(),
                 Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(MeetingActivity.this, MainActivity.class);
+
+        startActivity(intent);
     }
 
     @IgnoreExtraProperties
@@ -126,15 +131,15 @@ public class MeetingActivity extends AppCompatActivity {
         public int MinLevel;
         public int MaxLevel;
         public int NumGuests;
-        public String Attending;
+        public int Attending;
         public String Note;
        // public Map<String, Boolean> stars = new HashMap<>();
 
-        public Meet(String Host, String Title, String Location, String Language, Date MeetingDate, int MinLevel, int MaxLevel, int numGuests, String Attending, String Note) {
+        public Meet(String Host, String Title, String Location, String Language, Date MeetingDate, int MinLevel, int MaxLevel, int numGuests, int Attending, String Note) {
             // Default constructor required for calls to DataSnapshot.getValue(Meet.class)
         }
 
-        public Meet(String Host, String Title, String Location,String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Attending, String Note) {
+        public Meet(String Host, String Title, String Location,String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, int Attending, String Note) {
             this.Host = Host;
             this.Title = Title;
             this.Location = Location;

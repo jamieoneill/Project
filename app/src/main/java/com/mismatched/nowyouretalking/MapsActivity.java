@@ -1,18 +1,27 @@
 package com.mismatched.nowyouretalking;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +48,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        Button joinButton = (Button) findViewById(R.id.JoinButton);
+        Button cancelButton = (Button) findViewById(R.id.CancelButton);
+
+        joinButton.setVisibility(View.GONE);
+        cancelButton.setVisibility(View.GONE);
 
     }
 
@@ -70,32 +84,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    //TODO handle join meet up button
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //set map to dublin.... TODO change to user location
+        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(53.3441,-6.2675) , 6.0f) );
 
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-        //LatLng address = getLocationFromAddress(this, "27, Flemington Park, Balbriggan, Dublin");
-        //mMap.addMarker(new MarkerOptions().position(address).title("home").snippet("this is a snippet"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(address, 10));
-
-
+        //database ref
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Meetings");
+
+        //set images(colours) depending on language TODO change to country flags maybe
+        final BitmapDescriptor French =  BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
+        final BitmapDescriptor Spanish =  BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE);
+        final BitmapDescriptor German =  BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
+
 
 
         // Read from the database
@@ -108,14 +114,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 List<String> myList = new ArrayList<String>();
 
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    //get location from DB
+                    //get info from DB
+                    String Host = child.child("Host").getValue(String.class);
                     String Titles = child.child("Title").getValue(String.class);
                     String Locations = child.child("Location").getValue(String.class);
+                    String MeetingDate = child.child("MeetingDate").getValue(String.class);
+                    String Language = child.child("Language").getValue(String.class);
+                    int MinLevel =  child.child("MinLevel").getValue(int.class);
+                    int MaxLevel = child.child("MaxLevel").getValue(int.class);
+                    int NumGuests = child.child("NumGuests").getValue(int.class);
+                    int Attending = child.child("Attending").getValue(int.class);
+                    String Note = child.child("Note").getValue(String.class);
+
+                    //find out if spaces are available todo if not available don't display
+                    int Spaces = NumGuests - Attending;
+
+                    //convert address
+                    LatLng newaddress = getLocationFromAddress(MapsActivity.this, Locations);
+
 
                     //add to maker here
-                    LatLng newaddress = getLocationFromAddress(MapsActivity.this, Locations);
-                    mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles).snippet("this is a snippet"));
-                }
+                    if(Language.equals("French")){
+                        mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " +Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel+ "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(French));
+                    }else if(Language.equals("Spanish")){
+                        mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " +Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel+ "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(Spanish));
+                    }else if(Language.equals("German")){
+                        mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " +Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel+ "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(German  ));
+                    }
+
+
+
+                      }
             }
 
             @Override
@@ -125,13 +154,82 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+            @Override
+            public View getInfoWindow(Marker arg0) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(final Marker marker) {
+
+                //set info window
+                Context context = getApplicationContext();
+                LinearLayout info = new LinearLayout(context);
+                info.setOrientation(LinearLayout.VERTICAL);
+
+
+                TextView title = new TextView(context);
+                title.setTextColor(Color.BLACK);
+                title.setGravity(Gravity.CENTER);
+                title.setBackgroundColor(Color.parseColor("#61D9FF"));
+                title.setText(marker.getTitle());
+
+                TextView snippet = new TextView(context);
+                snippet.setTextColor(Color.GRAY);
+                snippet.setText(marker.getSnippet());
+
+                info.addView(title);
+                info.addView(snippet);
+                marker.hideInfoWindow();
+
+                //hide everything on cancel button
+                Button Cancel = (Button) findViewById(R.id.CancelButton);
+                Cancel.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Button joinButton = (Button) findViewById(R.id.JoinButton);
+                        Button cancelButton = (Button) findViewById(R.id.CancelButton);
+
+                        joinButton.setVisibility(View.GONE);
+                        cancelButton.setVisibility(View.GONE);
+
+                        marker.hideInfoWindow();
+                    }
+                });
+
+                return info;
+            }
+
+
+        });
 
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
             @Override
             public void onMapClick(LatLng mapclick) {
-                // TODO Auto-generated method stub
-                Log.d("mapclick", mapclick.latitude + "-" + mapclick.longitude);
+                //hide everything
+                Button joinButton = (Button) findViewById(R.id.JoinButton);
+                Button cancelButton = (Button) findViewById(R.id.CancelButton);
+
+                joinButton.setVisibility(View.GONE);
+                cancelButton.setVisibility(View.GONE);
+
+            }
+        });
+
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                //show buttons
+                Button joinButton = (Button) findViewById(R.id.JoinButton);
+                Button cancelButton = (Button) findViewById(R.id.CancelButton);
+
+                joinButton.setVisibility(View.VISIBLE);
+                cancelButton.setVisibility(View.VISIBLE);
+                return false;
             }
         });
 
