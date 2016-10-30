@@ -127,6 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         String Host = child.child("Host").getValue(String.class);
                         String Titles = child.child("Title").getValue(String.class);
                         String Locations = child.child("Location").getValue(String.class);
+                        String MeetingTime = child.child("MeetingTime").getValue(String.class);
                         String MeetingDate = child.child("MeetingDate").getValue(String.class);
                         String Language = child.child("Language").getValue(String.class);
                         int MinLevel = child.child("MinLevel").getValue(int.class);
@@ -138,11 +139,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         //add to maker here
                         if (Language.equals("French")) {
-                            mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(French));
+                            mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nTime: " +MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(French));
                         } else if (Language.equals("Spanish")) {
-                            mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(Spanish));
+                            mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nTime: " +MeetingTime +  "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(Spanish));
                         } else if (Language.equals("German")) {
-                            mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(German));
+                            mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nTime: " +MeetingTime +  "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(German));
                         }
                     }
 

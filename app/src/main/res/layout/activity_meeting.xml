@@ -71,13 +71,33 @@
                 android:textColor="?attr/editTextColor"
                 android:layout_weight="1" />
 
-            <EditText
+            <Button
+                android:text="Set Date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/DateText"
-                android:hint="Date"
+                android:id="@+id/DateButton"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Time:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TimeLable"
+                android:textColor="?attr/editTextColor"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="Set Time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TimeButton"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -160,12 +180,12 @@
                 android:textColor="?attr/editTextColor"
                 android:layout_weight="1" />
 
-            <NumberPicker
+            <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/GuestsNP"
-                android:layout_weight="1"
-                />
+                android:id="@+id/GuestsSpinner"
+                android:entries="@array/twototwenty_array"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
