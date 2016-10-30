@@ -153,7 +153,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="Number of Guests:"
+                android:text="Number of Attendees:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/GuestsLable"

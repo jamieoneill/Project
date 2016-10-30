@@ -3,6 +3,7 @@ package com.mismatched.nowyouretalking;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -21,21 +22,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 /**
  * Created by jamie on 18/10/2016.
  */
 
 public class MeetingActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     // Write a message to the database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Meetings");
 
+    // get user
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    final FirebaseUser user = mAuth.getCurrentUser();
+
     //set unique meeting id
     DatabaseReference meeting = myRef.push();
+    DatabaseReference attend = myRef.child("Attending").push();
 
     //inputs
     private TextView TitleText;
@@ -46,8 +49,6 @@ public class MeetingActivity extends AppCompatActivity {
     private Spinner MaxLevelSpinner;
     private NumberPicker GuestsNP;
     private TextView NoteText;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +84,9 @@ public class MeetingActivity extends AppCompatActivity {
                 int MinLevel =  Integer.parseInt(String.valueOf(MinLevelSpinner.getSelectedItem()));
                 int MaxLevel = Integer.parseInt(String.valueOf(MaxLevelSpinner.getSelectedItem()));
                 int NumGuests = GuestsNP.getValue();
-                int Attending = 0;
                 String Note = NoteText.getText().toString();
 
-                writeNewPost(Host, Title, Location, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Attending, Note);
+                writeNewPost(Host, Title, Location, Language, MeetingDate, MinLevel, MaxLevel, NumGuests,Note);
 
 
             }
@@ -96,13 +96,13 @@ public class MeetingActivity extends AppCompatActivity {
 
 
 
-    private void writeNewPost(String Host, String Title, String Location, String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, int Attending, String Note) {
+    private void writeNewPost(String Host, String Title, String Location, String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Note) {
 
         //unique ID
         String key =  meeting.getKey();
 
         //take values
-        Meet meet = new Meet(Host, Title, Location, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Attending, Note);
+        Meet meet = new Meet(Host, Title, Location, Language, MeetingDate, MinLevel, MaxLevel, NumGuests, Note);
         Map<String, Object> postValues = meet.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
@@ -112,8 +112,13 @@ public class MeetingActivity extends AppCompatActivity {
         myRef.updateChildren(childUpdates);
         myRef.child(key).setValue(postValues);
 
+        //add the creator to attending field
+        myRef.child(key).child("Attending").child(attend.getKey()).setValue(user.getUid());
+
         Toast.makeText(MeetingActivity.this,myRef +"/"+ key + postValues.toString(),
                 Toast.LENGTH_SHORT).show();
+        Log.i("database", "my ref: " + myRef + " key :" + key + " values: "+postValues.toString() );
+
 
         Intent intent = new Intent(MeetingActivity.this, MainActivity.class);
 
@@ -131,15 +136,14 @@ public class MeetingActivity extends AppCompatActivity {
         public int MinLevel;
         public int MaxLevel;
         public int NumGuests;
-        public int Attending;
         public String Note;
        // public Map<String, Boolean> stars = new HashMap<>();
 
-        public Meet(String Host, String Title, String Location, String Language, Date MeetingDate, int MinLevel, int MaxLevel, int numGuests, int Attending, String Note) {
+        public Meet(String Host, String Title, String Location, String Language, Date MeetingDate, int MinLevel, int MaxLevel, int numGuests, String Note) {
             // Default constructor required for calls to DataSnapshot.getValue(Meet.class)
         }
 
-        public Meet(String Host, String Title, String Location,String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, int Attending, String Note) {
+        public Meet(String Host, String Title, String Location,String Language, String MeetingDate, int MinLevel, int MaxLevel, int NumGuests, String Note) {
             this.Host = Host;
             this.Title = Title;
             this.Location = Location;
@@ -148,7 +152,6 @@ public class MeetingActivity extends AppCompatActivity {
             this.MinLevel = MinLevel;
             this.MaxLevel = MaxLevel;
             this.NumGuests = NumGuests;
-            this.Attending = Attending;
             this.Note = Note;
         }
 
@@ -163,7 +166,6 @@ public class MeetingActivity extends AppCompatActivity {
             result.put("MinLevel", MinLevel);
             result.put("MaxLevel", MaxLevel);
             result.put("NumGuests", NumGuests);
-            result.put("Attending", Attending);
             result.put("Note", Note);
 
             return result;

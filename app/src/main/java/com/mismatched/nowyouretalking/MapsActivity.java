@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -103,7 +102,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final BitmapDescriptor German =  BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
 
 
-
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -114,34 +112,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 List<String> myList = new ArrayList<String>();
 
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    //get info from DB
-                    String Host = child.child("Host").getValue(String.class);
-                    String Titles = child.child("Title").getValue(String.class);
-                    String Locations = child.child("Location").getValue(String.class);
-                    String MeetingDate = child.child("MeetingDate").getValue(String.class);
-                    String Language = child.child("Language").getValue(String.class);
-                    int MinLevel =  child.child("MinLevel").getValue(int.class);
-                    int MaxLevel = child.child("MaxLevel").getValue(int.class);
-                    int NumGuests = child.child("NumGuests").getValue(int.class);
-                    int Attending = child.child("Attending").getValue(int.class);
-                    String Note = child.child("Note").getValue(String.class);
 
-                    //find out if spaces are available todo if not available don't display
+                    //find out if spaces are available
+                    int NumGuests = child.child("NumGuests").getValue(int.class);
+                    int Attending = (int) child.child("Attending").getChildrenCount();
                     int Spaces = NumGuests - Attending;
 
-                    //convert address
-                    LatLng newaddress = getLocationFromAddress(MapsActivity.this, Locations);
+                    if(Spaces <= 0){
+                        //if no spaces do nothing, don't display, skip over this entry in the database
 
+                    }else { //get info and display
 
-                    //add to maker here
-                    if(Language.equals("French")){
-                        mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " +Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel+ "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(French));
-                    }else if(Language.equals("Spanish")){
-                        mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " +Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel+ "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(Spanish));
-                    }else if(Language.equals("German")){
-                        mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " +Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel+ "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(German  ));
+                        //get info from DB
+                        String Host = child.child("Host").getValue(String.class);
+                        String Titles = child.child("Title").getValue(String.class);
+                        String Locations = child.child("Location").getValue(String.class);
+                        String MeetingDate = child.child("MeetingDate").getValue(String.class);
+                        String Language = child.child("Language").getValue(String.class);
+                        int MinLevel = child.child("MinLevel").getValue(int.class);
+                        int MaxLevel = child.child("MaxLevel").getValue(int.class);
+                        String Note = child.child("Note").getValue(String.class);
+
+                        //convert address
+                        LatLng newaddress = getLocationFromAddress(MapsActivity.this, Locations);
+
+                        //add to maker here
+                        if (Language.equals("French")) {
+                            mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(French));
+                        } else if (Language.equals("Spanish")) {
+                            mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(Spanish));
+                        } else if (Language.equals("German")) {
+                            mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(German));
+                        }
                     }
-
 
 
                       }
