@@ -16,19 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <Button
-            android:text="Database test"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button2" />
-
-        <Button
-            android:text="Read from database"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button3" />
-
         <Button
             android:text="User Profile"
             android:layout_width="match_parent"
@@ -36,16 +23,22 @@
             android:id="@+id/button4" />
 
         <Button
-            android:text="Meeting"
+            android:text="Add a Meet Up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button5" />
 
         <Button
-            android:text="Maps"
+            android:text="Find a Meet Up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button6" />
+
+        <Button
+            android:text="Manage Meet Ups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button7" />
 
     </LinearLayout>
 
