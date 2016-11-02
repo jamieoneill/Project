@@ -1,12 +1,10 @@
 package com.mismatched.nowyouretalking;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -21,11 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 /**
  * Created by jamie on 31/10/2016.
  */
-
 
 public class ManageActivity extends AppCompatActivity {
 
@@ -46,17 +42,14 @@ public class ManageActivity extends AppCompatActivity {
 
         //set layout
         final LinearLayout myLinearLayout = (LinearLayout) findViewById(R.id.LinearLayout1);
-        final TextView[] myTextViews = new TextView[0]; // create an empty array;
 
         //set dialog
         final AlertDialog.Builder builder = new AlertDialog.Builder(ManageActivity.this);
-        //final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_Holo_Light_Dialog));
-
 
         //TODO add loading bar as indicator because database can take time
 
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -66,34 +59,44 @@ public class ManageActivity extends AppCompatActivity {
                     String Attending =  child.child("Attending").getValue().toString();
 
                     //if user is attending display it
-                    if(Attending.contains(user.getUid())){
+                    if(Attending.contains(user.getUid())) {
 
                         // create a new textview
                         final TextView rowTextView = new TextView(ManageActivity.this);
 
-                         //get info from DB
-                            String Host = child.child("Host").getValue(String.class);
-                            final String Titles = child.child("Title").getValue(String.class);
-                            final String Locations = child.child("Location").getValue(String.class);
-                            final String MeetingTime = child.child("MeetingTime").getValue(String.class);
-                            final String MeetingDate = child.child("MeetingDate").getValue(String.class);
-                            final String Language = child.child("Language").getValue(String.class);
-                            final int MinLevel = child.child("MinLevel").getValue(int.class);
-                            final int MaxLevel = child.child("MaxLevel").getValue(int.class);
-                            final int NumGuests = child.child("NumGuests").getValue(int.class);
-                            final String Note = child.child("Note").getValue(String.class);
+                        //get info from DB
+                        String Host = child.child("Host").getValue(String.class);
+                        final String Titles = child.child("Title").getValue(String.class);
+                        final String Locations = child.child("Location").getValue(String.class);
+                        final String MeetingTime = child.child("MeetingTime").getValue(String.class);
+                        final String MeetingDate = child.child("MeetingDate").getValue(String.class);
+                        final String Language = child.child("Language").getValue(String.class);
+                        final int MinLevel = child.child("MinLevel").getValue(int.class);
+                        final int MaxLevel = child.child("MaxLevel").getValue(int.class);
+                        final int NumGuests = child.child("NumGuests").getValue(int.class);
+                        final String Note = child.child("Note").getValue(String.class);
+                        final String meetup = child.getKey();
 
+                        String UserKey = null;
+                        for (final DataSnapshot attendees : child.child("Attending").getChildren()) {
 
-                        //String meetup =  child.getKey();
+                            //get the users in attending
+                            String name = attendees.getValue().toString();
+
+                            //get the user's push key, used to remove them from meet up
+                            if(name.equals(user.getUid())){
+                                UserKey = attendees.getKey();
+                            }
+                        }
 
                         // set text
-                        rowTextView.setText(Titles + "\n" + MeetingTime +" - " + MeetingDate );
+                        rowTextView.setText(Titles + "\n" + MeetingTime + " - " + MeetingDate);
                         rowTextView.setTypeface(Typeface.DEFAULT_BOLD);
 
                         // set properties of rowTextView
                         rowTextView.setBackgroundResource(R.drawable.border);
-                        rowTextView.layout(10,0, 0,0);
-                        rowTextView.setPadding(30,30,0,30);
+                        rowTextView.layout(10, 0, 0, 0);
+                        rowTextView.setPadding(30, 30, 0, 30);
 
                         //set image based on language
                         if (Language.equals("French")) {
@@ -108,6 +111,8 @@ public class ManageActivity extends AppCompatActivity {
                         }
                         rowTextView.setCompoundDrawablePadding(50);
 
+                        //initialize final userkey
+                        final String finalUserKey = UserKey;
 
                         //set on click
                         rowTextView.setClickable(true);
@@ -115,29 +120,32 @@ public class ManageActivity extends AppCompatActivity {
                             public void onClick(View v) {
 
                                 builder.setTitle(Titles)
-                                .setMessage(Locations + "\n" +MeetingTime + "\n" +MeetingDate + "\n" +Language + "\n" +MinLevel + "\n" +MaxLevel + "\n" + NumGuests  + "\n" + Note )
-                                .setNeutralButton("Remove", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        Toast.makeText(ManageActivity.this,"Remove",Toast.LENGTH_SHORT ).show();
-                                    }
-                                });
+                                        .setMessage(Locations + "\n" + MeetingTime + "\n" + MeetingDate + "\n" + Language + "\n" + MinLevel + "\n" + MaxLevel + "\n" + NumGuests + "\n" + Note)
+                                        .setNeutralButton("Remove", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+
+                                                //remove the user from selected meet up
+                                                Toast.makeText(ManageActivity.this, "Removed from meet up" , Toast.LENGTH_SHORT).show();
+                                                myRef.child(meetup).child("Attending").child(finalUserKey).removeValue();
+
+                                                //hide meetup for now. will not display on next load
+                                                rowTextView.setVisibility(View.GONE);
+                                            }
+                                        });
                                 builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Toast.makeText(ManageActivity.this,"Cancel",Toast.LENGTH_SHORT ).show();
+                                    //cancel button, do nothing
                                     }
                                 });
 
+                                //show dialog
                                 builder.show();
 
                             }
                         });
 
-
                         // add the textview to the linearlayout
-                            myLinearLayout.addView(rowTextView);
-
-                            // save a reference to the textview for later
-                           // myTextViews[i] = rowTextView;
+                        myLinearLayout.addView(rowTextView);
                     }
                 }
             }
@@ -152,4 +160,5 @@ public class ManageActivity extends AppCompatActivity {
 
 
     }
+
 }
