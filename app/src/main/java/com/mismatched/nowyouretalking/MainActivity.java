@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        Button button4 = (Button) findViewById(R.id.button4);
-        button4.setOnClickListener(new View.OnClickListener() {
+        Button ProfileActivityButton = (Button) findViewById(R.id.ProfileActivityButton);
+        ProfileActivityButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
 
@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button5 = (Button) findViewById(R.id.button5);
-        button5.setOnClickListener(new View.OnClickListener() {
+        Button AddMeetActivityButton = (Button) findViewById(R.id.AddMeetActivityButton);
+        AddMeetActivityButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MeetingActivity.class);
 
@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button6 = (Button) findViewById(R.id.button6);
-        button6.setOnClickListener(new View.OnClickListener() {
+        Button FindMeetActivityButton = (Button) findViewById(R.id.FindMeetActivityButton);
+        FindMeetActivityButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
 
@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button7 = (Button) findViewById(R.id.button7);
-        button7.setOnClickListener(new View.OnClickListener() {
+        Button ManageMeetActivityButton = (Button) findViewById(R.id.ManageMeetActivityButton);
+        ManageMeetActivityButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ManageActivity.class);
 
