@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -8,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorPrimary"
     tools:context="com.mismatched.nowyouretalking.MainActivity">
 
 
@@ -16,36 +18,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <Button
-            android:text="Database test"
+        <TextView
+            android:text="Now\nYou're\nTalking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button2" />
+            android:id="@+id/textView"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:textColor="#ffffff"
+            android:gravity="center"
+
+            />
 
         <Button
-            android:text="Read from database"
+            android:text="Add a Meet Up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button3" />
+            android:id="@+id/AddMeetActivityButton" />
+
+        <Button
+            android:text="Find a Meet Up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/FindMeetActivityButton" />
+
+        <Button
+            android:text="Manage Meet Ups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ManageMeetActivityButton" />
 
         <Button
             android:text="User Profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button4" />
-
-        <Button
-            android:text="Meeting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button5" />
-
-        <Button
-            android:text="Maps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button6" />
+            android:id="@+id/ProfileActivityButton" />
 
     </LinearLayout>
 

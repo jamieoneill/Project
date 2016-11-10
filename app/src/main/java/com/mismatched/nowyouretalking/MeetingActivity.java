@@ -105,8 +105,8 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
             }
         });
 
-        Button button1 = (Button) findViewById(R.id.button1);
-        button1.setOnClickListener(new View.OnClickListener() {
+        Button AddButton = (Button) findViewById(R.id.AddMeetButton);
+        AddButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 String Host = user.getDisplayName();
