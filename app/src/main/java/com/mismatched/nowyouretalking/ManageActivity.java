@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,16 +23,13 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ManageActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+    // get user info from profile class
+    final UserProfileActivity.getUserProfile getUserProfile = new UserProfileActivity().new getUserProfile();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage);
-
-        // get user
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
 
         //database ref
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -59,7 +54,7 @@ public class ManageActivity extends AppCompatActivity {
                     String Attending =  child.child("Attending").getValue().toString();
 
                     //if user is attending display it
-                    if(Attending.contains(user.getUid())) {
+                    if(Attending.contains(getUserProfile.uid)) {
 
                         // create a new textview
                         final TextView rowTextView = new TextView(ManageActivity.this);
@@ -84,7 +79,7 @@ public class ManageActivity extends AppCompatActivity {
                             String name = attendees.getValue().toString();
 
                             //get the user's push key, used to remove them from meet up
-                            if(name.equals(user.getUid())){
+                            if(name.equals(getUserProfile.uid)){
                                 UserKey = attendees.getKey();
                             }
                         }

@@ -1,7 +1,9 @@
 package com.mismatched.nowyouretalking;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -28,7 +30,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -54,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // map variables
     private static final int LOCATION_REQUEST_CODE = 1;
+    private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private GoogleMap mMap;
     double lat = 0, lng = 0;
     GoogleApiClient mGoogleApiClient;
@@ -113,7 +123,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
-
 
         //database ref
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -315,18 +324,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
+
         //Set GPS as the provider
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
                 .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        // check if GPS is enabled, if not send user to the GSP settings
-        // todo:  Better solution would be to display a dialog and suggesting to go to the settings
+        // check if GPS is enabled, if not open dialog to ask
         if (!enabled) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
+
+            //enable location through dialog box
+            LocationRequest locationRequest = LocationRequest.create();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(30 * 1000);
+            locationRequest.setFastestInterval(5 * 1000);
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                    .addLocationRequest(locationRequest);
+            builder.setAlwaysShow(true);
+
+
+            final PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+
+                @Override
+                public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
+                    final Status status = locationSettingsResult.getStatus();
+
+                    try {
+                        // Show the dialog by calling startResolutionForResult()
+                        status.startResolutionForResult(MapsActivity.this, REQUEST_CHECK_SETTINGS);
+
+                    } catch (IntentSender.SendIntentException e) {
+                    }
+
+                }
+            });
         }
 
+        // set location if turned on
+        setUserLocation();
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void setUserLocation() {
         //check for permissions to location
         if (hasPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -351,9 +392,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mLastLocation != null) {
             double mLat = mLastLocation.getLatitude();
             double mLng = mLastLocation.getLongitude();
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLat, mLng), 10.0f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLat, mLng), 10.0f));
 
         }
+
     }
 
     @Override

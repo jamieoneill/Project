@@ -1,7 +1,30 @@
 <resources>
+    <!--titles, headings and buttons -->
     <string name="app_name">NowYoureTalking</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title">Now\nYou\'re\nTalking</string>
+    <string name="addMeetUp">Add a Meet Up</string>
+    <string name="findMeetUp">Find a Meet Up</string>
+    <string name="manageMeetUp">Manage Meet Ups</string>
+    <string name="userProfile">User Profile</string>
+    <string name="join">Join</string>
+    <string name="cancel">Cancel</string>
+    <string name="nameLable">Name</string>
+    <string name="emailLable">Email</string>
+    <string name="titleLable">Title</string>
+    <string name="locationLable">Location</string>
+    <string name="dateLable">Date</string>
+    <string name="timeLable">Time</string>
+    <string name="languageLable">Language</string>
+    <string name="minLevelLable">Minimum Level</string>
+    <string name="maxLevelLable">Maximum Level</string>
+    <string name="attendeesLable">No. of Attendees</string>
+    <string name="noteLable">Note</string>
+    <string name="dateButtonLabel">Set Date</string>
+    <string name="timeButtonLable">Set Time</string>
+    <string name="addMeetingButtonLabel">Add Meeting</string>
 
+    <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">
         <item>1</item>
         <item>2</item>
@@ -25,6 +48,7 @@
         <item>20</item>
     </string-array>
 
+    <!--numbers 2 - 20 -->
     <string-array name="twototwenty_array">
         <item>2</item>
         <item>3</item>
@@ -47,6 +71,7 @@
         <item>20</item>
     </string-array>
 
+    <!--Languages -->
     <string-array name="language_array">
         <item>French</item>
         <item>Spanish</item>

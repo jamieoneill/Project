@@ -4,20 +4,22 @@ import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,9 +48,8 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Meetings");
 
-    // get user
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    final FirebaseUser user = mAuth.getCurrentUser();
+    // get user info from profile class
+    final UserProfileActivity.getUserProfile getUserProfile = new UserProfileActivity().new getUserProfile();
 
     //set unique meeting id
     DatabaseReference meeting = myRef.push();
@@ -62,15 +63,16 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
     private Spinner MaxLevelSpinner;
     private Spinner GuestsSpinner;
     private TextView NoteText;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting);
-
-        // get user
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
 
         TitleText = (TextView) findViewById(R.id.TitleText);
         LocationText = (TextView) findViewById(R.id.LocationText);
@@ -105,33 +107,73 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
             }
         });
 
+
         Button AddButton = (Button) findViewById(R.id.AddMeetButton);
         AddButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                String Host = user.getDisplayName();
+                String Host = getUserProfile.name;
                 String Title = TitleText.getText().toString();
                 String Location = LocationText.getText().toString();
                 String MeetingDate = dateButton.getText().toString();
                 String MeetingTime = timeButton.getText().toString();
                 String Language = String.valueOf(LanguageSpinner.getSelectedItem());
-                int MinLevel =  Integer.parseInt(String.valueOf(MinLevelSpinner.getSelectedItem()));
+                int MinLevel = Integer.parseInt(String.valueOf(MinLevelSpinner.getSelectedItem()));
                 int MaxLevel = Integer.parseInt(String.valueOf(MaxLevelSpinner.getSelectedItem()));
                 int NumGuests = Integer.parseInt(String.valueOf(GuestsSpinner.getSelectedItem()));
                 String Note = NoteText.getText().toString();
 
                 //check for empty values
-                if(Title.isEmpty() || Location.isEmpty() || MeetingDate.equals("Set Date") || MeetingTime.equals("Set Time")){
-                    Toast.makeText(MeetingActivity.this,"Please fill all fields",
+                if (Title.isEmpty() || Location.isEmpty() || MeetingDate.equals("Set Date") || MeetingTime.equals("Set Time")) {
+                    Toast.makeText(MeetingActivity.this, "Please fill all fields",
                             Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     //write to database
                     writeNewPost(Host, Title, Location, Language, MeetingDate, MeetingTime, MinLevel, MaxLevel, NumGuests, Note);
                 }
 
             }
-            });
+        });
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Meeting Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 
 
@@ -140,7 +182,7 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
     }
 
 
-    public void StartDatePicker(){
+    public void StartDatePicker() {
         //show calendar
         DatePickerDialog dialog = new DatePickerDialog(MeetingActivity.this, this, startYear, startMonth, startDay);
         dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
@@ -156,11 +198,11 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
         startDay = dayOfMonth;
 
         Button dateButton = (Button) findViewById(R.id.DateButton);
-        dateButton.setText(startDay +"/"+startMonth+"/"+startYear);
+        dateButton.setText(startDay + "/" + startMonth + "/" + startYear);
 
     }
 
-    public void StartTimePicker(){
+    public void StartTimePicker() {
         //show time picker
         TimePickerDialog dialog = new TimePickerDialog(MeetingActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth, timePickerListener, startHour, startMinute, false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -177,7 +219,7 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
                     startMinute = minute;
 
                     Button timeButton = (Button) findViewById(R.id.TimeButton);
-                    timeButton.setText(startHour +":"+startMinute);
+                    timeButton.setText(startHour + ":" + startMinute);
 
                 }
             };
@@ -186,7 +228,7 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
     private void writeNewPost(String Host, String Title, String Location, String Language, String MeetingDate, String MeetingTime, int MinLevel, int MaxLevel, int NumGuests, String Note) {
 
         //unique ID
-        String key =  meeting.getKey();
+        String key = meeting.getKey();
 
         //take values
         Meet meet = new Meet(Host, Title, Location, Language, MeetingDate, MeetingTime, MinLevel, MaxLevel, NumGuests, Note);
@@ -200,11 +242,11 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
         myRef.child(key).setValue(postValues);
 
         //add the creator to attending field
-        myRef.child(key).child("Attending").child(attend.getKey()).setValue(user.getUid());
+        myRef.child(key).child("Attending").child(attend.getKey()).setValue(getUserProfile.uid);
 
-        Toast.makeText(MeetingActivity.this,myRef +"/"+ key + postValues.toString(),
+        Toast.makeText(MeetingActivity.this, myRef + "/" + key + postValues.toString(),
                 Toast.LENGTH_SHORT).show();
-        Log.i("database", "my ref: " + myRef + " key :" + key + " values: "+postValues.toString() );
+        Log.i("database", "my ref: " + myRef + " key :" + key + " values: " + postValues.toString());
 
 
         Intent intent = new Intent(MeetingActivity.this, MainActivity.class);
@@ -225,13 +267,13 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
         public int MaxLevel;
         public int NumGuests;
         public String Note;
-       // public Map<String, Boolean> stars = new HashMap<>();
+        // public Map<String, Boolean> stars = new HashMap<>();
 
         public Meet(String Host, String Title, String Location, String Language, Date MeetingDate, String MeetingTime, int MinLevel, int MaxLevel, int numGuests, String Note) {
             // Default constructor required for calls to DataSnapshot.getValue(Meet.class)
         }
 
-        public Meet(String Host, String Title, String Location,String Language, String MeetingDate, String MeetingTime, int MinLevel, int MaxLevel, int NumGuests, String Note) {
+        public Meet(String Host, String Title, String Location, String Language, String MeetingDate, String MeetingTime, int MinLevel, int MaxLevel, int NumGuests, String Note) {
             this.Host = Host;
             this.Title = Title;
             this.Location = Location;

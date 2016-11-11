@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,7 +17,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Title:"
+                android:text="@string/titleLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/TitleLable"
@@ -32,7 +30,7 @@
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/TitleText"
-                android:hint="Title"
+                android:hint="@string/titleLable"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -43,7 +41,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Location:"
+                android:text="@string/locationLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/LocationLable"
@@ -66,7 +64,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Date:"
+                android:text="@string/dateLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/DateLable"
@@ -74,7 +72,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:text="Set Date"
+                android:text="@string/dateButtonLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/DateButton"
@@ -88,7 +86,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Time:"
+                android:text="@string/timeLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/TimeLable"
@@ -96,7 +94,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:text="Set Time"
+                android:text="@string/timeButtonLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/TimeButton"
@@ -110,7 +108,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="Language:"
+                android:text="@string/languageLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/LanguageLable"
@@ -131,7 +129,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="Minimum Level:"
+                android:text="@string/minLevelLable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/MinLevelLable"
@@ -154,7 +152,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="Maximum Level:"
+                android:text="@string/maxLevelLable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/MaxLevelLable"
@@ -175,7 +173,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="Number of Attendees:"
+                android:text="@string/attendeesLable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/GuestsLable"
@@ -196,7 +194,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Note:"
+                android:text="@string/noteLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/NoteLable"
@@ -209,7 +207,7 @@
                 android:inputType="textMultiLine"
                 android:ems="10"
                 android:id="@+id/NoteText"
-                android:hint="Note"
+                android:hint="@string/noteLable"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -220,7 +218,7 @@
             android:layout_weight="1">
 
             <Button
-                android:text="add meeting"
+                android:text="@string/addMeetingButtonLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/AddMeetButton"

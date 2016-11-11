@@ -43,8 +43,6 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
     private FirebaseAuth.AuthStateListener mAuthListener;
 
 
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
@@ -65,8 +63,6 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-
         mAuth = FirebaseAuth.getInstance();
 
         // [START auth_state_listener]
@@ -77,10 +73,9 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    Toast.makeText(SignInActivity.this, "Signed In", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
                     //set userprofile info
-
                     // set User table as reference
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     final DatabaseReference myRef = database.getReference("Users");
@@ -95,17 +90,14 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                     myRef.child(uid).child("Email").setValue(user.getEmail());
                     //level
                     myRef.child(uid).child("Level").setValue("test");
-                    //language i want to learn
-                    //myRef.child(uid).child("Language").setValue("test");
+
 
                     final String[] result = new String[1];
-
                     // check if a language is selected
                     myRef.child(uid).child("Language").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                              result[0] = dataSnapshot.getValue(String.class);
-                            Log.d(TAG, "FIRST result is:" + result[0]);
 
                             if(result[0] == null){
                                 final CharSequence languages[] = new CharSequence[] {"French", "Spanish", "German"};
@@ -142,11 +134,7 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
 
                 } else {
                     // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // [START_EXCLUDE]
-                //updateUI(user);
-                // [END_EXCLUDE]
             }
         };
         // [END auth_state_listener]
@@ -155,10 +143,6 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
 
     // [START auth_with_google]
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-        // [START_EXCLUDE silent]
-        showProgressDialog();
-        // [END_EXCLUDE]
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -176,16 +160,10 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                           //  Toast.makeText(GoogleSignInActivity.this, "Authentication failed.",
                             //        Toast.LENGTH_SHORT).show();
                         }
-                        // [START_EXCLUDE]
-                       // hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
     }
 
-    private void showProgressDialog() {
-    }
-    // [END auth_with_google]
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -210,21 +188,6 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
         }
     }
 
-    private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-           // mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-            updateUI(true);
-        } else {
-            // Signed out, show unauthenticated UI.
-            updateUI(false);
-        }
-    }
-
-    private void updateUI(boolean b) {
-    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

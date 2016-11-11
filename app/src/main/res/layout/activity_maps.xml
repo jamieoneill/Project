@@ -33,7 +33,7 @@
             >
 
             <Button
-                android:text="Join"
+                android:text="@string/join"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/JoinButton"
@@ -41,7 +41,7 @@
                 />
 
             <Button
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/CancelButton"

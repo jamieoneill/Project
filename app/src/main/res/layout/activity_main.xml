@@ -9,7 +9,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorPrimary"
     tools:context="com.mismatched.nowyouretalking.MainActivity">
 
 
@@ -19,37 +18,37 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:text="Now\nYou're\nTalking"
+            android:text="@string/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
             android:textStyle="bold"
-            android:textSize="25sp"
-            android:textColor="#ffffff"
+            android:textSize="30sp"
+            android:textColor="@color/colorPrimary"
             android:gravity="center"
 
             />
 
         <Button
-            android:text="Add a Meet Up"
+            android:text="@string/addMeetUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/AddMeetActivityButton" />
 
         <Button
-            android:text="Find a Meet Up"
+            android:text="@string/findMeetUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/FindMeetActivityButton" />
 
         <Button
-            android:text="Manage Meet Ups"
+            android:text="@string/manageMeetUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ManageMeetActivityButton" />
 
         <Button
-            android:text="User Profile"
+            android:text="@string/userProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ProfileActivityButton" />
