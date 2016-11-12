@@ -25,9 +25,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -79,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        View mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
 
         Button joinButton = (Button) findViewById(R.id.JoinButton);
@@ -342,7 +345,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .addLocationRequest(locationRequest);
             builder.setAlwaysShow(true);
 
-
             final PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
             result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
 
@@ -389,6 +391,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //set view to user last known location
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
         if (mLastLocation != null) {
             double mLat = mLastLocation.getLatitude();
             double mLng = mLastLocation.getLongitude();
@@ -396,6 +399,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+
+            case REQUEST_CHECK_SETTINGS:
+
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+
+                            //tell user to to zoom in on map
+                            Toast toast=Toast.makeText(MapsActivity.this, "Click here to zoom to your location", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.RIGHT| Gravity.TOP, 20, 210);
+                            toast.show();
+                break;
+
+                    case Activity.RESULT_CANCELED:
+                        Toast.makeText(MapsActivity.this, "Location not turned on", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                    {
+                        break;
+                    }
+                }
+                break;
+        }
     }
 
     @Override
