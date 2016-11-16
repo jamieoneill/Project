@@ -5,12 +5,16 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -27,6 +31,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +39,7 @@ import java.util.Map;
  * Created by jamie on 18/10/2016.
  */
 
-public class MeetingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class MeetingActivity extends AppCompatActivity  {
 
     // calendar variables
     Calendar c = Calendar.getInstance();
@@ -63,11 +68,6 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
     private Spinner MaxLevelSpinner;
     private Spinner GuestsSpinner;
     private TextView NoteText;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,41 +82,68 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
         GuestsSpinner = (Spinner) findViewById(R.id.GuestsSpinner);
         NoteText = (TextView) findViewById(R.id.NoteText);
 
+        //get views for dialog
+        final View dialogView = View.inflate(MeetingActivity.this, R.layout.datetimepicker_layout, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(MeetingActivity.this).create();
 
         //set date view
         final Button dateButton = (Button) findViewById(R.id.DateButton);
         dateButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             public void onClick(View v) {
 
-                DialogFragment dialogFragment = new StartDatePicker();
-                StartDatePicker();
-                dialogFragment.show(getFragmentManager(), "start_date_picker");
+                // set dialog
+                alertDialog.setView(dialogView);
+                alertDialog.show();
+
+                //set pickers
+                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                datePicker.setMinDate(System.currentTimeMillis() - 10000);
+                final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+
+                //get time and date on confirm
+                Button ok = (Button) dialogView.findViewById(R.id.datetimeButton);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        int day = datePicker.getDayOfMonth();
+                        int month = datePicker.getMonth()+1;
+                        int year = datePicker.getYear();
+                        int hour = timePicker.getHour();
+                        int minute = timePicker.getMinute();
+
+                        //format time and date
+                        String time =  String.format("%02d:%02d", hour, minute);
+                        String date = " " + day + "/" + month + "/" + year;
+
+                        //add to button
+                        dateButton.setText(time + date );
+
+                        alertDialog.dismiss();
+                    }
+
+                });
+
+
 
             }
         });
-
-        //set time view
-        final Button timeButton = (Button) findViewById(R.id.TimeButton);
-        timeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                DialogFragment dialogFragment = new StartDatePicker();
-                StartTimePicker();
-                dialogFragment.show(getFragmentManager(), "start_time_picker");
-
-            }
-        });
-
 
         Button AddButton = (Button) findViewById(R.id.AddMeetButton);
         AddButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                //split time from date
+                String timeanddate = dateButton.getText().toString();;
+                String[] parts = timeanddate.split(" ");
+                String time = parts[0];
+                String date = parts[1];
+
+                //get values
                 String Host = getUserProfile.name;
                 String Title = TitleText.getText().toString();
                 String Location = LocationText.getText().toString();
-                String MeetingDate = dateButton.getText().toString();
-                String MeetingTime = timeButton.getText().toString();
+                String MeetingDate = date;
+                String MeetingTime = time;
                 String Language = String.valueOf(LanguageSpinner.getSelectedItem());
                 int MinLevel = Integer.parseInt(String.valueOf(MinLevelSpinner.getSelectedItem()));
                 int MaxLevel = Integer.parseInt(String.valueOf(MaxLevelSpinner.getSelectedItem()));
@@ -134,95 +161,7 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
 
             }
         });
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Meeting Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }
-
-
-    private class StartDatePicker extends DialogFragment {
-        // Default constructor for date and time pickers
-    }
-
-
-    public void StartDatePicker() {
-        //show calendar
-        DatePickerDialog dialog = new DatePickerDialog(MeetingActivity.this, this, startYear, startMonth, startDay);
-        dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-        dialog.show();
-
-    }
-
-    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                          int dayOfMonth) {
-        //set date from user input
-        startYear = year;
-        startMonth = monthOfYear;
-        startDay = dayOfMonth;
-
-        Button dateButton = (Button) findViewById(R.id.DateButton);
-        dateButton.setText(startDay + "/" + startMonth + "/" + startYear);
-
-    }
-
-    public void StartTimePicker() {
-        //show time picker
-        TimePickerDialog dialog = new TimePickerDialog(MeetingActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth, timePickerListener, startHour, startMinute, false);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.show();
-
-    }
-
-    private TimePickerDialog.OnTimeSetListener timePickerListener =
-            new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hour, int minute) {
-                    //set time from user input
-                    startHour = hour;
-                    startMinute = minute;
-
-                    Button timeButton = (Button) findViewById(R.id.TimeButton);
-                    timeButton.setText(startHour + ":" + startMinute);
-
-                }
-            };
 
 
     private void writeNewPost(String Host, String Title, String Location, String Language, String MeetingDate, String MeetingTime, int MinLevel, int MaxLevel, int NumGuests, String Note) {
@@ -244,13 +183,8 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
         //add the creator to attending field
         myRef.child(key).child("Attending").child(attend.getKey()).setValue(getUserProfile.uid);
 
-        Toast.makeText(MeetingActivity.this, myRef + "/" + key + postValues.toString(),
-                Toast.LENGTH_SHORT).show();
-        Log.i("database", "my ref: " + myRef + " key :" + key + " values: " + postValues.toString());
-
-
+        // return to main
         Intent intent = new Intent(MeetingActivity.this, MainActivity.class);
-
         startActivity(intent);
     }
 

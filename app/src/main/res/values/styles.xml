@@ -5,7 +5,21 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <!-- timepicker -->
+    <style name="TimeTheme" parent="android:Theme.Holo.Light">
+    </style>
+
+    <!-- datepicker -->
+    <style name="DateTheme">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- button -->
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@color/White</item>
+    </style>
 </resources>
