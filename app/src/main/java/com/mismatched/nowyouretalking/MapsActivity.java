@@ -20,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -42,6 +43,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -81,7 +83,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        View mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
 
         Button joinButton = (Button) findViewById(R.id.JoinButton);
@@ -143,6 +144,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
 
+                    //show if user is not already attending
+                    String Guests = child.child("Attending").getValue().toString();
+                    if (!Guests.contains(user.getUid())) {
+
                     //find out if spaces are available
                     int NumGuests = child.child("NumGuests").getValue(int.class);
                     int Attending = (int) child.child("Attending").getChildrenCount();
@@ -169,76 +174,64 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         //add maker here and add the database key
                         if (Language.equals("French")) {
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(French));
-                            marker.setTag(child.getKey().toString());
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(French));
+                            marker.setTag(child.getKey());
                         } else if (Language.equals("Spanish")) {
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(Spanish));
-                            marker.setTag(child.getKey().toString());
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(Spanish));
+                            marker.setTag(child.getKey());
                         } else if (Language.equals("German")) {
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(German));
-                            marker.setTag(child.getKey().toString());
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(German));
+                            marker.setTag(child.getKey());
                         }
 
-                    }
+                    }//end no spaces check
 
+                }// end guest check
+                    } // end loop
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.i("database ", "Failed to read value.", error.toException());
-            }
+                @Override
+                public void onCancelled (DatabaseError error){
+                    // Failed to read value
+                    Log.i("database ", "Failed to read value.", error.toException());
+                }
+
+
         });
 
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public View getInfoWindow(Marker arg0) {
-                return null;
-            }
+            public boolean onMarkerClick(final Marker marker) {
 
-            @Override
-            public View getInfoContents(final Marker marker) {
+                //get views for dialog
+                View dialogView = View.inflate(MapsActivity.this, R.layout.markinfo_layout, null);
+                final AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
 
-                //set info window
-                Context context = getApplicationContext();
-                LinearLayout info = new LinearLayout(context);
-                info.setOrientation(LinearLayout.VERTICAL);
+                // set dialog
+                alertDialog.setView(dialogView);
+                alertDialog.show();
 
-                //title style and set
-                TextView title = new TextView(context);
-                title.setTextColor(Color.BLACK);
-                title.setGravity(Gravity.CENTER);
-                title.setBackgroundColor(Color.parseColor("#61D9FF"));
+                //set texts
+                TextView title = (TextView) dialogView.findViewById(R.id.TitleLable);
                 title.setText(marker.getTitle());
 
-                //snippet style and set
-                TextView snippet = new TextView(context);
-                snippet.setTextColor(Color.GRAY);
-                snippet.setText(marker.getSnippet());
+                TextView address = (TextView) dialogView.findViewById(R.id.MeetingText);
+                address.setText(marker.getSnippet());
 
-                //add to marker
-                info.addView(title);
-                info.addView(snippet);
-                marker.hideInfoWindow();
-
-                //hide everything on cancel button
-                Button Cancel = (Button) findViewById(R.id.CancelButton);
+                //hide on cancel button
+                Button Cancel = (Button) dialogView.findViewById(R.id.CancelButton);
                 Cancel.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        Button joinButton = (Button) findViewById(R.id.JoinButton);
-                        Button cancelButton = (Button) findViewById(R.id.CancelButton);
-
-                        joinButton.setVisibility(View.GONE);
-                        cancelButton.setVisibility(View.GONE);
-
+                        alertDialog.dismiss();
+                        //don't show info window
                         marker.hideInfoWindow();
                     }
                 });
 
+
                 //join to add user to meet up
-                Button Join = (Button) findViewById(R.id.JoinButton);
+                Button Join = (Button) dialogView.findViewById(R.id.JoinButton);
                 Join.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
 
@@ -279,41 +272,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
 
-                return info;
-            }
-
-
-        });
-
-        //on map click
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng mapclick) {
-                //hide everything
-                Button joinButton = (Button) findViewById(R.id.JoinButton);
-                Button cancelButton = (Button) findViewById(R.id.CancelButton);
-
-                joinButton.setVisibility(View.GONE);
-                cancelButton.setVisibility(View.GONE);
-
-            }
-        });
-
-
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-                //show buttons
-                Button joinButton = (Button) findViewById(R.id.JoinButton);
-                Button cancelButton = (Button) findViewById(R.id.CancelButton);
-
-                joinButton.setVisibility(View.VISIBLE);
-                cancelButton.setVisibility(View.VISIBLE);
                 return false;
             }
         });
-
 
     }
 
@@ -373,13 +334,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //check for permissions to location
         if (hasPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             //return user location is permission is set

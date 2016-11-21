@@ -55,27 +55,40 @@
 
         <Button
             android:text="@string/addMeetUp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/AddMeetActivityButton" />
+            android:id="@+id/AddMeetActivityButton"
+            android:theme="@style/ButtonStyle"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            />
 
         <Button
             android:text="@string/findMeetUp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/FindMeetActivityButton" />
+            android:id="@+id/FindMeetActivityButton"
+            android:theme="@style/ButtonStyle"
+            android:layout_gravity="center"
+            />
 
         <Button
             android:text="@string/manageMeetUp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ManageMeetActivityButton" />
+            android:id="@+id/ManageMeetActivityButton"
+            android:theme="@style/ButtonStyle"
+            android:layout_gravity="center"
+            />
 
         <Button
             android:text="@string/userProfile"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ProfileActivityButton" />
+            android:id="@+id/ProfileActivityButton"
+            android:theme="@style/ButtonStyle"
+            android:layout_gravity="center"
+            />
 
     </LinearLayout>
 

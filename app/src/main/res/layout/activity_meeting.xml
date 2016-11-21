@@ -76,7 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/DateButton"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:theme="@style/ButtonStyle"
+                />
 
         </LinearLayout>
 
@@ -190,17 +192,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="match_parent">
 
             <Button
                 android:text="@string/addMeetingButtonLabel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/AddMeetButton"
-                android:layout_weight="1" />
+                android:theme="@style/ButtonStyle"
+                android:layout_gravity="center"
+                />
 
         </LinearLayout>
 

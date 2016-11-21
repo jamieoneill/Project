@@ -41,14 +41,6 @@ import java.util.Map;
 
 public class MeetingActivity extends AppCompatActivity  {
 
-    // calendar variables
-    Calendar c = Calendar.getInstance();
-    int startYear = c.get(Calendar.YEAR);
-    int startMonth = c.get(Calendar.MONTH);
-    int startDay = c.get(Calendar.DAY_OF_MONTH);
-    int startHour = c.get(Calendar.HOUR);
-    int startMinute = c.get(Calendar.MINUTE);
-
     // Write a message to the database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Meetings");

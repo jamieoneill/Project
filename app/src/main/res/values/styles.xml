@@ -21,5 +21,13 @@
     <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="android:textColor">@color/White</item>
+        <item name="android:width">200dp</item>
+    </style>
+
+    <!-- red button -->
+    <style name="RedButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/Red</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:width">200dp</item>
     </style>
 </resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:text="@string/titleLable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/TitleLable"
+                android:textColor="@color/White"
+                android:layout_gravity="center"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="@string/titleLable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/MeetingText"
+                android:textColor="?attr/editTextColor"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <Button
+                android:text="@string/join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/JoinButton"
+                android:layout_weight="1"
+                android:theme="@style/ButtonStyle"
+                />
+
+            <Button
+                android:text="@string/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/CancelButton"
+                android:layout_weight="1"
+                android:theme="@style/RedButtonStyle"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+
+
+
