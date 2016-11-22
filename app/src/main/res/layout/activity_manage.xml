@@ -5,11 +5,42 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:layout_margin="10dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/LayoutWrapper">
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/LinearLayout1">
-</LinearLayout>
+    android:id="@+id/myMeetUpLayout">
 
+    <TextView
+        android:text="My Meet ups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/myMeetUpLable"
+        android:textColor="?attr/editTextColor"
+        android:textSize="20sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/attendingMeetUpLayout">
+
+    <TextView
+        android:text="Attending Meet ups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/attendingMeetupLable"
+        android:textColor="?attr/editTextColor"
+        android:textSize="20sp" />
+    </LinearLayout>
+
+
+    </LinearLayout>
 </ScrollView>
