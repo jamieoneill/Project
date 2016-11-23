@@ -24,6 +24,10 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,6 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -54,7 +59,7 @@ public class MeetingActivity extends AppCompatActivity  {
 
     //inputs
     private TextView TitleText;
-    private TextView LocationText;
+    private String LocationText;
     private Spinner LanguageSpinner;
     private Spinner MinLevelSpinner;
     private Spinner MaxLevelSpinner;
@@ -67,12 +72,29 @@ public class MeetingActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_meeting);
 
         TitleText = (TextView) findViewById(R.id.TitleText);
-        LocationText = (TextView) findViewById(R.id.LocationText);
         LanguageSpinner = (Spinner) findViewById(R.id.LanguageSpinner);
         MinLevelSpinner = (Spinner) findViewById(R.id.MinLevelSpinner);
         MaxLevelSpinner = (Spinner) findViewById(R.id.MaxLevelSpinner);
         GuestsSpinner = (Spinner) findViewById(R.id.GuestsSpinner);
         NoteText = (TextView) findViewById(R.id.NoteText);
+
+        //location auto complete
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                //set location from address picked
+               LocationText = place.getAddress().toString();
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("Places error", "An error occurred: " + status);
+            }
+        });
 
         //get views for dialog
         final View dialogView = View.inflate(MeetingActivity.this, R.layout.datetimepicker_layout, null);
@@ -104,11 +126,12 @@ public class MeetingActivity extends AppCompatActivity  {
                         int minute = timePicker.getMinute();
 
                         //format time and date
-                        String time =  String.format("%02d:%02d", hour, minute);
+                        String time =  String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
                         String date = " " + day + "/" + month + "/" + year;
+                        String timedate = time + date;
 
                         //add to button
-                        dateButton.setText(time + date );
+                        dateButton.setText(timedate);
 
                         alertDialog.dismiss();
                     }
@@ -133,7 +156,7 @@ public class MeetingActivity extends AppCompatActivity  {
                 //get values
                 String Host = getUserProfile.name;
                 String Title = TitleText.getText().toString();
-                String Location = LocationText.getText().toString();
+                String Location = LocationText;
                 String MeetingDate = date;
                 String MeetingTime = time;
                 String Language = String.valueOf(LanguageSpinner.getSelectedItem());
@@ -143,7 +166,7 @@ public class MeetingActivity extends AppCompatActivity  {
                 String Note = NoteText.getText().toString();
 
                 //check for empty values
-                if (Title.isEmpty() || Location.isEmpty() || MeetingDate.equals("Set Date") || MeetingTime.equals("Set Time")) {
+                if (Title.isEmpty() || Location.isEmpty() || MeetingDate.contains("Date")) {
                     Toast.makeText(MeetingActivity.this, "Please fill all fields",
                             Toast.LENGTH_SHORT).show();
                 } else {
@@ -174,6 +197,9 @@ public class MeetingActivity extends AppCompatActivity  {
 
         //add the creator to attending field
         myRef.child(key).child("Attending").child(attend.getKey()).setValue(getUserProfile.uid);
+
+        //tell user it has been added
+        Toast.makeText(MeetingActivity.this, Title + " meet up has been created", Toast.LENGTH_SHORT);
 
         // return to main
         Intent intent = new Intent(MeetingActivity.this, MainActivity.class);

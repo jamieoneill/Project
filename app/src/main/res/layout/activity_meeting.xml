@@ -42,20 +42,20 @@
 
             <TextView
                 android:text="@string/locationLable"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/LocationLable"
                 android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".3"/>
 
-            <EditText
-                android:layout_width="match_parent"
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/LocationText"
-                android:hint="Street Address"
-                android:layout_weight="1" />
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:layout_weight="1"
+                />
         </LinearLayout>
 
         <LinearLayout

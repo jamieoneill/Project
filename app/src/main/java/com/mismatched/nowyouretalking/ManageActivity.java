@@ -131,8 +131,8 @@ public class ManageActivity extends AppCompatActivity {
                                 title.setHeight(150);
                                 title.setGravity(Gravity.CENTER);
 
-                                TextView address = (TextView) dialogView.findViewById(R.id.MeetingText);
-                                address.setText("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + " - " + MaxLevel + "\nSeats: " + NumGuests + "\nNote: " + Note);
+                                TextView info = (TextView) dialogView.findViewById(R.id.MeetingText);
+                                info.setText("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + " - " + MaxLevel + "\nSeats: " + NumGuests + "\nNote: " + Note);
 
                                 //hide on cancel button
                                 Button Cancel = (Button) dialogView.findViewById(R.id.CancelButton);
