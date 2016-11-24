@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     >
 
     <LinearLayout
@@ -13,14 +12,14 @@
         android:layout_weight="1">
 
         <TextView
-            android:text="Name:"
+            android:text="@string/nameLable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/NameLable"
             android:layout_weight="1" />
 
         <TextView
-            android:text="Email"
+            android:text="@string/emailLable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/emailLable"

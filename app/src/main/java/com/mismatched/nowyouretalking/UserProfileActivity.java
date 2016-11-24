@@ -14,11 +14,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    private static final String TAG = "UserProfileActivity";
-    private FirebaseAuth mAuth;
-
     private TextView NameText;
     private TextView EmailText;
+
+    //get user profile
+    final UserProfileActivity.getUserProfile getUserProfile = new UserProfileActivity.getUserProfile();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +29,23 @@ public class UserProfileActivity extends AppCompatActivity {
         NameText = (TextView) findViewById(R.id.nameText);
         EmailText = (TextView) findViewById(R.id.emailText);
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        Log.d(TAG, "signed_in:" + user);
-
-        String name  = user.getDisplayName();
-        String email = user.getEmail();
+        String name  = getUserProfile.name;
+        String email = getUserProfile.email;
 
         NameText.append(name);
         EmailText.append(email);
 
+
     }
+
+    // public class to get user from any activity
+    public class getUserProfile{
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String name  = user.getDisplayName();
+        String email = user.getEmail();
+        String uid = user.getUid();
+    }
+
+
 }

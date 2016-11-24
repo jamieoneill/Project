@@ -1,7 +1,9 @@
 package com.mismatched.nowyouretalking;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -18,19 +20,30 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.awareness.snapshot.LocationResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -54,8 +67,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // map variables
     private static final int LOCATION_REQUEST_CODE = 1;
+    private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private GoogleMap mMap;
-    double lat = 0, lng = 0;
     GoogleApiClient mGoogleApiClient;
 
     // get user
@@ -70,13 +83,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        Button joinButton = (Button) findViewById(R.id.JoinButton);
-        Button cancelButton = (Button) findViewById(R.id.CancelButton);
-
-        joinButton.setVisibility(View.GONE);
-        cancelButton.setVisibility(View.GONE);
-
     }
 
     //Convert to get address
@@ -103,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
 
         // add api for location and connect
@@ -114,7 +120,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mGoogleApiClient.connect();
 
-
         //database ref
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Meetings");
@@ -123,6 +128,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final BitmapDescriptor German = BitmapDescriptorFactory.fromResource(R.drawable.germanyicon);
         final BitmapDescriptor French = BitmapDescriptorFactory.fromResource(R.drawable.franceicon);
         final BitmapDescriptor Spanish = BitmapDescriptorFactory.fromResource(R.drawable.spainicon);
+        final BitmapDescriptor GermanDark = BitmapDescriptorFactory.fromResource(R.drawable.germanyicon_dark);
+        final BitmapDescriptor FrenchDark = BitmapDescriptorFactory.fromResource(R.drawable.franceicon_dark);
+        final BitmapDescriptor SpanishDark = BitmapDescriptorFactory.fromResource(R.drawable.spainicon_dark);
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -131,15 +139,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
 
+                    //show if user is not already attending
+                    String Guests = child.child("Attending").getValue().toString();
+
                     //find out if spaces are available
                     int NumGuests = child.child("NumGuests").getValue(int.class);
                     int Attending = (int) child.child("Attending").getChildrenCount();
                     int Spaces = NumGuests - Attending;
 
-                    if (Spaces <= 0) {
-                        //if no spaces do nothing, don't display, skip over this entry in the database
-
-                    } else { //get info and display
+                    //if there is a space get info and display
+                    if (Spaces >= 1) {
+                         //get info and display
 
                         //get info from DB
                         String Host = child.child("Host").getValue(String.class);
@@ -155,78 +165,83 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         //convert address
                         LatLng newaddress = getLocationFromAddress(MapsActivity.this, Locations);
 
+                        // marker icon holder
+                        BitmapDescriptor markerIcon;
+
                         //add maker here and add the database key
                         if (Language.equals("French")) {
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(French));
-                            marker.setTag(child.getKey().toString());
+                            if(Guests.contains(user.getUid())){
+                                markerIcon = FrenchDark;
+                            }else{
+                                markerIcon = French;
+                            }
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
+                            marker.setTag(child.getKey());
                         } else if (Language.equals("Spanish")) {
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(Spanish));
-                            marker.setTag(child.getKey().toString());
+                            if(Guests.contains(user.getUid())){
+                                markerIcon = SpanishDark;
+                            }else{
+                                markerIcon = Spanish;
+                            }
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
+                            marker.setTag(child.getKey());
                         } else if (Language.equals("German")) {
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\n Created By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(German));
-                            marker.setTag(child.getKey().toString());
+
+                            if(Guests.contains(user.getUid())){
+                                markerIcon = GermanDark;
+                            }else{
+                                markerIcon = German;
+                            }
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
+                            marker.setTag(child.getKey());
                         }
 
-                    }
-
+                    }//end no spaces check
+                    } // end loop
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.i("database ", "Failed to read value.", error.toException());
-            }
+                @Override
+                public void onCancelled (DatabaseError error){
+                    // Failed to read value
+                    Log.i("database ", "Failed to read value.", error.toException());
+                }
+
+
         });
 
-        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public View getInfoWindow(Marker arg0) {
-                return null;
-            }
+            public boolean onMarkerClick(final Marker marker) {
 
-            @Override
-            public View getInfoContents(final Marker marker) {
+                //get views for dialog
+                View dialogView = View.inflate(MapsActivity.this, R.layout.markinfo_layout, null);
+                final AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
 
-                //set info window
-                Context context = getApplicationContext();
-                LinearLayout info = new LinearLayout(context);
-                info.setOrientation(LinearLayout.VERTICAL);
+                // set dialog
+                alertDialog.setView(dialogView);
+                alertDialog.show();
 
-                //title style and set
-                TextView title = new TextView(context);
-                title.setTextColor(Color.BLACK);
-                title.setGravity(Gravity.CENTER);
-                title.setBackgroundColor(Color.parseColor("#61D9FF"));
+                //set texts
+                TextView title = (TextView) dialogView.findViewById(R.id.TitleLable);
                 title.setText(marker.getTitle());
 
-                //snippet style and set
-                TextView snippet = new TextView(context);
-                snippet.setTextColor(Color.GRAY);
-                snippet.setText(marker.getSnippet());
+                TextView address = (TextView) dialogView.findViewById(R.id.MeetingText);
+                address.setText(marker.getSnippet());
 
-                //add to marker
-                info.addView(title);
-                info.addView(snippet);
-                marker.hideInfoWindow();
-
-                //hide everything on cancel button
-                Button Cancel = (Button) findViewById(R.id.CancelButton);
+                //hide on cancel button
+                Button Cancel = (Button) dialogView.findViewById(R.id.CancelButton);
                 Cancel.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        Button joinButton = (Button) findViewById(R.id.JoinButton);
-                        Button cancelButton = (Button) findViewById(R.id.CancelButton);
-
-                        joinButton.setVisibility(View.GONE);
-                        cancelButton.setVisibility(View.GONE);
-
+                        alertDialog.dismiss();
+                        //don't show info window
                         marker.hideInfoWindow();
                     }
                 });
 
+
                 //join to add user to meet up
-                Button Join = (Button) findViewById(R.id.JoinButton);
+                Button Join = (Button) dialogView.findViewById(R.id.JoinButton);
                 Join.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
 
@@ -236,7 +251,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 //list to hold attendees
-                                List<String> myList = new ArrayList<String>();
+                                List<String> myList = new ArrayList<>();
 
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                                     //get all users currently attending meeting
@@ -251,8 +266,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     // add the user to attending for the marker selected
                                     myRef.child(marker.getTag().toString()).child("Attending").push().setValue(user.getUid());
 
+                                    //tell user it has been added
+                                    Toast.makeText(MapsActivity.this, "Meet up added", Toast.LENGTH_LONG).show();
+
                                     //change activity to break database updating loop
-                                    Intent intent = new Intent(MapsActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(MapsActivity.this, ManageActivity.class);
                                     startActivity(intent);
 
                                 }
@@ -267,43 +285,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
 
-                return info;
-            }
-
-
-        });
-
-        //on map click
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng mapclick) {
-                //hide everything
-                Button joinButton = (Button) findViewById(R.id.JoinButton);
-                Button cancelButton = (Button) findViewById(R.id.CancelButton);
-
-                joinButton.setVisibility(View.GONE);
-                cancelButton.setVisibility(View.GONE);
-
-            }
-        });
-
-
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-                //show buttons
-                Button joinButton = (Button) findViewById(R.id.JoinButton);
-                Button cancelButton = (Button) findViewById(R.id.CancelButton);
-
-                joinButton.setVisibility(View.VISIBLE);
-                cancelButton.setVisibility(View.VISIBLE);
                 return false;
             }
         });
 
-
     }
+
+
 
     //return permissions
     private boolean hasPermission(MapsActivity mapsActivity, String accessFineLocation) {
@@ -315,28 +303,53 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
+
         //Set GPS as the provider
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
                 .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        // check if GPS is enabled, if not send user to the GSP settings
-        // todo:  Better solution would be to display a dialog and suggesting to go to the settings
+        // check if GPS is enabled, if not open dialog to ask
         if (!enabled) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
+
+            //enable location through dialog box
+            LocationRequest locationRequest = LocationRequest.create();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(30 * 1000);
+            locationRequest.setFastestInterval(5 * 1000);
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                    .addLocationRequest(locationRequest);
+            builder.setAlwaysShow(true);
+
+            final PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+
+                @Override
+                public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
+                    final Status status = locationSettingsResult.getStatus();
+
+                    try {
+                        // Show the dialog by calling startResolutionForResult()
+                        status.startResolutionForResult(MapsActivity.this, REQUEST_CHECK_SETTINGS);
+
+                    } catch (IntentSender.SendIntentException e) {
+                        Log.i("Location ", "Failed to get location.", e.getCause());
+                    }
+
+                }
+            });
         }
 
+        // set location if turned on
+        setUserLocation();
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void setUserLocation() {
         //check for permissions to location
         if (hasPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             //return user location is permission is set
@@ -348,11 +361,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //set view to user last known location
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
         if (mLastLocation != null) {
             double mLat = mLastLocation.getLatitude();
             double mLng = mLastLocation.getLongitude();
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLat, mLng), 10.0f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLat, mLng), 10.0f));
 
+        }
+
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+
+            case REQUEST_CHECK_SETTINGS:
+
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+
+                            //tell user to to zoom in on map
+                            Toast toast=Toast.makeText(MapsActivity.this, "Click here to zoom to your location", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.END| Gravity.TOP, 20, 210);
+                            toast.show();
+                break;
+
+                    case Activity.RESULT_CANCELED:
+                        Toast.makeText(MapsActivity.this, "Location not turned on", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                    {
+                        break;
+                    }
+                }
+                break;
         }
     }
 
@@ -365,4 +410,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
 }

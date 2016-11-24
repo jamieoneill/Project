@@ -4,20 +4,30 @@ import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.NumberPicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,30 +35,23 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
  * Created by jamie on 18/10/2016.
  */
 
-public class MeetingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-
-    // calendar variables
-    Calendar c = Calendar.getInstance();
-    int startYear = c.get(Calendar.YEAR);
-    int startMonth = c.get(Calendar.MONTH);
-    int startDay = c.get(Calendar.DAY_OF_MONTH);
-    int startHour = c.get(Calendar.HOUR);
-    int startMinute = c.get(Calendar.MINUTE);
+public class MeetingActivity extends AppCompatActivity  {
 
     // Write a message to the database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Meetings");
 
-    // get user
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    final FirebaseUser user = mAuth.getCurrentUser();
+    // get user info from profile class
+    final UserProfileActivity.getUserProfile getUserProfile = new UserProfileActivity().new getUserProfile();
 
     //set unique meeting id
     DatabaseReference meeting = myRef.push();
@@ -56,7 +59,7 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
 
     //inputs
     private TextView TitleText;
-    private TextView LocationText;
+    private String LocationText;
     private Spinner LanguageSpinner;
     private Spinner MinLevelSpinner;
     private Spinner MaxLevelSpinner;
@@ -68,39 +71,84 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting);
 
-        // get user
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
-
         TitleText = (TextView) findViewById(R.id.TitleText);
-        LocationText = (TextView) findViewById(R.id.LocationText);
         LanguageSpinner = (Spinner) findViewById(R.id.LanguageSpinner);
         MinLevelSpinner = (Spinner) findViewById(R.id.MinLevelSpinner);
         MaxLevelSpinner = (Spinner) findViewById(R.id.MaxLevelSpinner);
         GuestsSpinner = (Spinner) findViewById(R.id.GuestsSpinner);
         NoteText = (TextView) findViewById(R.id.NoteText);
 
+        //location auto complete
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                //set location from address picked
+               LocationText = place.getAddress().toString();
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("Places error", "An error occurred: " + status);
+            }
+        });
+
+        //get views for dialog
+        final View dialogView = View.inflate(MeetingActivity.this, R.layout.datetimepicker_layout, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(MeetingActivity.this).create();
 
         //set date view
         final Button dateButton = (Button) findViewById(R.id.DateButton);
         dateButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             public void onClick(View v) {
 
-                DialogFragment dialogFragment = new StartDatePicker();
-                StartDatePicker();
-                dialogFragment.show(getFragmentManager(), "start_date_picker");
+                // set dialog
+                alertDialog.setView(dialogView);
+                alertDialog.show();
 
-            }
-        });
+                //set pickers
+                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                datePicker.setMinDate(System.currentTimeMillis() - 10000);
+                final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
 
-        //set time view
-        final Button timeButton = (Button) findViewById(R.id.TimeButton);
-        timeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+                //get time and date on confirm
+                Button ok = (Button) dialogView.findViewById(R.id.datetimeButton);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        int day = datePicker.getDayOfMonth();
+                        int month = datePicker.getMonth()+1;
+                        int year = datePicker.getYear();
+                        int hour;
+                        int minute;
 
-                DialogFragment dialogFragment = new StartDatePicker();
-                StartTimePicker();
-                dialogFragment.show(getFragmentManager(), "start_time_picker");
+                        // get method is different between android versions
+                        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+                        if (currentApiVersion > android.os.Build.VERSION_CODES.LOLLIPOP_MR1){
+                             hour = timePicker.getHour();
+                             minute = timePicker.getMinute();
+                        } else {
+                             hour = timePicker.getCurrentHour();
+                             minute = timePicker.getCurrentMinute();
+                        }
+
+                        //format time and date
+                        String time =  String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
+                        String date = " " + day + "/" + month + "/" + year;
+                        String timedate = time + date;
+
+                        //add to button
+                        dateButton.setText(timedate);
+
+                        alertDialog.dismiss();
+                    }
+
+                });
+
+
 
             }
         });
@@ -109,84 +157,43 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
         AddButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                String Host = user.getDisplayName();
+                //split time from date
+                String timeanddate = dateButton.getText().toString();;
+                String[] parts = timeanddate.split(" ");
+                String time = parts[0];
+                String date = parts[1];
+
+                //get values
+                String Host = getUserProfile.name;
                 String Title = TitleText.getText().toString();
-                String Location = LocationText.getText().toString();
-                String MeetingDate = dateButton.getText().toString();
-                String MeetingTime = timeButton.getText().toString();
+                String Location = LocationText;
+                String MeetingDate = date;
+                String MeetingTime = time;
                 String Language = String.valueOf(LanguageSpinner.getSelectedItem());
-                int MinLevel =  Integer.parseInt(String.valueOf(MinLevelSpinner.getSelectedItem()));
+                int MinLevel = Integer.parseInt(String.valueOf(MinLevelSpinner.getSelectedItem()));
                 int MaxLevel = Integer.parseInt(String.valueOf(MaxLevelSpinner.getSelectedItem()));
                 int NumGuests = Integer.parseInt(String.valueOf(GuestsSpinner.getSelectedItem()));
                 String Note = NoteText.getText().toString();
 
                 //check for empty values
-                if(Title.isEmpty() || Location.isEmpty() || MeetingDate.equals("Set Date") || MeetingTime.equals("Set Time")){
-                    Toast.makeText(MeetingActivity.this,"Please fill all fields",
+                if (Title.isEmpty() || Location.isEmpty() || MeetingDate.contains("Date")) {
+                    Toast.makeText(MeetingActivity.this, "Please fill all fields",
                             Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
+
                     //write to database
                     writeNewPost(Host, Title, Location, Language, MeetingDate, MeetingTime, MinLevel, MaxLevel, NumGuests, Note);
                 }
 
             }
-            });
-
+        });
     }
-
-
-    private class StartDatePicker extends DialogFragment {
-        // Default constructor for date and time pickers
-    }
-
-
-    public void StartDatePicker(){
-        //show calendar
-        DatePickerDialog dialog = new DatePickerDialog(MeetingActivity.this, this, startYear, startMonth, startDay);
-        dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-        dialog.show();
-
-    }
-
-    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                          int dayOfMonth) {
-        //set date from user input
-        startYear = year;
-        startMonth = monthOfYear;
-        startDay = dayOfMonth;
-
-        Button dateButton = (Button) findViewById(R.id.DateButton);
-        dateButton.setText(startDay +"/"+startMonth+"/"+startYear);
-
-    }
-
-    public void StartTimePicker(){
-        //show time picker
-        TimePickerDialog dialog = new TimePickerDialog(MeetingActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth, timePickerListener, startHour, startMinute, false);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.show();
-
-    }
-
-    private TimePickerDialog.OnTimeSetListener timePickerListener =
-            new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hour, int minute) {
-                    //set time from user input
-                    startHour = hour;
-                    startMinute = minute;
-
-                    Button timeButton = (Button) findViewById(R.id.TimeButton);
-                    timeButton.setText(startHour +":"+startMinute);
-
-                }
-            };
 
 
     private void writeNewPost(String Host, String Title, String Location, String Language, String MeetingDate, String MeetingTime, int MinLevel, int MaxLevel, int NumGuests, String Note) {
 
         //unique ID
-        String key =  meeting.getKey();
+        String key = meeting.getKey();
 
         //take values
         Meet meet = new Meet(Host, Title, Location, Language, MeetingDate, MeetingTime, MinLevel, MaxLevel, NumGuests, Note);
@@ -200,15 +207,13 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
         myRef.child(key).setValue(postValues);
 
         //add the creator to attending field
-        myRef.child(key).child("Attending").child(attend.getKey()).setValue(user.getUid());
+        myRef.child(key).child("Attending").child(attend.getKey()).setValue(getUserProfile.uid);
 
-        Toast.makeText(MeetingActivity.this,myRef +"/"+ key + postValues.toString(),
-                Toast.LENGTH_SHORT).show();
-        Log.i("database", "my ref: " + myRef + " key :" + key + " values: "+postValues.toString() );
+        //tell user it has been added
+        Toast.makeText(MeetingActivity.this, Title + " meet up has been created", Toast.LENGTH_SHORT).show();
 
-
+        // return to main
         Intent intent = new Intent(MeetingActivity.this, MainActivity.class);
-
         startActivity(intent);
     }
 
@@ -225,13 +230,13 @@ public class MeetingActivity extends AppCompatActivity implements DatePickerDial
         public int MaxLevel;
         public int NumGuests;
         public String Note;
-       // public Map<String, Boolean> stars = new HashMap<>();
+        // public Map<String, Boolean> stars = new HashMap<>();
 
         public Meet(String Host, String Title, String Location, String Language, Date MeetingDate, String MeetingTime, int MinLevel, int MaxLevel, int numGuests, String Note) {
             // Default constructor required for calls to DataSnapshot.getValue(Meet.class)
         }
 
-        public Meet(String Host, String Title, String Location,String Language, String MeetingDate, String MeetingTime, int MinLevel, int MaxLevel, int NumGuests, String Note) {
+        public Meet(String Host, String Title, String Location, String Language, String MeetingDate, String MeetingTime, int MinLevel, int MaxLevel, int NumGuests, String Note) {
             this.Host = Host;
             this.Title = Title;
             this.Location = Location;

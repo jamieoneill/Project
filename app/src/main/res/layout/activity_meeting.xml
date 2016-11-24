@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,7 +17,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Title:"
+                android:text="@string/titleLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/TitleLable"
@@ -32,7 +30,7 @@
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/TitleText"
-                android:hint="Title"
+                android:hint="@string/titleLable"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -43,21 +41,21 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Location:"
-                android:layout_width="match_parent"
+                android:text="@string/locationLable"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/LocationLable"
                 android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".3"/>
 
-            <EditText
-                android:layout_width="match_parent"
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/LocationText"
-                android:hint="Street Address"
-                android:layout_weight="1" />
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:layout_weight="1"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -66,7 +64,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Date:"
+                android:text="@string/dateLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/DateLable"
@@ -74,33 +72,13 @@
                 android:layout_weight="1" />
 
             <Button
-                android:text="Set Date"
+                android:text="@string/dateButtonLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/DateButton"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:text="Time:"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/TimeLable"
-                android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
-
-            <Button
-                android:text="Set Time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/TimeButton"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:theme="@style/ButtonStyle"
+                />
 
         </LinearLayout>
 
@@ -110,7 +88,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="Language:"
+                android:text="@string/languageLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/LanguageLable"
@@ -131,7 +109,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="Minimum Level:"
+                android:text="@string/minLevelLable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/MinLevelLable"
@@ -154,7 +132,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="Maximum Level:"
+                android:text="@string/maxLevelLable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/MaxLevelLable"
@@ -175,7 +153,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="Number of Attendees:"
+                android:text="@string/attendeesLable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/GuestsLable"
@@ -196,7 +174,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Note:"
+                android:text="@string/noteLable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/NoteLable"
@@ -209,26 +187,27 @@
                 android:inputType="textMultiLine"
                 android:ems="10"
                 android:id="@+id/NoteText"
-                android:hint="Note"
+                android:hint="@string/noteLable"
                 android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="match_parent">
 
             <Button
-                android:text="add meeting"
-                android:layout_width="match_parent"
+                android:text="@string/addMeetingButtonLabel"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/AddMeetButton"
-                android:layout_weight="1" />
+                android:theme="@style/ButtonStyle"
+                android:layout_gravity="center"
+                />
+
         </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>
 
 

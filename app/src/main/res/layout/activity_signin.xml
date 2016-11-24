@@ -5,16 +5,24 @@
     android:layout_height="fill_parent"
     android:background="@color/colorPrimary">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/logo"
-            android:id="@+id/LogoImage" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"/>
+
+        <TextView
+            android:text="@string/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="#ffffff"
+            android:layout_above="@id/sign_in_button"
+            android:gravity="center"
+            android:padding="15dp"
+            />
 
 </RelativeLayout>
