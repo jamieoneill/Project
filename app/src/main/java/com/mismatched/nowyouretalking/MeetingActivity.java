@@ -122,8 +122,18 @@ public class MeetingActivity extends AppCompatActivity  {
                         int day = datePicker.getDayOfMonth();
                         int month = datePicker.getMonth()+1;
                         int year = datePicker.getYear();
-                        int hour = timePicker.getHour();
-                        int minute = timePicker.getMinute();
+                        int hour;
+                        int minute;
+
+                        // get method is different between android versions
+                        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+                        if (currentApiVersion > android.os.Build.VERSION_CODES.LOLLIPOP_MR1){
+                             hour = timePicker.getHour();
+                             minute = timePicker.getMinute();
+                        } else {
+                             hour = timePicker.getCurrentHour();
+                             minute = timePicker.getCurrentMinute();
+                        }
 
                         //format time and date
                         String time =  String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
@@ -170,6 +180,7 @@ public class MeetingActivity extends AppCompatActivity  {
                     Toast.makeText(MeetingActivity.this, "Please fill all fields",
                             Toast.LENGTH_SHORT).show();
                 } else {
+
                     //write to database
                     writeNewPost(Host, Title, Location, Language, MeetingDate, MeetingTime, MinLevel, MaxLevel, NumGuests, Note);
                 }
@@ -199,7 +210,7 @@ public class MeetingActivity extends AppCompatActivity  {
         myRef.child(key).child("Attending").child(attend.getKey()).setValue(getUserProfile.uid);
 
         //tell user it has been added
-        Toast.makeText(MeetingActivity.this, Title + " meet up has been created", Toast.LENGTH_SHORT);
+        Toast.makeText(MeetingActivity.this, Title + " meet up has been created", Toast.LENGTH_SHORT).show();
 
         // return to main
         Intent intent = new Intent(MeetingActivity.this, MainActivity.class);

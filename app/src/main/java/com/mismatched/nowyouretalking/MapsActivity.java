@@ -69,7 +69,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int LOCATION_REQUEST_CODE = 1;
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private GoogleMap mMap;
-    double lat = 0, lng = 0;
     GoogleApiClient mGoogleApiClient;
 
     // get user
@@ -256,8 +255,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     // add the user to attending for the marker selected
                                     myRef.child(marker.getTag().toString()).child("Attending").push().setValue(user.getUid());
 
+                                    //tell user it has been added
+                                    Toast.makeText(MapsActivity.this, "Meet up added", Toast.LENGTH_SHORT).show();
+
                                     //change activity to break database updating loop
-                                    Intent intent = new Intent(MapsActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(MapsActivity.this, ManageActivity.class);
                                     startActivity(intent);
 
                                 }
@@ -394,4 +396,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
 }

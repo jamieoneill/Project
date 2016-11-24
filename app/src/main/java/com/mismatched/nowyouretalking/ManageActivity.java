@@ -1,6 +1,7 @@
 package com.mismatched.nowyouretalking;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -196,8 +197,12 @@ public class ManageActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
+
+
+    public void onBackPressed(){
+        //set to home screen on back button
+        Intent intent = new Intent(ManageActivity.this, MainActivity.class);
+        startActivity(intent);    }
 
 }
