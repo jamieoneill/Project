@@ -39,9 +39,6 @@ public class ManageActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Meetings");
 
-        //initialize layout
-        //final LinearLayout myLinearLayout = (LinearLayout) findViewById(R.id.LayoutWrapper);;
-        
         //set dialog
         final AlertDialog.Builder builder = new AlertDialog.Builder(ManageActivity.this);
 
@@ -200,6 +197,7 @@ public class ManageActivity extends AppCompatActivity {
     }
 
 
+    @Override
     public void onBackPressed(){
         //set to home screen on back button
         Intent intent = new Intent(ManageActivity.this, MainActivity.class);

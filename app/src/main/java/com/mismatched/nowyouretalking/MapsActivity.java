@@ -83,13 +83,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        Button joinButton = (Button) findViewById(R.id.JoinButton);
-        Button cancelButton = (Button) findViewById(R.id.CancelButton);
-
-        joinButton.setVisibility(View.GONE);
-        cancelButton.setVisibility(View.GONE);
-
     }
 
     //Convert to get address
@@ -116,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
 
         // add api for location and connect
@@ -135,6 +128,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final BitmapDescriptor German = BitmapDescriptorFactory.fromResource(R.drawable.germanyicon);
         final BitmapDescriptor French = BitmapDescriptorFactory.fromResource(R.drawable.franceicon);
         final BitmapDescriptor Spanish = BitmapDescriptorFactory.fromResource(R.drawable.spainicon);
+        final BitmapDescriptor GermanDark = BitmapDescriptorFactory.fromResource(R.drawable.germanyicon_dark);
+        final BitmapDescriptor FrenchDark = BitmapDescriptorFactory.fromResource(R.drawable.franceicon_dark);
+        final BitmapDescriptor SpanishDark = BitmapDescriptorFactory.fromResource(R.drawable.spainicon_dark);
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -145,17 +141,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     //show if user is not already attending
                     String Guests = child.child("Attending").getValue().toString();
-                    if (!Guests.contains(user.getUid())) {
 
                     //find out if spaces are available
                     int NumGuests = child.child("NumGuests").getValue(int.class);
                     int Attending = (int) child.child("Attending").getChildrenCount();
                     int Spaces = NumGuests - Attending;
 
-                    if (Spaces <= 0) {
-                        //if no spaces do nothing, don't display, skip over this entry in the database
-
-                    } else { //get info and display
+                    //if there is a space get info and display
+                    if (Spaces >= 1) {
+                         //get info and display
 
                         //get info from DB
                         String Host = child.child("Host").getValue(String.class);
@@ -171,21 +165,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         //convert address
                         LatLng newaddress = getLocationFromAddress(MapsActivity.this, Locations);
 
+                        // marker icon holder
+                        BitmapDescriptor markerIcon;
+
                         //add maker here and add the database key
                         if (Language.equals("French")) {
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(French));
+                            if(Guests.contains(user.getUid())){
+                                markerIcon = FrenchDark;
+                            }else{
+                                markerIcon = French;
+                            }
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
                             marker.setTag(child.getKey());
                         } else if (Language.equals("Spanish")) {
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(Spanish));
+                            if(Guests.contains(user.getUid())){
+                                markerIcon = SpanishDark;
+                            }else{
+                                markerIcon = Spanish;
+                            }
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
                             marker.setTag(child.getKey());
                         } else if (Language.equals("German")) {
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(German));
+
+                            if(Guests.contains(user.getUid())){
+                                markerIcon = GermanDark;
+                            }else{
+                                markerIcon = German;
+                            }
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
                             marker.setTag(child.getKey());
                         }
 
                     }//end no spaces check
-
-                }// end guest check
                     } // end loop
                 }
 
@@ -240,7 +251,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 //list to hold attendees
-                                List<String> myList = new ArrayList<String>();
+                                List<String> myList = new ArrayList<>();
 
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                                     //get all users currently attending meeting
@@ -256,7 +267,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     myRef.child(marker.getTag().toString()).child("Attending").push().setValue(user.getUid());
 
                                     //tell user it has been added
-                                    Toast.makeText(MapsActivity.this, "Meet up added", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MapsActivity.this, "Meet up added", Toast.LENGTH_LONG).show();
 
                                     //change activity to break database updating loop
                                     Intent intent = new Intent(MapsActivity.this, ManageActivity.class);
@@ -279,6 +290,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
     }
+
+
 
     //return permissions
     private boolean hasPermission(MapsActivity mapsActivity, String accessFineLocation) {
@@ -320,6 +333,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         status.startResolutionForResult(MapsActivity.this, REQUEST_CHECK_SETTINGS);
 
                     } catch (IntentSender.SendIntentException e) {
+                        Log.i("Location ", "Failed to get location.", e.getCause());
                     }
 
                 }
@@ -371,7 +385,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                             //tell user to to zoom in on map
                             Toast toast=Toast.makeText(MapsActivity.this, "Click here to zoom to your location", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.RIGHT| Gravity.TOP, 20, 210);
+                            toast.setGravity(Gravity.END| Gravity.TOP, 20, 210);
                             toast.show();
                 break;
 
