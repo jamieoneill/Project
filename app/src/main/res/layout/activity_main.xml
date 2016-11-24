@@ -90,6 +90,15 @@
             android:layout_gravity="center"
             />
 
+        <Button
+            android:text="@string/translateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/TranslateActivityButton"
+            android:theme="@style/ButtonStyle"
+            android:layout_gravity="center"
+            />
+
     </LinearLayout>
 
 </LinearLayout>
