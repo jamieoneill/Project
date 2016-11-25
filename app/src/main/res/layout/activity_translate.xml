@@ -41,7 +41,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:inputType="textPersonName"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
@@ -51,6 +50,7 @@
         android:id="@+id/InputText"
         android:hint="@string/translateHint"
         android:background="@drawable/border"
+        android:inputType="textMultiLine"
         />
 
 
@@ -80,6 +80,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/translateButton"
+            android:theme="@style/ButtonStyle"
+            android:layout_marginRight="20dp"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -97,6 +99,20 @@
         android:gravity="center_vertical"
         android:textSize="17sp"
         />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/ic_voice_search"
+            android:id="@+id/SpeakButton"
+            android:background="@drawable/circle_button"
+            />
+
+
+
     </LinearLayout>
+
 
 </RelativeLayout>
