@@ -24,6 +24,13 @@
         <item name="android:width">200dp</item>
     </style>
 
+    <!-- button -->
+    <style name="JoinButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/Green</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:width">200dp</item>
+    </style>
+
     <!-- red button -->
     <style name="RedButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/Red</item>
