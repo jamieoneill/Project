@@ -127,6 +127,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button TranslateActivityButton = (Button) findViewById(R.id.TranslateActivityButton);
+        TranslateActivityButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TranslateActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void onBackPressed(){

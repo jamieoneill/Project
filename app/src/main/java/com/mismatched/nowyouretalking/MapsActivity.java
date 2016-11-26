@@ -11,6 +11,7 @@ import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -61,6 +62,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -111,6 +113,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+
 
         // add api for location and connect
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -236,6 +240,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         alertDialog.dismiss();
                         //don't show info window
                         marker.hideInfoWindow();
+                    }
+                });
+
+                //get directions
+                Button Directions = (Button) dialogView.findViewById(R.id.DirectionsButton);
+                Directions.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + marker.getPosition().latitude + "," + marker.getPosition().longitude);
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        startActivity(mapIntent);
                     }
                 });
 

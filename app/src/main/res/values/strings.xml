@@ -23,6 +23,14 @@
     <string name="dateButtonLabel">Set Date</string>
     <string name="timeButtonLable">Set Time</string>
     <string name="addMeetingButtonLabel">Add Meeting</string>
+    <string name="translateHint">Enter text</string>
+    <string name="translateToLabel">Translate To:</string>
+    <string name="translateFromLabel">Translate From:</string>
+    <string name="enter">Enter</string>
+    <string name="Translation">Translation</string>
+    <string name="translateLabel">Translate</string>
+    <string name="Directions">Directions</string>
+
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">
@@ -78,5 +86,21 @@
         <item>German</item>
     </string-array>
 
+    <!--Languages with english -->
+    <string-array name="language_array_with_english">
+        <item>English</item>
+        <item>French</item>
+        <item>Spanish</item>
+        <item>German</item>
+    </string-array>
+
+    <!--Languages with english -->
+    <string-array name="language_array_with_english_backwards">
+
+        <item>German</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>English</item>
+    </string-array>
 
 </resources>

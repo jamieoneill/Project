@@ -59,7 +59,7 @@ public class MeetingActivity extends AppCompatActivity  {
 
     //inputs
     private TextView TitleText;
-    private String LocationText;
+    private String LocationText = "Search";
     private Spinner LanguageSpinner;
     private Spinner MinLevelSpinner;
     private Spinner MaxLevelSpinner;
@@ -176,7 +176,7 @@ public class MeetingActivity extends AppCompatActivity  {
                 String Note = NoteText.getText().toString();
 
                 //check for empty values
-                if (Title.isEmpty() || Location.isEmpty() || MeetingDate.contains("Date")) {
+                if (Title.isEmpty() || Location.contains("Search") || MeetingDate.contains("Date")) {
                     Toast.makeText(MeetingActivity.this, "Please fill all fields",
                             Toast.LENGTH_SHORT).show();
                 } else {

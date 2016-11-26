@@ -1,9 +1,13 @@
 package com.mismatched.nowyouretalking;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +19,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 /**
  * Created by jamie on 31/10/2016.
@@ -141,6 +148,17 @@ public class ManageActivity extends AppCompatActivity {
                                     }
                                 });
 
+                                //get directions
+                                Button Directions = (Button) dialogView.findViewById(R.id.DirectionsButton);
+                                Directions.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View v) {
+                                        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + Locations);
+                                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                        mapIntent.setPackage("com.google.android.apps.maps");
+                                        startActivity(mapIntent);
+                                    }
+                                });
+
                                 //join to add user to meet up
                                 Button Remove = (Button) dialogView.findViewById(R.id.JoinButton);
                                 Remove.setText("Remove");
@@ -196,6 +214,29 @@ public class ManageActivity extends AppCompatActivity {
 
     }
 
+
+    //Convert to get address
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return p1;
+
+    }
 
     @Override
     public void onBackPressed(){
