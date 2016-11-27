@@ -1,11 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     >
 
+
+    <ImageButton
+        android:layout_width="200dp"
+        android:layout_height="110dp"
+        android:src="@drawable/find_header_image"
+        android:id="@+id/FindMeetActivityButton2"
+        android:scaleType="centerCrop"
+        android:theme="@style/ButtonStyle"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:text="@string/findMeetUp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/FindMeetActivityButton"
+        android:theme="@style/IconButtonStyle"
+        android:drawableLeft="@drawable/ic_find_meet"
+        android:layout_marginTop="-14dp"
+        android:textSize="12sp"
+        android:layout_below="@id/FindMeetActivityButton2"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ImageButton
+        android:layout_width="200dp"
+        android:layout_height="110dp"
+        android:src="@drawable/people_header_image"
+        android:id="@+id/AddMeetActivityButton2"
+        android:scaleType="centerCrop"
+        android:theme="@style/ButtonStyle"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/FindMeetActivityButton"
+        />
+
+    <Button
+        android:text="@string/addMeetUp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/AddMeetActivityButton"
+        android:theme="@style/IconButtonStyle"
+        android:drawableLeft="@drawable/ic_add_meet"
+        android:layout_marginTop="-14dp"
+        android:textSize="12sp"
+        android:layout_below="@id/AddMeetActivityButton2"
+        android:layout_centerHorizontal="true"
+        />
+
+
+    <ImageButton
+        android:layout_width="200dp"
+        android:layout_height="110dp"
+        android:src="@drawable/edit_header_image"
+        android:id="@+id/ManageMeetActivityButton2"
+        android:scaleType="centerCrop"
+        android:theme="@style/ButtonStyle"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/AddMeetActivityButton"
+        />
+
+    <Button
+        android:text="@string/manageMeetUp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ManageMeetActivityButton"
+        android:theme="@style/IconButtonStyle"
+        android:drawableLeft="@drawable/ic_edit_meet"
+        android:layout_marginTop="-14dp"
+        android:textSize="12sp"
+        android:layout_below="@id/ManageMeetActivityButton2"
+        android:layout_centerHorizontal="true"
+        />
+
+<!--
     <Button
         android:text="@string/addMeetUp"
         android:layout_width="wrap_content"
@@ -14,6 +88,9 @@
         android:theme="@style/ButtonStyle"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:layout_below="@id/SocialButton3"
+        android:layout_centerHorizontal="true"
+
         />
 
     <Button
@@ -23,6 +100,9 @@
         android:id="@+id/FindMeetActivityButton"
         android:theme="@style/ButtonStyle"
         android:layout_gravity="center"
+        android:layout_below="@id/AddMeetActivityButton"
+        android:layout_centerHorizontal="true"
+
         />
 
     <Button
@@ -32,6 +112,10 @@
         android:id="@+id/ManageMeetActivityButton"
         android:theme="@style/ButtonStyle"
         android:layout_gravity="center"
-        />
+        android:layout_below="@id/FindMeetActivityButton"
+        android:layout_centerHorizontal="true"
 
-</LinearLayout>
+        />
+-->
+
+</RelativeLayout>

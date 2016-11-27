@@ -10,6 +10,7 @@ import android.os.Bundle;
         import android.view.View;
         import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class SocialFragment extends Fragment implements View.OnClickListener {
     @Override
@@ -20,12 +21,18 @@ public class SocialFragment extends Fragment implements View.OnClickListener {
         //set buttons
         Button AddMeetActivityButton = (Button) v.findViewById(R.id.AddMeetActivityButton);
         AddMeetActivityButton.setOnClickListener(this);
+        ImageButton AddMeetActivityButton2 = (ImageButton) v.findViewById(R.id.AddMeetActivityButton2);
+        AddMeetActivityButton2.setOnClickListener(this);
 
         Button FindMeetActivityButton = (Button) v.findViewById(R.id.FindMeetActivityButton);
         FindMeetActivityButton.setOnClickListener(this);
+        ImageButton FindMeetActivityButton2 = (ImageButton) v.findViewById(R.id.FindMeetActivityButton2);
+        FindMeetActivityButton2.setOnClickListener(this);
 
         Button ManageMeetActivityButton = (Button) v.findViewById(R.id.ManageMeetActivityButton);
         ManageMeetActivityButton.setOnClickListener(this);
+        ImageButton ManageMeetActivityButton2 = (ImageButton) v.findViewById(R.id.ManageMeetActivityButton2);
+        ManageMeetActivityButton2.setOnClickListener(this);
 
         return v;
     }
@@ -40,11 +47,23 @@ public class SocialFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), MeetingActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.AddMeetActivityButton2:
+                intent = new Intent(getActivity(), MeetingActivity.class);
+                startActivity(intent);
+                break;
             case R.id.FindMeetActivityButton:
                 intent = new Intent(getActivity(), MapsActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.FindMeetActivityButton2:
+                intent = new Intent(getActivity(), MapsActivity.class);
+                startActivity(intent);
+                break;
             case R.id.ManageMeetActivityButton:
+                intent = new Intent(getActivity(), ManageActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ManageMeetActivityButton2:
                 intent = new Intent(getActivity(), ManageActivity.class);
                 startActivity(intent);
                 break;
