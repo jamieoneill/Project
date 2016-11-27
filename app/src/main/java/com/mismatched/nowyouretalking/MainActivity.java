@@ -1,5 +1,8 @@
 package com.mismatched.nowyouretalking;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         girl_walkImage.setBackgroundResource(R.drawable.girl_walk_animate);
 
 
+
         //start animation of images
         AnimationDrawable boy_walk = (AnimationDrawable) boy_walkImage.getBackground();
         AnimationDrawable girl_walk = (AnimationDrawable) girl_walkImage.getBackground();
@@ -53,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
         girl_walk.start();
 
         //set directions
-        TranslateAnimation moveLefttoRight = new TranslateAnimation(0, 250, 0, 0);
+        TranslateAnimation moveLefttoRight = new TranslateAnimation(0, 300, 0, 0);
         TranslateAnimation moveRighttoLeft = new TranslateAnimation(250, 0, 0 , 0);
+
 
         //durations
         moveLefttoRight.setDuration(4000);
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         //start the moving along the screen
         boy_walkImage.startAnimation(moveLefttoRight);
         girl_walkImage.startAnimation(moveRighttoLeft);
+
 
         moveLefttoRight.setAnimationListener(new  Animation.AnimationListener() {
 
@@ -88,55 +94,132 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //set social view on load
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        SocialFragment social = new SocialFragment();
+        fragmentTransaction.add(R.id.fragment_container, social, "Social");
+        fragmentTransaction.commit();
 
 
-        //activity buttons
-        Button ProfileActivityButton = (Button) findViewById(R.id.ProfileActivityButton);
-        ProfileActivityButton.setOnClickListener(new View.OnClickListener() {
+        Button socialButton = (Button) findViewById(R.id.SocialButton);
+        socialButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
+                //change fragment view
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                SocialFragment social = new SocialFragment();
+                fragmentTransaction.replace(R.id.fragment_container, social, "Social");
+                fragmentTransaction.commit();
 
-                startActivity(intent);
+                //get previous fragment
+                Fragment previousFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+                String fragTag = previousFragment.getTag();
+
+                //set image and animation
+                ImageView highligher = (ImageView) findViewById(R.id.highligherImage);
+                TranslateAnimation highligherAnimation;
+
+                //animate slider image
+                switch (fragTag){
+                    case "Learn":
+                        highligherAnimation = new TranslateAnimation(480, 0, 0 , 0);
+                        highligherAnimation.setDuration(200);
+                        highligherAnimation.setFillAfter(true);
+                        highligherAnimation.setFillEnabled(true);
+
+                        highligher.startAnimation(highligherAnimation);
+                        break;
+                    case "Profile":
+                        highligherAnimation = new TranslateAnimation(962, 0, 0 , 0);
+                        highligherAnimation.setDuration(200);
+                        highligherAnimation.setFillAfter(true);
+                        highligherAnimation.setFillEnabled(true);
+
+                        highligher.startAnimation(highligherAnimation);
+                }
             }
         });
 
-        Button AddMeetActivityButton = (Button) findViewById(R.id.AddMeetActivityButton);
-        AddMeetActivityButton.setOnClickListener(new View.OnClickListener() {
+        Button learnButton = (Button) findViewById(R.id.LearnButton);
+        learnButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MeetingActivity.class);
+                //change fragment view
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                LearnFragment learn = new LearnFragment();
+                fragmentTransaction.replace(R.id.fragment_container, learn, "Learn");
+                fragmentTransaction.commit();
 
-                startActivity(intent);
+                //get previous fragment
+                Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+                String fragTag = currentFragment.getTag();
+
+                //set image and animation
+                ImageView highligher = (ImageView) findViewById(R.id.highligherImage);
+                TranslateAnimation highligherAnimation;
+
+                //animate slider image
+                switch (fragTag){
+                    case "Social":
+                        highligherAnimation = new TranslateAnimation(0, 480, 0 , 0);
+                        highligherAnimation.setDuration(200);
+                        highligherAnimation.setFillAfter(true);
+                        highligherAnimation.setFillEnabled(true);
+
+                        highligher.startAnimation(highligherAnimation);
+                        break;
+                    case "Profile":
+                        highligherAnimation = new TranslateAnimation(962, 480, 0 , 0);
+                        highligherAnimation.setDuration(200);
+                        highligherAnimation.setFillAfter(true);
+                        highligherAnimation.setFillEnabled(true);
+
+                        highligher.startAnimation(highligherAnimation);
+                }
             }
         });
 
-        Button FindMeetActivityButton = (Button) findViewById(R.id.FindMeetActivityButton);
-        FindMeetActivityButton.setOnClickListener(new View.OnClickListener() {
+        Button profileButton = (Button) findViewById(R.id.ProfileButton);
+        profileButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                ProfileFragment profile = new ProfileFragment();
+                fragmentTransaction.replace(R.id.fragment_container, profile, "Profile");
+                fragmentTransaction.commit();
 
-                startActivity(intent);
-            }
-        });
+                //get previous fragment
+                Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+                String fragTag = currentFragment.getTag();
 
-        Button ManageMeetActivityButton = (Button) findViewById(R.id.ManageMeetActivityButton);
-        ManageMeetActivityButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ManageActivity.class);
+                //set image and animation
+                ImageView highligher = (ImageView) findViewById(R.id.highligherImage);
+                TranslateAnimation highligherAnimation;
 
-                startActivity(intent);
-            }
-        });
+                //animate slider image
+                switch (fragTag){
+                    case "Social":
+                        highligherAnimation = new TranslateAnimation(0, 962, 0 , 0);
+                        highligherAnimation.setDuration(200);
+                        highligherAnimation.setFillAfter(true);
+                        highligherAnimation.setFillEnabled(true);
 
-        Button TranslateActivityButton = (Button) findViewById(R.id.TranslateActivityButton);
-        TranslateActivityButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TranslateActivity.class);
+                        highligher.startAnimation(highligherAnimation);
+                        break;
+                    case "Learn":
+                        highligherAnimation = new TranslateAnimation(480, 962, 0, 0);
+                        highligherAnimation.setDuration(200);
+                        highligherAnimation.setFillAfter(true);
+                        highligherAnimation.setFillEnabled(true);
 
-                startActivity(intent);
+                        highligher.startAnimation(highligherAnimation);
+                }
             }
         });
 
     }
+
 
     public void onBackPressed(){
         //exit app on back button

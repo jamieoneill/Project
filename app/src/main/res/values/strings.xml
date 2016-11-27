@@ -30,7 +30,9 @@
     <string name="Translation">Translation</string>
     <string name="translateLabel">Translate</string>
     <string name="Directions">Directions</string>
-
+    <string name="Social">Social</string>
+    <string name="Learn">Learn</string>
+    <string name="Profile">Profile</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">
@@ -102,5 +104,11 @@
         <item>French</item>
         <item>English</item>
     </string-array>
+    <string name="title_activity_test">test</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 </resources>

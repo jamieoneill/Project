@@ -9,8 +9,7 @@
     </style>
 
     <!-- timepicker -->
-    <style name="TimeTheme" parent="android:Theme.Holo.Light">
-    </style>
+    <style name="TimeTheme" parent="android:Theme.Holo.Light"></style>
 
     <!-- datepicker -->
     <style name="DateTheme">
@@ -24,7 +23,7 @@
         <item name="android:width">200dp</item>
     </style>
 
-    <!-- button -->
+    <!-- green button -->
     <style name="JoinButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/Green</item>
         <item name="android:textColor">@color/White</item>
@@ -37,4 +36,12 @@
         <item name="android:textColor">@color/White</item>
         <item name="android:width">200dp</item>
     </style>
+
+    <!-- icon button -->
+    <style name="IconButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
 </resources>
