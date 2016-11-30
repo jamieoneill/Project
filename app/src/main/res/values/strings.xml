@@ -33,6 +33,7 @@
     <string name="Social">Social</string>
     <string name="Learn">Learn</string>
     <string name="Profile">Profile</string>
+    <string name="Messages">Message</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">

@@ -79,43 +79,4 @@
         android:layout_centerHorizontal="true"
         />
 
-<!--
-    <Button
-        android:text="@string/addMeetUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/AddMeetActivityButton"
-        android:theme="@style/ButtonStyle"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/SocialButton3"
-        android:layout_centerHorizontal="true"
-
-        />
-
-    <Button
-        android:text="@string/findMeetUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/FindMeetActivityButton"
-        android:theme="@style/ButtonStyle"
-        android:layout_gravity="center"
-        android:layout_below="@id/AddMeetActivityButton"
-        android:layout_centerHorizontal="true"
-
-        />
-
-    <Button
-        android:text="@string/manageMeetUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ManageMeetActivityButton"
-        android:theme="@style/ButtonStyle"
-        android:layout_gravity="center"
-        android:layout_below="@id/FindMeetActivityButton"
-        android:layout_centerHorizontal="true"
-
-        />
--->
-
 </RelativeLayout>

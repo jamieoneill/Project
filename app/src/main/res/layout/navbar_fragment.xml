@@ -33,7 +33,7 @@
 
     <Button
         android:text="@string/Social"
-        app:layout_widthPercent="33%"
+        app:layout_widthPercent="25%"
         android:layout_height="wrap_content"
         android:id="@+id/SocialButton"
         android:theme="@style/IconButtonStyle"
@@ -45,12 +45,12 @@
 
     <Button
         android:text="@string/Learn"
-        app:layout_widthPercent="33%"
+        app:layout_widthPercent="25%"
         android:layout_height="wrap_content"
         android:id="@+id/LearnButton"
         android:theme="@style/IconButtonStyle"
         android:drawableRight="@drawable/ic_learn"
-        android:layout_centerInParent="true"
+        android:layout_toRightOf="@id/SocialButton"
         android:layout_below="@id/highligherImage"
         />
 
@@ -58,12 +58,24 @@
 
     <Button
         android:text="@string/Profile"
-        app:layout_widthPercent="33%"
+        app:layout_widthPercent="25%"
         android:layout_height="wrap_content"
         android:id="@+id/ProfileButton"
         android:layout_weight="1"
         android:theme="@style/IconButtonStyle"
         android:drawableRight="@drawable/ic_profile"
+        android:layout_toRightOf="@id/LearnButton"
+        android:layout_below="@id/highligherImage"
+        />
+
+    <Button
+        android:text="@string/Messages"
+        app:layout_widthPercent="25%"
+        android:layout_height="wrap_content"
+        android:id="@+id/MessagingActivityButton"
+        android:layout_weight="1"
+        android:theme="@style/IconButtonStyle"
+        android:drawableRight="@drawable/ic_message"
         android:layout_alignParentRight="true"
         android:layout_below="@id/highligherImage"
         />
