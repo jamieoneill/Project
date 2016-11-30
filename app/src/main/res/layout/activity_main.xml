@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#ffffff"
-    tools:context="com.mismatched.nowyouretalking.MainActivity">
+    tools:context="com.mismatched.nowyouretalking.MainActivity"
+    android:orientation="vertical">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:id="@+id/verlay">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -23,7 +22,7 @@
             android:layout_height="wrap_content"
             >
 
-
+<!--
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,7 +39,7 @@
                 android:textSize="30sp"
                 android:textColor="@color/colorPrimary"
                 android:gravity="center"
-                android:layout_marginLeft="65dp"
+                android:layout_marginLeft="80dp"
                  />
 
             <ImageView
@@ -49,56 +48,29 @@
                 android:id="@+id/girl_walk_image"
                 android:layout_gravity="bottom|right"
                 />
+                -->
 
 
         </LinearLayout>
 
-        <Button
-            android:text="@string/addMeetUp"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/AddMeetActivityButton"
-            android:theme="@style/ButtonStyle"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            />
+            android:orientation="vertical"
+            >
 
-        <Button
-            android:text="@string/findMeetUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/FindMeetActivityButton"
-            android:theme="@style/ButtonStyle"
-            android:layout_gravity="center"
-            />
-
-        <Button
-            android:text="@string/manageMeetUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ManageMeetActivityButton"
-            android:theme="@style/ButtonStyle"
-            android:layout_gravity="center"
-            />
-
-        <Button
-            android:text="@string/userProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ProfileActivityButton"
-            android:theme="@style/ButtonStyle"
-            android:layout_gravity="center"
-            />
-
-        <Button
-            android:text="@string/translateLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/TranslateActivityButton"
-            android:theme="@style/ButtonStyle"
-            android:layout_gravity="center"
-            />
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/navbar_container"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        />
+
+
+</RelativeLayout>
