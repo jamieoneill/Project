@@ -34,6 +34,7 @@
     <string name="Learn">Learn</string>
     <string name="Profile">Profile</string>
     <string name="Messages">Message</string>
+    <string name="EnterMessageHint">Enter Message</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">

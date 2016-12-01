@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,7 +32,6 @@ public class MessagingActivity extends AppCompatActivity {
         // get user info from profile class
         final UserProfileActivity.getUserProfile getUserProfile = new UserProfileActivity().new getUserProfile();
 
-
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -43,9 +41,8 @@ public class MessagingActivity extends AppCompatActivity {
                     //if user is in this coversation
                     if(child.getKey().toString().contains(getUserProfile.uid)){
 
+                        //get conversation
                         final String conversationkey = child.getKey();
-                        Log.i("conversationkey ", conversationkey);
-                        Log.i("children ", String.valueOf(child.getChildrenCount()));
 
                         //get the other user's name
                         final String participant = conversationkey.replace(getUserProfile.uid, "");
@@ -55,7 +52,6 @@ public class MessagingActivity extends AppCompatActivity {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                Log.i("child key111 ", dataSnapshot.child("Name").getValue().toString());
 
                                 //get participant's name
                                 String participantName = dataSnapshot.child("Name").getValue().toString();
@@ -96,8 +92,6 @@ public class MessagingActivity extends AppCompatActivity {
 
                             }
                         });
-
-
 
                     } //end if user message
 

@@ -7,9 +7,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +47,6 @@ public class Message extends AppCompatActivity {
         //layout
         final LinearLayout myLinearLayout = (LinearLayout) findViewById(R.id.messagesLayout);
 
-
         myRef.addValueEventListener(new ValueEventListener() {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -75,21 +76,20 @@ public class Message extends AppCompatActivity {
 
                     //set layout if to or from user
                     if(from.contains(getUserProfile.uid)){
-                        params.setMargins(0, 5, 150, 5);
                         params.gravity = Gravity.END;
+                        params.setMargins(350, 5, 150, 5);
                         rowTextView.setBackgroundColor(ContextCompat.getColor(Message.this, R.color.colorPrimary));
                     }
                     else if(to.contains(getUserProfile.uid)){
-                        params.setMargins(150, 5, 0, 5);
-                        rowTextView.setGravity(Gravity.START);
+                        params.setMargins(150, 5, 350, 5);
+                        params.gravity = Gravity.START;
                         rowTextView.setBackgroundColor(ContextCompat.getColor(Message.this, R.color.colorAccent));
                     }
 
-                    // add to view
-                    myLinearLayout.addView(rowTextView);
+                        // add to view
+                        myLinearLayout.addView(rowTextView);
 
                     }// end null check
-
                 } // end database loop
             }
 
@@ -99,10 +99,22 @@ public class Message extends AppCompatActivity {
             }
         });
 
+        //on input click
+        EditText messageText = (EditText) findViewById(R.id.MessageText);
+        messageText.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //set view to bottom
+                ScrollView ScrollWindow = (ScrollView) findViewById(R.id.ScrollWindow);
+                ScrollWindow.fullScroll(View.FOCUS_DOWN);
+            }
+
+        });
 
         Button sendButton = (Button) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                ScrollView ScrollWindow = (ScrollView) findViewById(R.id.ScrollWindow);
 
                 //get entered text
                 EditText messageText = (EditText) findViewById(R.id.MessageText);
@@ -117,6 +129,15 @@ public class Message extends AppCompatActivity {
                 pushval.child("to").setValue(participant);
                 pushval.child("from").setValue(getUserProfile.uid);
                 pushval.child("text").setValue(sendingText);
+
+                //close keyboard and clear input
+                InputMethodManager imm = (InputMethodManager) getSystemService(Message.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(messageText.getWindowToken(), 0);
+                messageText.getText().clear();
+
+                //set view to bottom
+                ScrollWindow.fullScroll(View.FOCUS_DOWN);
+
                 }
                 else{
                     Toast.makeText(Message.this, "Cannot send empty message", Toast.LENGTH_SHORT).show();
