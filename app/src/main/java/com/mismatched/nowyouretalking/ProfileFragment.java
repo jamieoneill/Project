@@ -3,9 +3,11 @@ package com.mismatched.nowyouretalking;
 /**
  * Created by jamie on 26/11/2016.
  */
-import android.*;
 import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -20,7 +22,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -59,10 +64,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         Button changePhotoButton = (Button) view.findViewById(R.id.ChangePhotoButton);
         changePhotoButton.setOnClickListener(this);
 
-        //get image
-        loadProfileImage();
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // path to /data/data/nowyourtalking/app_data/imageDir
+        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        File mypath=new File(directory,getUserProfile.uid); //file name
+        Activity activity = getActivity();
+        ImageView imageview = (ImageView) getView().findViewById(R.id.ProfilePic);
+
+
+        //get image
+        if(mypath.length() != 0){
+            //if there is a image on device load it
+            loadImageFromStorage(getUserProfile.uid, imageview, activity);
+        }
+        else{
+            //else pull image from online storage
+            loadProfileImage(getUserProfile.uid, imageview, activity);
+        }
+
     }
 
 
@@ -81,39 +107,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Here, thisActivity is the current activity
+        // check permissions
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
+                // waiting for the user's response!
             } else {
-
-                // No explanation needed, we can request the permission.
-
+                // request the permission.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ActivityCompat.requestPermissions(getActivity(),
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             REQUEST_READ_EXTERNAL_STORAGE);
                 }
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         }
             // When an Image is picked
@@ -143,7 +156,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 //upload image to storage
                 Uri file = Uri.fromFile(new File(imgDecodableString));
                 UploadTask uploadTask = imageRef.putFile(file);
-                Toast.makeText(getActivity(), "Profile picture updated.\nRefresh page to see changes.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Profile picture updated.", Toast.LENGTH_LONG).show();
+
+                //save user's image to local
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                     saveToInternalStorage(bitmap, getUserProfile.uid, getActivity());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
@@ -157,17 +179,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    public void loadProfileImage(){
+    //fill users image to selected view
+    public String loadProfileImage (final String userToLoad, final ImageView viewToFill, final Activity activity){
 
         // Create storage reference
         final StorageReference storageRef = storage.getReferenceFromUrl("gs://now-yourre-talking.appspot.com/ProfilePictures/");
 
         //set image based on user id
-        StorageReference  myProfilePic = storageRef.child(getUserProfile.uid);
-
+        StorageReference  myProfilePic = storageRef.child(userToLoad);
 
         //set max image download size
-        final long ONE_MEGABYTE = 5000 * 5000;
+        final long ONE_MEGABYTE = 10000 * 10000;
         myProfilePic.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -175,12 +197,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 //decode image
                 Bitmap userImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
+                //save this user image to local device
+                saveToInternalStorage(userImage, userToLoad, activity);
+
                 //set circle style
-                RoundedBitmapDrawable roundedImage = RoundedBitmapDrawableFactory.create(getResources(), userImage);
+                RoundedBitmapDrawable roundedImage = RoundedBitmapDrawableFactory.create(activity.getResources(), userImage);
                 roundedImage.setCornerRadius(Math.max(userImage.getWidth(), userImage.getHeight()) / 2.0f);
 
                 //set image to view
-                ImageView imgView = (ImageView) getView().findViewById(R.id.ProfilePic);
+                ImageView imgView = viewToFill;
                 imgView.setImageDrawable(roundedImage);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -195,11 +220,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             Bitmap userImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
                             //set circle style
-                            RoundedBitmapDrawable roundedImage = RoundedBitmapDrawableFactory.create(getResources(), userImage);
+                            RoundedBitmapDrawable roundedImage = RoundedBitmapDrawableFactory.create(activity.getResources(), userImage);
                             roundedImage.setCornerRadius(Math.max(userImage.getWidth(), userImage.getHeight()) / 2.0f);
 
                             //set image to view
-                            ImageView imgView = (ImageView) getView().findViewById(R.id.ProfilePic);
+                            ImageView imgView = viewToFill;
                             imgView.setImageDrawable(roundedImage);
                         }
                     });
@@ -208,6 +233,59 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+                 return null;
+    }
+
+    //save user images when downloaded
+    public String saveToInternalStorage(Bitmap bitmapImage, String userToSave, Activity activity){
+        ContextWrapper cw = new ContextWrapper(activity.getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,userToSave); //file name
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
+    }
+
+    public void loadImageFromStorage(String userToLoad, ImageView viewToFill, Activity activity)
+    {
+
+        try {
+            // path to /data/data/yourapp/app_data/imageDir
+            ContextWrapper cw = new ContextWrapper(activity.getApplicationContext());
+            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+            // path for this user
+            File mypath=new File(directory,userToLoad); //file name
+
+            Bitmap userimage = BitmapFactory.decodeStream(new FileInputStream(mypath));
+
+            //set circle style
+            RoundedBitmapDrawable roundedImage = RoundedBitmapDrawableFactory.create(activity.getResources(), userimage);
+            roundedImage.setCornerRadius(Math.max(userimage.getWidth(), userimage.getHeight()) / 2.0f);
+
+            //set to imageview
+            ImageView imgView = viewToFill;
+            imgView.setImageDrawable(roundedImage);
+
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
