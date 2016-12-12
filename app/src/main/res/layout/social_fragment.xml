@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,75 +8,77 @@
 
 
     <ImageButton
-        android:layout_width="200dp"
-        android:layout_height="110dp"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="40%"
         android:src="@drawable/find_header_image"
         android:id="@+id/FindMeetActivityButton2"
         android:scaleType="centerCrop"
-        android:theme="@style/ButtonStyle"
-        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+
         />
 
     <Button
         android:text="@string/findMeetUp"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        app:layout_widthPercent="53%"
+        app:layout_heightPercent="6%"
         android:id="@+id/FindMeetActivityButton"
         android:theme="@style/IconButtonStyle"
         android:drawableLeft="@drawable/ic_find_meet"
-        android:layout_marginTop="-14dp"
+        android:layout_marginTop="-4dp"
+        android:layout_marginLeft="-4dp"
         android:textSize="12sp"
         android:layout_below="@id/FindMeetActivityButton2"
-        android:layout_centerHorizontal="true"
-        />
+
+       />
 
     <ImageButton
-        android:layout_width="200dp"
-        android:layout_height="110dp"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="40%"
         android:src="@drawable/people_header_image"
         android:id="@+id/AddMeetActivityButton2"
-        android:scaleType="centerCrop"
-        android:theme="@style/ButtonStyle"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/FindMeetActivityButton"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:layout_toRightOf="@id/FindMeetActivityButton"
+        android:layout_alignLeft="@+id/AddMeetActivityButton"
+        android:layout_alignRight="@+id/AddMeetActivityButton"
         />
 
     <Button
         android:text="@string/addMeetUp"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        app:layout_widthPercent="53%"
+        app:layout_heightPercent="6%"
         android:id="@+id/AddMeetActivityButton"
         android:theme="@style/IconButtonStyle"
         android:drawableLeft="@drawable/ic_add_meet"
-        android:layout_marginTop="-14dp"
+        android:layout_marginTop="-4dp"
+        android:layout_marginRight="-4dp"
         android:textSize="12sp"
         android:layout_below="@id/AddMeetActivityButton2"
-        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/FindMeetActivityButton2"
         />
 
 
     <ImageButton
-        android:layout_width="200dp"
-        android:layout_height="110dp"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="40%"
         android:src="@drawable/edit_header_image"
         android:id="@+id/ManageMeetActivityButton2"
-        android:scaleType="centerCrop"
-        android:theme="@style/ButtonStyle"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/AddMeetActivityButton"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/FindMeetActivityButton"
+        android:padding="0dp"
         />
 
     <Button
         android:text="@string/manageMeetUp"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        app:layout_widthPercent="52%"
+        app:layout_heightPercent="6%"
         android:id="@+id/ManageMeetActivityButton"
         android:theme="@style/IconButtonStyle"
         android:drawableLeft="@drawable/ic_edit_meet"
-        android:layout_marginTop="-14dp"
         android:textSize="12sp"
         android:layout_below="@id/ManageMeetActivityButton2"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-4dp"
+        android:layout_marginLeft="-4dp"
         />
 
-</RelativeLayout>
+</android.support.percent.PercentRelativeLayout>

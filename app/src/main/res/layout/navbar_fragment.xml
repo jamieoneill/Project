@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingTop="10dp"
     android:background="#ffffff"
     tools:context="com.mismatched.nowyouretalking.NavbarFragment"
     android:orientation="vertical">

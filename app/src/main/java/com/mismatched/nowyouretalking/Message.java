@@ -1,9 +1,7 @@
 package com.mismatched.nowyouretalking;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
+
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,8 +13,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -28,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
 
 /**
  * Created by jamie on 29/11/2016.
@@ -48,8 +43,6 @@ public class Message extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final String conversation = extras.getString("conversation");
         final String participant = extras.getString("Participant");
-        final String participantname = extras.getString("ParticipantName");
-
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -147,10 +140,8 @@ public class Message extends AppCompatActivity {
                             final TextView rowTextView = new TextView(Message.this);
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                             rowTextView.setLayoutParams(params);
-                            //rowTextView.setText(text);
                             rowTextView.setPadding(40,0,40,0);
                             rowTextView.setTextColor(ContextCompat.getColor(Message.this, R.color.White));
-                            //rowTextView.setGravity(Gravity.BOTTOM);
 
                             //set layout if to or from user
                             if(from.contains(getUserProfile.uid)){
@@ -192,7 +183,7 @@ public class Message extends AppCompatActivity {
             });
 
             return null;
-        }//end do in packground
+        }//end do in background
 
     }
 

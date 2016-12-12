@@ -15,7 +15,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,7 +41,6 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
@@ -56,10 +54,9 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                 .requestEmail()
                 .build();
 
-        // Build a GoogleApiClient with access to the Google Sign-In API and the
-        // options specified by gso.
+        // Build a GoogleApiClient with access to the Google Sign-In API
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
@@ -72,10 +69,8 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     Toast.makeText(SignInActivity.this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
-                    //set userprofile info
                     // set User table as reference
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     final DatabaseReference myRef = database.getReference("Users");
@@ -83,12 +78,9 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                     // get uid
                     final String uid = user.getUid();
 
-                    //set...
-                    //name
+                    //set... name, email and level
                     myRef.child(uid).child("Name").setValue(user.getDisplayName());
-                    //email
                     myRef.child(uid).child("Email").setValue(user.getEmail());
-                    //level
                     myRef.child(uid).child("Level").setValue("test");
 
 
@@ -150,15 +142,8 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
-                          //  Toast.makeText(GoogleSignInActivity.this, "Authentication failed.",
-                            //        Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -182,8 +167,7 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-                // Google Sign In failed, update UI appropriately
-                // ...
+                // Google Sign In failed
             }
         }
     }
@@ -200,7 +184,6 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
             case R.id.sign_in_button:
                 signIn();
                 break;
-            // ...
         }
     }
 

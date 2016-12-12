@@ -22,35 +22,6 @@
             android:layout_height="wrap_content"
             >
 
-<!--
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/boy_walk_image"
-                android:layout_gravity="bottom|left"
-                />
-
-            <TextView
-                android:text="@string/title"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:textStyle="bold"
-                android:textSize="30sp"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
-                android:layout_marginLeft="80dp"
-                 />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/girl_walk_image"
-                android:layout_gravity="bottom|right"
-                />
-                -->
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -67,7 +38,7 @@
     <RelativeLayout
         android:id="@+id/navbar_container"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         />

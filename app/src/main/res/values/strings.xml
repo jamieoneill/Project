@@ -1,6 +1,6 @@
 <resources>
     <!--titles, headings and buttons -->
-    <string name="app_name">NowYoureTalking</string>
+    <string name="app_name">Now You\'re Talking</string>
     <string name="title_activity_maps">Map</string>
     <string name="title">Now\nYou\'re\nTalking</string>
     <string name="addMeetUp">Add a Meet Up</string>
@@ -35,6 +35,7 @@
     <string name="Profile">Profile</string>
     <string name="Messages">Message</string>
     <string name="EnterMessageHint">Enter Message</string>
+    <string name="Send">Send</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">
