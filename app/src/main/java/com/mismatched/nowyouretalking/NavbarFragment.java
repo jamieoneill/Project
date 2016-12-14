@@ -3,6 +3,7 @@ package com.mismatched.nowyouretalking;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,7 @@ public class NavbarFragment extends Fragment {
             //animate slider image based on previous frag
             switch (fragTag){
                 case "Learn":
-                    highligherAnimation = new TranslateAnimation(480, 0, 0 , 0);
+                    highligherAnimation = new TranslateAnimation(360, 0, 0 , 0);
                     highligherAnimation.setDuration(200);
                     highligherAnimation.setFillAfter(true);
                     highligherAnimation.setFillEnabled(true);
@@ -51,7 +52,7 @@ public class NavbarFragment extends Fragment {
                     highligher.startAnimation(highligherAnimation);
                     break;
                 case "Profile":
-                    highligherAnimation = new TranslateAnimation(962, 0, 0 , 0);
+                    highligherAnimation = new TranslateAnimation(720, 0, 0 , 0);
                     highligherAnimation.setDuration(200);
                     highligherAnimation.setFillAfter(true);
                     highligherAnimation.setFillEnabled(true);
@@ -82,7 +83,7 @@ public class NavbarFragment extends Fragment {
             //animate slider image based on previous frag
             switch (fragTag){
                 case "Social":
-                    highligherAnimation = new TranslateAnimation(0, 480, 0 , 0);
+                    highligherAnimation = new TranslateAnimation(0, 360, 0 , 0);
                     highligherAnimation.setDuration(200);
                     highligherAnimation.setFillAfter(true);
                     highligherAnimation.setFillEnabled(true);
@@ -90,7 +91,7 @@ public class NavbarFragment extends Fragment {
                     highligher.startAnimation(highligherAnimation);
                     break;
                 case "Profile":
-                    highligherAnimation = new TranslateAnimation(962, 480, 0 , 0);
+                    highligherAnimation = new TranslateAnimation(720, 360, 0 , 0);
                     highligherAnimation.setDuration(200);
                     highligherAnimation.setFillAfter(true);
                     highligherAnimation.setFillEnabled(true);
@@ -120,7 +121,7 @@ public class NavbarFragment extends Fragment {
             //animate slider image based on previous frag
             switch (fragTag){
                 case "Social":
-                    highligherAnimation = new TranslateAnimation(0, 962, 0 , 0);
+                    highligherAnimation = new TranslateAnimation(0, 720, 0 , 0);
                     highligherAnimation.setDuration(200);
                     highligherAnimation.setFillAfter(true);
                     highligherAnimation.setFillEnabled(true);
@@ -128,7 +129,7 @@ public class NavbarFragment extends Fragment {
                     highligher.startAnimation(highligherAnimation);
                     break;
                 case "Learn":
-                    highligherAnimation = new TranslateAnimation(480, 962, 0, 0);
+                    highligherAnimation = new TranslateAnimation(360, 720, 0, 0);
                     highligherAnimation.setDuration(200);
                     highligherAnimation.setFillAfter(true);
                     highligherAnimation.setFillEnabled(true);
@@ -137,6 +138,17 @@ public class NavbarFragment extends Fragment {
             }
         }
     });
+
+        Button messagingButton = (Button) view.findViewById(R.id.MessagingActivityButton);
+        messagingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                //start message activity
+                Intent intent = new Intent(getActivity(), MessagingActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         return view;

@@ -139,7 +139,6 @@ public class TranslateActivity extends AppCompatActivity implements TextToSpeech
 
             tts.stop();
             tts.shutdown();
-            Log.i("onDestroy", "TTS Destroyed");
         }
         super.onDestroy();
     }
