@@ -36,6 +36,16 @@
     <string name="Messages">Message</string>
     <string name="EnterMessageHint">Enter Message</string>
     <string name="Send">Send</string>
+    <string name="Basics">Basics</string>
+    <string name="Basics2">Basics 2</string>
+    <string name="Food">Food</string>
+    <string name="Phrases">Phrases</string>
+    <string name="Animals">Animals</string>
+    <string name="Locked">Locked</string>
+
+
+
+
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">

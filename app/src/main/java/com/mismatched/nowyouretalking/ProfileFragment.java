@@ -64,6 +64,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         Button changePhotoButton = (Button) view.findViewById(R.id.ChangePhotoButton);
         changePhotoButton.setOnClickListener(this);
 
+        Button TranslateActivityButton = (Button) view.findViewById(R.id.TranslateActivityButton);
+        TranslateActivityButton.setOnClickListener(this);
+
         return view;
     }
 
@@ -103,6 +106,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 // Start the Intent
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+                break;
+            case R.id.TranslateActivityButton:
+                intent = new Intent(getActivity(), TranslateActivity.class);
+                startActivity(intent);
                 break;
         }
     }
