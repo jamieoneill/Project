@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,10 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflating the layout for this fragment
         View v = inflater.inflate(R.layout.levelselect_fragment, null);
-       // Button foodimage = (Button) v.findViewById(R.id.foodBtn);
+
+        //set buttons
+        ImageButton basicsBtn = (ImageButton) v.findViewById(R.id.basicsBtn);
+        basicsBtn.setOnClickListener(this);
 
         return v;
     }
@@ -35,6 +39,9 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.basicsBtn:
                 //start game
+                intent = new Intent(getActivity(), GameActivity.class);
+                intent.putExtra("Lesson", "basics");
+                startActivity(intent);
 
                 break;
             case R.id.phrasesBtn:

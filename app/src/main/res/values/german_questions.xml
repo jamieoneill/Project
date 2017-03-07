@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--basics questions -->
+    <string-array name="German_basics_questions_array">
+                R.array.German_basics_questions_array
+        <item>ImageQuestion,Which of these is \"man\",Mann</item>
+        <item>ImageQuestion,Which of these is \"boy\",Junge</item>
+        <item>ImageQuestion,Which of these is \"woman\",Frau</item>
+        <item>TranslateQuestion,Eine Frau,A woman</item>
+        <item>TranslateQuestion,Eine Mann,A man</item>
+        <item>ButtonQuestion,Ich bin ein Mann, I am a man</item>
+        <item>ButtonQuestion,A Woman,Eine Frau</item>
+        <item>ButtonQuestion,Boy,Junge</item>
+        <item>ButtonQuestion,I am a woman,Ich bin eine Frau</item>
+        <item>TranslateQuestion,Junge,boy</item>
+    </string-array>
+
+    <!--basics questions -->
+    <string-array name="German_basics_false_array">
+        R.array.German_basics_questions_array
+        <item>Frau,Brot,Junge</item>
+        <item>Frau,Wasser,Mann</item>
+        <item>Brot,Junge,Mann</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>woman,and,girl,child</item>
+        <item>mann,eine,ich,junge</item>
+        <item>ich,ein,frau,mann</item>
+        <item>frau,mannmich,junge</item>
+        <item>none,none,none</item>
+    </string-array>
+
+</resources>
