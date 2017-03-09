@@ -1,19 +1,23 @@
 package com.mismatched.nowyouretalking;
 
+import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -70,27 +74,48 @@ public class GameActivity extends AppCompatActivity {
         final ProgressBar pb = (ProgressBar) findViewById(R.id.CompletionProgressBar);
         pb.getProgressDrawable().setColorFilter(ContextCompat.getColor(this, R.color.Green), PorterDuff.Mode.SRC_IN);
 
-        //question layouts
-        RelativeLayout imageQuestionView = (RelativeLayout) findViewById(R.id.imageQuestionLayout);
-        RelativeLayout buttonQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
-        RelativeLayout translateQuestionView = (RelativeLayout) findViewById(R.id.translateQuestionLayout);
-
-        imageQuestionView.setVisibility(View.GONE);
-        buttonQuestionView.setVisibility(View.GONE);
-        translateQuestionView.setVisibility(View.GONE);
+        //hide layouts
+        hideAllViews();
 
     }
 
-    private void checkAnswer(int questionNumber, String correctAnswer, String answerGiven, String[] questionInfo, String[] falseInfo) {
+    private void checkAnswer(int questionNumber, String correctAnswer, final String answerGiven, final String[] questionInfo, final String[] falseInfo) {
+
+        // hide keyboard if showing
+        View keyboardView = this.getCurrentFocus();
+        if (keyboardView != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(keyboardView.getWindowToken(), 0);
+        }
+
+        //set result view
+        RelativeLayout resultView = (RelativeLayout) findViewById(R.id.resultLayout);
+        resultView.setVisibility(View.VISIBLE);
+        TextView resultHolder = (TextView) findViewById(R.id.resultHolder);
+        TextView answerHolder = (TextView) findViewById(R.id.correctAnswerHolder);
+
+        //set text in result
+        answerHolder.setText(correctAnswer);
 
         if (answerGiven.equals(correctAnswer)) {
-            Toast.makeText(GameActivity.this, "Correct = " + answerGiven, Toast.LENGTH_SHORT).show();
 
+            //set result
+            resultView.setBackgroundResource(R.drawable.rounded_textview_green);
+            resultHolder.setTextColor(getResources().getColor(R.color.DarkGreen));
+            answerHolder.setTextColor(getResources().getColor(R.color.DarkGreen));
+            resultHolder.setText(getResources().getString(R.string.CorrectAnswer));
+
+
+            //add a score
             score++;
             TextView scoreLbl = (TextView) findViewById(R.id.scoreLable);
             scoreLbl.setText(String.valueOf(score));
         } else {
-            Toast.makeText(GameActivity.this, "Wrong = " + answerGiven, Toast.LENGTH_SHORT).show();
+            //set result
+            resultView.setBackgroundResource(R.drawable.rounded_textview_red);
+            resultHolder.setTextColor(getResources().getColor(R.color.Red));
+            answerHolder.setTextColor(getResources().getColor(R.color.Red));
+            resultHolder.setText(getResources().getString(R.string.WrongAnswer));
         }
 
         //update progress and question
@@ -98,12 +123,70 @@ public class GameActivity extends AppCompatActivity {
         pb.setProgress(pb.getProgress() + 10);
         questionNumber = questionNumber + 1;
 
-        if (questionNumber == 10) {
-            Toast.makeText(GameActivity.this, "finished " + answerGiven, Toast.LENGTH_SHORT).show();
-        } else {
-            // load next question here
-            loadNextQuestion(questionNumber, questionInfo, falseInfo);
-        }
+        final Button confirm = (Button) findViewById(R.id.checkAnswerBtn);
+        confirm.setText(getResources().getString(R.string.Continue));
+        final int finalQuestionNumber = questionNumber;
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalQuestionNumber == 10) {
+
+                    //hide views
+                    Button confirm = (Button) findViewById(R.id.checkAnswerBtn);
+                    confirm.setVisibility(View.GONE);
+                    TextView goalLbl = (TextView) findViewById(R.id.goalLable);
+                    goalLbl.setVisibility(View.GONE);
+                    ProgressBar pb = (ProgressBar) findViewById(R.id.CompletionProgressBar);
+                    pb.setProgress(0);
+                    TextView scoreLbl = (TextView) findViewById(R.id.scoreLable);
+                    scoreLbl.setText(null);
+
+                    hideAllViews();
+
+                    //show end game view
+                    RelativeLayout endGameView = (RelativeLayout) findViewById(R.id.endGameLayout);
+                    endGameView.setVisibility(View.VISIBLE);
+
+                    //set messages
+                    TextView endScore = (TextView) findViewById(R.id.endScore);
+                    endScore.setText(score + "/10");
+
+                    TextView endMessage = (TextView) findViewById(R.id.endMessage);
+                    if(score == 10){
+                        endMessage.setText(getResources().getString(R.string.EndMessageGood));
+                    }else if(score < 10 && score > 6){
+                        endMessage.setText(getResources().getString(R.string.EndMessageMiddle));
+                    }else if(score < 7){
+                        endMessage.setText(getResources().getString(R.string.EndMessageBad));
+                    }
+
+                    Button leaveGameBtn = (Button) findViewById(R.id.leaveGameBtn);
+                    leaveGameBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                        }
+                    });
+
+                    Button tryAgainBtn = (Button) findViewById(R.id.tryAgainBtn);
+                    tryAgainBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            View vg = findViewById (R.id.gameLayout);
+                            vg.invalidate();
+                            recreate();
+                        }
+                    });
+
+                } else {
+                    // load next question here
+                    confirm.setText(getResources().getString(R.string.Check));
+                    loadNextQuestion(finalQuestionNumber, questionInfo, falseInfo);
+                }
+            }
+        });
+
+
 
     }
 
@@ -131,18 +214,13 @@ public class GameActivity extends AppCompatActivity {
         //set goal label
         TextView goalLbl = (TextView) findViewById(R.id.goalLable);
 
-        //question layouts
-        RelativeLayout imageQuestionView = (RelativeLayout) findViewById(R.id.imageQuestionLayout);
-        RelativeLayout buttonQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
-        RelativeLayout translateQuestionView = (RelativeLayout) findViewById(R.id.translateQuestionLayout);
-
-        imageQuestionView.setVisibility(View.GONE);
-        buttonQuestionView.setVisibility(View.GONE);
-        translateQuestionView.setVisibility(View.GONE);
+        //hidelayouts
+        hideAllViews();
 
         switch (questionType) {
             case "ImageQuestion":
                 //handle question here
+                RelativeLayout imageQuestionView = (RelativeLayout) findViewById(R.id.imageQuestionLayout);
                 imageQuestionView.setVisibility(View.VISIBLE);
 
                 //set goal
@@ -210,6 +288,29 @@ public class GameActivity extends AppCompatActivity {
                 b_three.setText(answersShuffled.get(2).toString());
                 b_four.setText(answersShuffled.get(3).toString());
 
+                ArrayList<View> radiobuttons = new ArrayList<View>();
+                radiobuttons.add(b_one);
+                radiobuttons.add(b_two);
+                radiobuttons.add(b_three);
+                radiobuttons.add(b_four);
+
+
+                for(View current : radiobuttons){
+                    //get the imageview for this button
+                    RelativeLayout parent = (RelativeLayout) current.getParent();
+                    ImageView myimage = (ImageView) parent.getChildAt(0);
+                    TextView textFromButton = (TextView)current;
+
+                    //pass text into image helper
+                    ImageHelper imageHelperClass = new ImageHelper();
+                    int selected = imageHelperClass.getImageForView(textFromButton.getText().toString());
+
+                    //set image from imageHelper
+                    myimage.setBackgroundResource(selected);
+
+                }
+
+
                 confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -236,6 +337,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case "ButtonQuestion":
                 //handle question here
+                RelativeLayout buttonQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
                 buttonQuestionView.setVisibility(View.VISIBLE);
 
                 //set goal
@@ -327,6 +429,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case "TranslateQuestion":
                 //handle question here
+                RelativeLayout translateQuestionView = (RelativeLayout) findViewById(R.id.translateQuestionLayout);
                 translateQuestionView.setVisibility(View.VISIBLE);
 
                 //set goal
@@ -341,13 +444,21 @@ public class GameActivity extends AppCompatActivity {
 
                 final EditText input = (EditText) findViewById(R.id.translateInputText);
 
-                input.setOnClickListener(new View.OnClickListener() {
+                input.addTextChangedListener(new TextWatcher() {
                     @Override
-                    public void onClick(View v) {
-                        //enable button
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                         confirm.setEnabled(true);
                     }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
                 });
+
 
                 confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -384,5 +495,21 @@ public class GameActivity extends AppCompatActivity {
 
         //load the first question which is 0 in array
         loadNextQuestion(0, questionInfo, wrongAnswers);
+    }
+
+    private void hideAllViews(){
+        //layouts
+        RelativeLayout imageQuestionView = (RelativeLayout) findViewById(R.id.imageQuestionLayout);
+        RelativeLayout buttonQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
+        RelativeLayout translateQuestionView = (RelativeLayout) findViewById(R.id.translateQuestionLayout);
+        RelativeLayout resultView = (RelativeLayout) findViewById(R.id.resultLayout);
+        RelativeLayout endGameView = (RelativeLayout) findViewById(R.id.endGameLayout);
+
+        //hide views
+        imageQuestionView.setVisibility(View.GONE);
+        buttonQuestionView.setVisibility(View.GONE);
+        translateQuestionView.setVisibility(View.GONE);
+        resultView.setVisibility(View.GONE);
+        endGameView.setVisibility(View.GONE);
     }
 }

@@ -9,4 +9,6 @@
     <color name="Black">#000000</color>
     <color name="LevelBackground">#F8F1E1</color>
     <color name="Gray">#a3a3a3</color>
+    <color name="DarkGreen">#30c73a</color>
+    <color name="DarkRed">#fa2f2f</color>
 </resources>

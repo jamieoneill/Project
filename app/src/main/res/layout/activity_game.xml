@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/gameLayout">
 
     <ProgressBar
         android:id="@+id/CompletionProgressBar"
@@ -30,7 +31,6 @@
         android:layout_marginTop="10dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Goal of game here"
         android:textColor="@color/Black" />
 
     <Button
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/Continue"
+        android:text="@string/Check"
         android:theme="@style/JoinButtonStyle"
         style="@style/Widget.AppCompat.Button.Colored"/>
 
@@ -61,15 +61,13 @@
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/apple" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:id="@+id/radioButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imageView1"
-                android:text="RadioButton" />
+                android:layout_below="@id/imageView1" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -82,15 +80,14 @@
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/apple" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageView2"
-                android:text="RadioButton" />
+                />
 
         </RelativeLayout>
 
@@ -105,15 +102,13 @@
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/apple" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imageView3"
-                android:text="RadioButton" />
+                android:layout_below="@id/imageView3" />
 
         </RelativeLayout>
 
@@ -128,15 +123,13 @@
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/apple" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:id="@+id/radioButton4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imageView4"
-                android:text="RadioButton" />
+                android:layout_below="@id/imageView4" />
 
         </RelativeLayout>
 
@@ -222,7 +215,7 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
@@ -236,5 +229,83 @@
             android:maxLines="1"
             />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultLayout"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_textview_red"
+        android:layout_margin="25dp">
+
+
+        <TextView
+            android:text="You are correct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:id="@+id/resultHolder"
+            />
+
+        <TextView
+            android:text="correctAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/resultHolder"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:id="@+id/correctAnswerHolder" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/endGameLayout">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/endScore"
+            android:layout_marginTop="100dp"
+            android:textStyle="bold"
+            android:textColor="@color/Black"
+            android:textSize="60sp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/endMessage"
+            android:layout_below="@+id/endScore"
+            android:textColor="@color/Black"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/leaveGameBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tryAgainBtn"
+            android:layout_centerHorizontal="true"
+            android:text="@string/Continue"
+            android:theme="@style/JoinButtonStyle"
+            style="@style/Widget.AppCompat.Button.Colored"/>
+
+        <Button
+            android:id="@+id/tryAgainBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/TryAgain"
+            android:theme="@style/ButtonStyle"
+            />
+    </RelativeLayout>
+
 
 </RelativeLayout>

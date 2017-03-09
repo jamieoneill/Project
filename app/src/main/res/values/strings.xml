@@ -44,6 +44,14 @@
     <string name="Locked">Locked</string>
     <string name="TranslateGoal">Translate this sentence:</string>
     <string name="Continue">Continue</string>
+    <string name="CorrectAnswer">You are correct</string>
+    <string name="WrongAnswer">That\'s not correct</string>
+    <string name="Check">Check</string>
+    <string name="TryAgain">Try again</string>
+    <string name="EndMessageGood">Great Job</string>
+    <string name="EndMessageMiddle">Really close, keep trying</string>
+    <string name="EndMessageBad">Too bad, you need practice \nKeep trying</string>
+
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">
