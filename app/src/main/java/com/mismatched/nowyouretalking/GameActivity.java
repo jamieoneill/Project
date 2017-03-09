@@ -1,6 +1,7 @@
 package com.mismatched.nowyouretalking;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -177,6 +178,22 @@ public class GameActivity extends AppCompatActivity {
                             recreate();
                         }
                     });
+
+                    //update score
+                    // get user details
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference userRef = database.getReference("Users/" + getUserProfile.uid);
+
+                    //userRef.child("Level").setValue(score);
+
+                    //check if score is higher and update
+                    SharedPreferences Prefs = getSharedPreferences("Prefs", MODE_PRIVATE);
+                    int thisLessonScore = Prefs.getInt("German" + "Basics", 0);
+                    if (thisLessonScore < score) {
+                        SharedPreferences.Editor editor = Prefs.edit();
+                        editor.putInt("German" + "Basics", score);
+                        editor.apply();
+                    }
 
                 } else {
                     // load next question here

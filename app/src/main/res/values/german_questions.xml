@@ -2,7 +2,7 @@
 <resources>
 
     <!--basics questions -->
-    <string-array name="German_basics_questions_array">
+    <string-array name="German_Basics_questions_array">
                 R.array.German_basics_questions_array
         <item>ImageQuestion,Which of these is \"man\",Mann</item>
         <item>ImageQuestion,Which of these is \"boy\",Junge</item>
@@ -17,7 +17,7 @@
     </string-array>
 
     <!--basics questions -->
-    <string-array name="German_basics_false_array">
+    <string-array name="German_Basics_false_array">
         R.array.German_basics_questions_array
         <item>Frau,Brot,Junge</item>
         <item>Frau,Wasser,Mann</item>

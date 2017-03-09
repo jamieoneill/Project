@@ -18,6 +18,16 @@
             android:layout_margin="20dp"
             >
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/basicsLayout"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp">
+
+
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,13 +42,25 @@
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/Black"
                 android:textStyle="bold"
+                android:id="@+id/basicsText"
                 />
 
-        <RelativeLayout
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/basicsText"
+                android:id="@+id/progressBarBasics" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_below="@id/basicsBtn"
+            android:layout_below="@id/basicsLayout"
             android:id="@+id/phrasesLayout"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
@@ -58,14 +80,23 @@
                 android:text="@string/Phrases"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/Black"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:id="@+id/phrasesText"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/phrasesText"
+                    android:id="@+id/progressBarPhrases" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_below="@id/basicsBtn"
+            android:layout_below="@id/basicsLayout"
             android:layout_alignParentRight="true"
             android:id="@+id/basics2Layout"
             android:layout_marginBottom="20dp"
@@ -86,7 +117,17 @@
                 android:text="@string/Basics2"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/Black"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:id="@+id/basics2Text"/>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/basics2Text"
+                android:id="@+id/progressBarBasics2" />
+
         </RelativeLayout>
 
             <RelativeLayout
@@ -113,7 +154,16 @@
                     android:text="@string/Animals"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/Black"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:id="@+id/animalsText"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/animalsText"
+                    android:id="@+id/progressBarAnimals" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -140,7 +190,16 @@
                     android:text="@string/Food"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/Black"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:id="@+id/foodText"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/foodText"
+                    android:id="@+id/progressBarFood" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -151,14 +210,16 @@
                 android:layout_alignParentLeft="true"
                 android:id="@+id/pluralsLayout"
                 android:layout_marginBottom="20dp"
-
                 >
+
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/pluralsBtn"
                     android:background="@drawable/animals"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
