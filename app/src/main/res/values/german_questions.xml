@@ -10,10 +10,10 @@
         <item>TranslateQuestion,Eine Frau,A woman</item>
         <item>TranslateQuestion,Eine Mann,A man</item>
         <item>ButtonQuestion,Ich bin ein Mann, I am a man</item>
-        <item>ButtonQuestion,A Woman,Eine Frau</item>
-        <item>ButtonQuestion,Boy,Junge</item>
-        <item>ButtonQuestion,I am a woman,Ich bin eine Frau</item>
-        <item>TranslateQuestion,Junge,boy</item>
+        <item>ButtonQuestion,A Woman, Eine Frau</item>
+        <item>ButtonQuestion,Boy, Junge</item>
+        <item>ButtonQuestion,I am a woman, Ich bin eine Frau</item>
+        <item>TranslateQuestion,Junge,Boy</item>
     </string-array>
 
     <!--basics questions -->
@@ -24,10 +24,10 @@
         <item>Brot,Junge,Mann</item>
         <item>none,none,none</item>
         <item>none,none,none</item>
-        <item>woman,and,girl,child</item>
-        <item>mann,eine,ich,junge</item>
-        <item>ich,ein,frau,mann</item>
-        <item>frau,mannmich,junge</item>
+        <item>I,am,a,man,woman,and,girl,child</item>
+        <item>Eine,Frau,mann,eine,ich,junge</item>
+        <item>Junge,ich,ein,frau,mann</item>
+        <item>Ich,bin,eine,Frau,frau,mannmich,junge</item>
         <item>none,none,none</item>
     </string-array>
 

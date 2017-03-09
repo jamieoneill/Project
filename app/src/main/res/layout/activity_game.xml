@@ -39,8 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Continue"
-        android:theme="@style/JoinButtonStyle" />
+        android:text="@string/Continue"
+        android:theme="@style/JoinButtonStyle"
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <RelativeLayout
         android:id="@+id/imageQuestionLayout"
@@ -151,18 +152,23 @@
 
 
         <TextView
-            android:id="@+id/questionTextview"
+            android:id="@+id/buttonQuestionTextview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="70dp"
-            android:text="Question goes here"
             android:textColor="@color/Black" />
+
+        <TextView
+            android:id="@+id/questionInput"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonQuestionTextview" />
 
         <TextView
             android:id="@+id/questionLine1"
             android:layout_width="fill_parent"
             android:layout_height="1dip"
-            android:layout_below="@id/questionTextview"
+            android:layout_below="@id/questionInput"
             android:layout_marginBottom="50dp"
             android:background="@color/Gray"
             android:text="" />
@@ -172,18 +178,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/questionLine1"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="40dp"
+            android:layout_alignParentLeft="true"
             android:orientation="horizontal">
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/buttonLine2"
+        android:id="@+id/buttonLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonLine1"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonLine3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonLine1"
+            android:layout_below="@id/buttonLine2"
+            android:layout_alignParentLeft="true"
             android:orientation="horizontal">
-
         </LinearLayout>
 
 
@@ -201,7 +218,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
-            android:text="Question goes here"
             android:textColor="@color/Black" />
 
         <EditText
@@ -210,13 +226,14 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="200dp"
             android:gravity="top|left"
-            android:id="@+id/InputText"
+            android:id="@+id/translateInputText"
             android:hint="@string/translateHint"
             android:layout_below="@id/translatQuestionTextview"
             android:background="@drawable/border"
-            android:inputType="textMultiLine"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
             />
     </RelativeLayout>
 
