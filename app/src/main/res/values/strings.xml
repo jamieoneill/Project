@@ -51,7 +51,8 @@
     <string name="EndMessageGood">Great Job</string>
     <string name="EndMessageMiddle">Really close, keep trying</string>
     <string name="EndMessageBad">Too bad, you need practice \nKeep trying</string>
-
+    <string name="ChangeLanguage">Change Language</string>
+    <string name="SignOut">Sign Out</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">
