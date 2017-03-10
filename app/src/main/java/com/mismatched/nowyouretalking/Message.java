@@ -2,6 +2,8 @@ package com.mismatched.nowyouretalking;
 
 import android.annotation.TargetApi;
 
+import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +25,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -65,6 +71,7 @@ public class Message extends AppCompatActivity {
 
         Button sendButton = (Button) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.N)
             public void onClick(View v) {
 
                 ScrollView ScrollWindow = (ScrollView) findViewById(R.id.ScrollWindow);
@@ -75,21 +82,28 @@ public class Message extends AppCompatActivity {
 
                 //check if not empty
                 if (!sendingText.isEmpty()){
-                //create push value
-                DatabaseReference pushval = myRef.push();
 
-                //upload message
-                pushval.child("to").setValue(participant);
-                pushval.child("from").setValue(getUserProfile.uid);
-                pushval.child("text").setValue(sendingText);
+                    //set date
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    String currentDate = sdf.format(new Date());
 
-                //close keyboard and clear input
-                InputMethodManager imm = (InputMethodManager) getSystemService(Message.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(messageText.getWindowToken(), 0);
-                messageText.getText().clear();
+                    //put details in a map
+                    Map<String, Object> childUpdates = new HashMap<>();
+                    childUpdates.put("date", currentDate);
+                    childUpdates.put("to", participant);
+                    childUpdates.put("text", sendingText);
+                    childUpdates.put("from", getUserProfile.uid);
 
-                //set view to bottom
-                ScrollWindow.fullScroll(View.FOCUS_DOWN);
+                    //upload message
+                    myRef.push().updateChildren(childUpdates);
+
+                    //close keyboard and clear input
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Message.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(messageText.getWindowToken(), 0);
+                    messageText.getText().clear();
+
+                    //set view to bottom
+                    ScrollWindow.fullScroll(View.FOCUS_DOWN);
 
                 }
                 else{
@@ -99,7 +113,7 @@ public class Message extends AppCompatActivity {
 
         });
 
-}
+    }
 
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
@@ -109,7 +123,7 @@ public class Message extends AppCompatActivity {
             //get conversation and participant selected
             Bundle extras = getIntent().getExtras();
             final String conversation = extras.getString("conversation");
-            final String participantname = extras.getString("ParticipantName");
+            final String participantName = extras.getString("ParticipantName");
 
             // Write a message to the database
             FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -156,7 +170,7 @@ public class Message extends AppCompatActivity {
                                 params.setMargins(150, 5, 350, 5);
                                 params.gravity = Gravity.START;
                                 rowTextView.setBackgroundColor(ContextCompat.getColor(Message.this, R.color.colorAccent));
-                                String sourceString = "<b>" + participantname + "</b> "+ "<br/>" + text;
+                                String sourceString = "<b>" + participantName + "</b> "+ "<br/>" + text;
                                 rowTextView.setText(Html.fromHtml(sourceString));
                             }
 
@@ -185,6 +199,12 @@ public class Message extends AppCompatActivity {
             return null;
         }//end do in background
 
+    }
+
+    public void onBackPressed(){
+        //go back to messages
+        Intent intent = new Intent(Message.this, MessagingActivity.class);
+        startActivity(intent);
     }
 
 }
