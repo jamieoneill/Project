@@ -7,6 +7,8 @@
     <color name="Red">#ff4c4c</color>
     <color name="Green">#5cb85c</color>
     <color name="Black">#000000</color>
-
-
+    <color name="LevelBackground">#F8F1E1</color>
+    <color name="Gray">#a3a3a3</color>
+    <color name="DarkGreen">#30c73a</color>
+    <color name="DarkRed">#fa2f2f</color>
 </resources>

@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorAccent">@color/Green</item>
     </style>
 
     <!-- timepicker -->
@@ -24,7 +24,7 @@
     </style>
 
     <!-- green button -->
-    <style name="JoinButtonStyle" parent="Widget.AppCompat.Button.Colored">
+    <style name="JoinButtonStyle" parent="ThemeOverlay.AppCompat.Dark">
         <item name="colorButtonNormal">@color/Green</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:width">200dp</item>

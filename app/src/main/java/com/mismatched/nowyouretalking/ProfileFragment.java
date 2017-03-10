@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -22,6 +23,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -63,6 +68,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         //set buttons
         Button changePhotoButton = (Button) view.findViewById(R.id.ChangePhotoButton);
         changePhotoButton.setOnClickListener(this);
+
+        Button TranslateActivityButton = (Button) view.findViewById(R.id.TranslateActivityButton);
+        TranslateActivityButton.setOnClickListener(this);
+
+        Button changeLanguageButton = (Button) view.findViewById(R.id.ChangeLanguageButton);
+        changeLanguageButton.setOnClickListener(this);
+
+        Button SignOutButton = (Button) view.findViewById(R.id.SignOutButton);
+        SignOutButton.setOnClickListener(this);
 
         return view;
     }
@@ -103,6 +117,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 // Start the Intent
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+                break;
+            case R.id.TranslateActivityButton:
+                intent = new Intent(getActivity(), TranslateActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ChangeLanguageButton:
+
+                // get reference
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                final DatabaseReference myRef = database.getReference("Users");
+
+                final CharSequence languages[] = new CharSequence[] {"French", "Spanish", "German"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Pick a Language to Learn");
+                builder.setItems(languages, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        myRef.child(getUserProfile.uid).child("Language").setValue(languages[which]);
+
+                    }
+                });
+                builder.show();
+
+                break;
+            case R.id.SignOutButton:
+
+                //sign out & return to sign in
+                FirebaseAuth.getInstance().signOut();
+                intent = new Intent(getActivity(), SignInActivity.class);
+                startActivity(intent);
                 break;
         }
     }

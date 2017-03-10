@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/White" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="60dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/basicsLayout"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp">
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/basicsBtn"
+                android:background="@drawable/books"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/basicsBtn"
+                android:text="@string/Basics"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/Black"
+                android:textStyle="bold"
+                android:id="@+id/basicsText"
+                />
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/basicsText"
+                android:id="@+id/progressBarBasics" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/basicsLayout"
+            android:id="@+id/phrasesLayout"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            >
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/phrasesBtn"
+                android:background="@drawable/talking"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phrasesBtn"
+                android:text="@string/Phrases"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/Black"
+                android:textStyle="bold"
+                android:id="@+id/phrasesText"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/phrasesText"
+                    android:id="@+id/progressBarPhrases" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/basicsLayout"
+            android:layout_alignParentRight="true"
+            android:id="@+id/basics2Layout"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/basics2Btn"
+                android:background="@drawable/notebook"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/basics2Btn"
+                android:text="@string/Basics2"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/Black"
+                android:textStyle="bold"
+                android:id="@+id/basics2Text"/>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/basics2Text"
+                android:id="@+id/progressBarBasics2" />
+
+        </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/phrasesLayout"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/animalsLayout"
+                android:layout_marginBottom="20dp"
+
+                >
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/animalsBtn"
+                    android:background="@drawable/animals"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/animalsBtn"
+                    android:text="@string/Animals"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold"
+                    android:id="@+id/animalsText"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/animalsText"
+                    android:id="@+id/progressBarAnimals" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/basics2Layout"
+                android:layout_alignParentRight="true"
+                android:id="@+id/foodLayout"
+                android:layout_marginBottom="20dp"
+
+                >
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/foodBtn"
+                    android:background="@drawable/apple"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/foodBtn"
+                    android:text="@string/Food"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold"
+                    android:id="@+id/foodText"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/foodText"
+                    android:id="@+id/progressBarFood" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/animalsLayout"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/pluralsLayout"
+                android:layout_marginBottom="20dp"
+                >
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pluralsBtn"
+                    android:background="@drawable/animals"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pluralsBtn"
+                    android:text="@string/Locked"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/foodLayout"
+                android:layout_alignParentRight="true"
+                android:id="@+id/adjectivesLayout"
+                android:layout_marginBottom="20dp"
+
+                >
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/adjectivesBtn"
+                    android:background="@drawable/apple"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/adjectivesBtn"
+                    android:text="@string/Locked"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    android:id="@+id/gameLayout">
+
+    <ProgressBar
+        android:id="@+id/CompletionProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/Green" />
+
+    <TextView
+        android:id="@+id/scoreLable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/Black" />
+
+    <TextView
+        android:id="@+id/goalLable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CompletionProgressBar"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/Black" />
+
+    <Button
+        android:id="@+id/checkAnswerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/Check"
+        android:theme="@style/JoinButtonStyle"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+
+    <RelativeLayout
+        android:id="@+id/imageQuestionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/goalLable"
+        android:layout_margin="25dp">
+
+
+        <RelativeLayout
+            android:id="@+id/imageLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/imageLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView2"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/imageLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/imageLayout1"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView3" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/imageLayout4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/imageLayout2"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView4" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonQuestionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/goalLable"
+        android:layout_margin="25dp">
+
+
+        <TextView
+            android:id="@+id/buttonQuestionTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            android:textColor="@color/Black" />
+
+        <TextView
+            android:id="@+id/questionInput"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonQuestionTextview" />
+
+        <TextView
+            android:id="@+id/questionLine1"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_below="@id/questionInput"
+            android:layout_marginBottom="50dp"
+            android:background="@color/Gray"
+            android:text="" />
+
+        <LinearLayout
+            android:id="@+id/buttonLine1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/questionLine1"
+            android:layout_marginBottom="40dp"
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <LinearLayout
+        android:id="@+id/buttonLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonLine1"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonLine3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonLine2"
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/translateQuestionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/goalLable"
+        android:layout_margin="25dp">
+
+        <TextView
+            android:id="@+id/translatQuestionTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:textColor="@color/Black" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="200dp"
+            android:gravity="top|left"
+            android:id="@+id/translateInputText"
+            android:hint="@string/translateHint"
+            android:layout_below="@id/translatQuestionTextview"
+            android:background="@drawable/border"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultLayout"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_textview_red"
+        android:layout_margin="25dp">
+
+
+        <TextView
+            android:text="You are correct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:id="@+id/resultHolder"
+            />
+
+        <TextView
+            android:text="correctAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/resultHolder"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:id="@+id/correctAnswerHolder" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/endGameLayout">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/endScore"
+            android:layout_marginTop="100dp"
+            android:textStyle="bold"
+            android:textColor="@color/Black"
+            android:textSize="60sp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/endMessage"
+            android:layout_below="@+id/endScore"
+            android:textColor="@color/Black"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/leaveGameBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tryAgainBtn"
+            android:layout_centerHorizontal="true"
+            android:text="@string/Continue"
+            android:theme="@style/JoinButtonStyle"
+            style="@style/Widget.AppCompat.Button.Colored"/>
+
+        <Button
+            android:id="@+id/tryAgainBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/TryAgain"
+            android:theme="@style/ButtonStyle"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>

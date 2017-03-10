@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--basics questions -->
+<string-array name="French_Basics_questions_array">
+    R.array.French_basics_questions_array
+    <item>ImageQuestion,Which of these is \"man\",Homme</item>
+    <item>ImageQuestion,Which of these is \"boy\",Garçon</item>
+    <item>ImageQuestion,Which of these is \"woman\",Femme</item>
+    <item>TranslateQuestion,Une femme,A woman</item>
+    <item>TranslateQuestion,Un homme,A man</item>
+    <item>ButtonQuestion,Je suis un homme, I am a man</item>
+    <item>ButtonQuestion,A Woman, Une Femme</item>
+    <item>ButtonQuestion,Boy, Garçon</item>
+    <item>ButtonQuestion,I am a woman, Je suis une Femme</item>
+    <item>TranslateQuestion,Garçon,Boy</item>
+</string-array>
+
+<!--basics questions -->
+<string-array name="French_Basics_false_array">
+    R.array.French_basics_questions_array
+    <item>Femme,Pain,Garçon</item>
+    <item>Femme,Eau,Homme</item>
+    <item>Pain,Garçon,Homme</item>
+    <item>none,none,none</item>
+    <item>none,none,none</item>
+    <item>I,am,a,man,woman,and,girl,child</item>
+    <item>Une,Femme,Homme,un,je,garçon</item>
+    <item>Garçon,un,je,femme,homme</item>
+    <item>Je,suis,une,Femme,femme,homme,garçon</item>
+    <item>none,none,none</item>
+</string-array>
+
+</resources>

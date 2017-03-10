@@ -36,6 +36,23 @@
     <string name="Messages">Message</string>
     <string name="EnterMessageHint">Enter Message</string>
     <string name="Send">Send</string>
+    <string name="Basics">Basics</string>
+    <string name="Basics2">Basics 2</string>
+    <string name="Food">Food</string>
+    <string name="Phrases">Phrases</string>
+    <string name="Animals">Animals</string>
+    <string name="Locked">Locked</string>
+    <string name="TranslateGoal">Translate this sentence:</string>
+    <string name="Continue">Continue</string>
+    <string name="CorrectAnswer">You are correct</string>
+    <string name="WrongAnswer">That\'s not correct</string>
+    <string name="Check">Check</string>
+    <string name="TryAgain">Try again</string>
+    <string name="EndMessageGood">Great Job</string>
+    <string name="EndMessageMiddle">Really close, keep trying</string>
+    <string name="EndMessageBad">Too bad, you need practice \nKeep trying</string>
+    <string name="ChangeLanguage">Change Language</string>
+    <string name="SignOut">Sign Out</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">
