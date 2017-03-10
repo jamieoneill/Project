@@ -80,7 +80,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    private void checkAnswer(int questionNumber, String correctAnswer, final String answerGiven, final String[] questionInfo, final String[] falseInfo) {
+    private void checkAnswer(int questionNumber, String correctAnswer, final String answerGiven, final String[] questionInfo, final String[] falseInfo, final String userlanguage, final String lesson) {
 
         // hide keyboard if showing
         View keyboardView = this.getCurrentFocus();
@@ -188,17 +188,19 @@ public class GameActivity extends AppCompatActivity {
 
                     //check if score is higher and update
                     SharedPreferences Prefs = getSharedPreferences("Prefs", MODE_PRIVATE);
-                    int thisLessonScore = Prefs.getInt("German" + "Basics", 0);
+                    int thisLessonScore = Prefs.getInt(userlanguage + lesson, 0);
+
+                    //int thisLessonScore = Prefs.getInt("German" + "Basics", 0);
                     if (thisLessonScore < score) {
                         SharedPreferences.Editor editor = Prefs.edit();
-                        editor.putInt("German" + "Basics", score);
+                        editor.putInt(userlanguage + lesson, score);
                         editor.apply();
                     }
 
                 } else {
                     // load next question here
                     confirm.setText(getResources().getString(R.string.Check));
-                    loadNextQuestion(finalQuestionNumber, questionInfo, falseInfo);
+                    loadNextQuestion(finalQuestionNumber, questionInfo, falseInfo, userlanguage, lesson);
                 }
             }
         });
@@ -207,7 +209,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    private void loadNextQuestion(final int questionNumber, final String[] questionInfo, final String[] falseInfo) {
+    private void loadNextQuestion(final int questionNumber, final String[] questionInfo, final String[] falseInfo, final String userlanguage, final String lesson) {
 
         //get question info
         String[] parts = questionInfo[questionNumber].split(",");
@@ -348,7 +350,7 @@ public class GameActivity extends AppCompatActivity {
                         b_four.setChecked(false);
 
                         //check answer
-                        checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo);
+                        checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo, userlanguage, lesson);
                     }
                 });
                 break;
@@ -439,7 +441,7 @@ public class GameActivity extends AppCompatActivity {
                         textLine.setText(null);
 
                         //check answer
-                        checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo);
+                        checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo, userlanguage, lesson);
                     }
                 });
 
@@ -487,7 +489,7 @@ public class GameActivity extends AppCompatActivity {
                         input.getText().clear();
 
                         //check answer
-                        checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo);
+                        checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo, userlanguage, lesson);
                     }
                 });
                 break;
@@ -511,7 +513,7 @@ public class GameActivity extends AppCompatActivity {
         String[] wrongAnswers = getBaseContext().getResources().getStringArray(resId2);
 
         //load the first question which is 0 in array
-        loadNextQuestion(0, questionInfo, wrongAnswers);
+        loadNextQuestion(0, questionInfo, wrongAnswers, language, lesson);
     }
 
     private void hideAllViews(){
