@@ -53,6 +53,12 @@
     <string name="EndMessageBad">Too bad, you need practice \nKeep trying</string>
     <string name="ChangeLanguage">Change Language</string>
     <string name="SignOut">Sign Out</string>
+    <string name="Message">Messages</string>
+    <string name="Friends">Friends</string>
+    <string name="search">Search</string>
+    <string name="friendEmail">Friend\'s Email:</string>
+    <string name="addFriend">Add Friend</string>
+    <string name="add">add</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">
