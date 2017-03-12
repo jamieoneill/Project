@@ -2,6 +2,7 @@ package com.mismatched.nowyouretalking;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -9,6 +10,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -71,10 +74,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        //check for internet
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(activeNetworkInfo  != null){
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        }
+        else{
+
+            //open dialog box
+            AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+            builder.setTitle(getResources().getString(R.string.NoConnection));
+            builder.setMessage(getResources().getString(R.string.ConnectionNeeded));
+
+            builder.setPositiveButton(getResources().getString(R.string.exit), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    finish();
+                }
+            });
+
+            builder.show();
+        }
     }
 
     //Convert to get address
@@ -162,31 +188,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         BitmapDescriptor markerIcon;
 
                         //add maker here and add the database key
-                        if (Language.equals("French")) {
-                            if(Guests.contains(user.getUid())){
-                                markerIcon = FrenchDark;
-                            }else{
-                                markerIcon = French;
+                        switch (Language) {
+                            case "French": {
+                                if (Guests.contains(user.getUid())) {
+                                    markerIcon = FrenchDark;
+                                } else {
+                                    markerIcon = French;
+                                }
+                                Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
+                                marker.setTag(child.getKey());
+                                break;
                             }
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
-                            marker.setTag(child.getKey());
-                        } else if (Language.equals("Spanish")) {
-                            if(Guests.contains(user.getUid())){
-                                markerIcon = SpanishDark;
-                            }else{
-                                markerIcon = Spanish;
+                            case "Spanish": {
+                                if (Guests.contains(user.getUid())) {
+                                    markerIcon = SpanishDark;
+                                } else {
+                                    markerIcon = Spanish;
+                                }
+                                Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
+                                marker.setTag(child.getKey());
+                                break;
                             }
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
-                            marker.setTag(child.getKey());
-                        } else if (Language.equals("German")) {
+                            case "German": {
 
-                            if(Guests.contains(user.getUid())){
-                                markerIcon = GermanDark;
-                            }else{
-                                markerIcon = German;
+                                if (Guests.contains(user.getUid())) {
+                                    markerIcon = GermanDark;
+                                } else {
+                                    markerIcon = German;
+                                }
+                                Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
+                                marker.setTag(child.getKey());
+                                break;
                             }
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(newaddress).title(Titles + "\nCreated By: " + Host).snippet("Address: " + Locations + "\nTime: " + MeetingTime + "\nDate: " + MeetingDate + "\nLanguage: " + Language + "\nRecommended Level: " + MinLevel + "-" + MaxLevel + "\nAvailable Spaces: " + Spaces + "\nNote: " + Note).icon(markerIcon));
-                            marker.setTag(child.getKey());
                         }
 
                     }//end no spaces check
