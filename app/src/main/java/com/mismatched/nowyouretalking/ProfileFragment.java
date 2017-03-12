@@ -323,8 +323,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             roundedImage.setCornerRadius(Math.max(userimage.getWidth(), userimage.getHeight()) / 2.0f);
 
             //set to imageview
-            ImageView imgView = viewToFill;
-            imgView.setImageDrawable(roundedImage);
+            viewToFill.setImageDrawable(roundedImage);
 
         }
         catch (FileNotFoundException e)
