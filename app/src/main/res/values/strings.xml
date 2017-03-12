@@ -59,6 +59,12 @@
     <string name="friendEmail">Friend\'s Email:</string>
     <string name="addFriend">Add Friend</string>
     <string name="add">add</string>
+    <string name="NoConnection">Not Connected</string>
+    <string name="ConnectionNeeded">An internet connection is required to use this feature</string>
+    <string name="exit">Exit</string>
+    <string name="speak">Speak</string>
+    <string name="sayToTranslate">Say words to be translated...</string>
+    <string name="speechNotSupported">Sorry! Speech recognition is not supported in this device.</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">

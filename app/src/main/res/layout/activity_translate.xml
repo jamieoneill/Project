@@ -5,7 +5,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -34,9 +33,16 @@
                 android:id="@+id/FromLanguageSpinner"
                 android:entries="@array/language_array_with_english" />
 
+            <Button
+                android:text="@string/speak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/speechToText"
+                android:theme="@style/ButtonStyle"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1" />
+
         </LinearLayout>
-
-
 
     <EditText
         android:layout_width="match_parent"
