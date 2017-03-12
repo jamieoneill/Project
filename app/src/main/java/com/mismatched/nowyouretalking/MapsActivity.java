@@ -55,7 +55,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -140,7 +143,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mGoogleApiClient.connect();
 
         //database ref
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Meetings");
 
         //set images(country flags) depending on language
@@ -165,17 +168,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     int NumGuests = child.child("NumGuests").getValue(int.class);
                     int Attending = (int) child.child("Attending").getChildrenCount();
                     int Spaces = NumGuests - Attending;
+                    String MeetingDate = child.child("MeetingDate").getValue(String.class);
 
-                    //if there is a space get info and display
-                    if (Spaces >= 1) {
-                         //get info and display
+                    //check the dates
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date theMeetingDate = null;
+                    try {
+                        theMeetingDate = sdf.parse(MeetingDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Date todayDate = new Date();
+                    Date todayWithZeroTime = null;
+                    try {
+                        todayWithZeroTime = sdf.parse(sdf.format(todayDate));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    //if the meeting is in the past move it to PastMeetings in database
+                    if(theMeetingDate.compareTo(todayWithZeroTime) < 0){
+                        moveFirebaseRecord(myRef.child(child.getKey()), database.getReference("PastMeetings/" + child.getKey()));
+                    }
+
+                    //if there is a space to attend and the meeting is still open get info and display
+                    if (Spaces >= 1 && (theMeetingDate.compareTo(todayWithZeroTime) > 0)) {
 
                         //get info from DB
                         String Host = child.child("Host").getValue(String.class);
                         String Titles = child.child("Title").getValue(String.class);
                         String Locations = child.child("Location").getValue(String.class);
                         String MeetingTime = child.child("MeetingTime").getValue(String.class);
-                        String MeetingDate = child.child("MeetingDate").getValue(String.class);
                         String Language = child.child("Language").getValue(String.class);
                         int MinLevel = child.child("MinLevel").getValue(int.class);
                         int MaxLevel = child.child("MaxLevel").getValue(int.class);
@@ -446,6 +469,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    public void moveFirebaseRecord(final DatabaseReference fromPath, final DatabaseReference toPath)
+    {
+        fromPath.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                //copy the value to new referance
+                toPath.setValue(dataSnapshot.getValue(), new DatabaseReference.CompletionListener()
+                {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if (databaseError != null)
+                        {
+                            System.out.println("Copy failed");
+                        }
+                        else
+                        {
+                            System.out.println("Success");
+                        }
+                    }
+                });
+                //remove the original values
+                fromPath.removeValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("Copy failed");
+
+            }
+
+        });
     }
 
 }
