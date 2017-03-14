@@ -30,8 +30,6 @@ public class ManageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage);
 
-        getMeetingStats();
-
         //database ref
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Meetings");
@@ -189,66 +187,6 @@ public class ManageActivity extends AppCompatActivity {
                             myLinearLayout.addView(rowTextView);
 
                         }
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.i("database ", "Failed to read value.", error.toException());
-            }
-        });
-
-    }
-
-    public void getMeetingStats(){
-        //database ref
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("PastMeetings");
-
-        final int[] numOfMeetings = {0};
-
-        // Read from the database
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (final DataSnapshot child : dataSnapshot.getChildren()) {
-
-                    //get users attending
-                    String Attending =  child.child("Attending").getValue().toString();
-
-                    //if user is attending display it
-                    if(Attending.contains(getUserProfile.uid)) {
-
-                        //get info from DB
-                        final String Host = child.child("Host").getValue(String.class);
-                        final String Titles = child.child("Title").getValue(String.class);
-                        final String Locations = child.child("Location").getValue(String.class);
-                        final String MeetingTime = child.child("MeetingTime").getValue(String.class);
-                        final String MeetingDate = child.child("MeetingDate").getValue(String.class);
-                        final String Language = child.child("Language").getValue(String.class);
-                        final int MinLevel = child.child("MinLevel").getValue(int.class);
-                        final int MaxLevel = child.child("MaxLevel").getValue(int.class);
-                        final int NumGuests = child.child("NumGuests").getValue(int.class);
-                        final String Note = child.child("Note").getValue(String.class);
-                        final String meetup = child.getKey();
-
-                        String UserKey = null;
-                        for (final DataSnapshot attendees : child.child("Attending").getChildren()) {
-
-                            //get the users in attending
-                            String name = attendees.getValue().toString();
-
-                            //get the num of meetings this user has attended
-                            if(name.equals(getUserProfile.uid)){
-                                numOfMeetings[0] = numOfMeetings[0] + 1;
-                            }
-                            Log.d("num of meet", String.valueOf(numOfMeetings[0]));
-
-                        }//end for
 
                     }
                 }

@@ -66,6 +66,9 @@
     <string name="sayToTranslate">Say words to be translated…</string>
     <string name="speechNotSupported">Sorry! Speech recognition is not supported in this device.</string>
     <string name="remove">Remove</string>
+    <string name="stats">Stats</string>
+    <string name="MeetupsAttended">Meetups Attended:</string>
+    <string name="NoMeetups">No meet ups scheduled</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">

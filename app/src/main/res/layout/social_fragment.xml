@@ -81,4 +81,62 @@
         android:layout_marginLeft="-4dp"
         />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/AddMeetActivityButton"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/ManageMeetActivityButton">
+
+        <TextView
+            android:text="My next Meet up:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nextLbl"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/Black"/>
+
+
+        <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/flagImage"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="80dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/meetupTitleLbl"
+        android:layout_below="@id/flagImage"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textColor="@color/Black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/meetupTimeLbl"
+            android:layout_below="@id/meetupTitleLbl"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/Black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/meetupDateLbl"
+            android:layout_below="@id/meetupTimeLbl"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/Black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/meetupLocationLbl"
+            android:layout_below="@id/meetupDateLbl"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/Black"/>
+    </RelativeLayout>
+
 </android.support.percent.PercentRelativeLayout>

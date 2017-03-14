@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/Green</item>
     </style>
 
+    <!-- splash screen -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splashscreen</item>
+    </style>
+
     <!-- timepicker -->
     <style name="TimeTheme" parent="android:Theme.Holo.Light"></style>
 
