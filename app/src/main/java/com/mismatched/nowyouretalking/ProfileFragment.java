@@ -78,6 +78,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         Button SignOutButton = (Button) view.findViewById(R.id.SignOutButton);
         SignOutButton.setOnClickListener(this);
 
+        Button statsButton = (Button) view.findViewById(R.id.StatsButton);
+        statsButton.setOnClickListener(this);
+
         return view;
     }
 
@@ -147,6 +150,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 //sign out & return to sign in
                 FirebaseAuth.getInstance().signOut();
                 intent = new Intent(getActivity(), SignInActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.StatsButton:
+
+                //open stats
+                intent = new Intent(getActivity(), StatsActivity.class);
                 startActivity(intent);
                 break;
         }

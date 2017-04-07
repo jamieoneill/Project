@@ -52,4 +52,13 @@
         android:layout_marginTop="20dp"
         />
 
+    <Button
+        android:text="@string/stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/StatsButton"
+        android:theme="@style/ButtonStyle"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        />
 </LinearLayout>

@@ -1,12 +1,7 @@
 package com.mismatched.nowyouretalking;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -19,18 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.List;
-
-/**
- * Created by jamie on 31/10/2016.
- */
 
 public class ManageActivity extends AppCompatActivity {
 
@@ -45,11 +33,6 @@ public class ManageActivity extends AppCompatActivity {
         //database ref
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Meetings");
-
-        //set dialog
-        final AlertDialog.Builder builder = new AlertDialog.Builder(ManageActivity.this);
-
-        //TODO add loading bar as indicator because database can take time
 
         // Read from the database
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -102,15 +85,19 @@ public class ManageActivity extends AppCompatActivity {
                         rowTextView.setPadding(30, 30, 0, 30);
 
                         //set image based on language
-                        if (Language.equals("French")) {
-                            rowTextView.setCompoundDrawablesWithIntrinsicBounds(
-                                    R.drawable.franceicon, 0, 0, 0);
-                        } else if (Language.equals("Spanish")) {
-                            rowTextView.setCompoundDrawablesWithIntrinsicBounds(
-                                    R.drawable.spainicon, 0, 0, 0);
-                        } else if (Language.equals("German")) {
-                            rowTextView.setCompoundDrawablesWithIntrinsicBounds(
-                                    R.drawable.germanyicon, 0, 0, 0);
+                        switch (Language) {
+                            case "French":
+                                rowTextView.setCompoundDrawablesWithIntrinsicBounds(
+                                        R.drawable.franceicon, 0, 0, 0);
+                                break;
+                            case "Spanish":
+                                rowTextView.setCompoundDrawablesWithIntrinsicBounds(
+                                        R.drawable.spainicon, 0, 0, 0);
+                                break;
+                            case "German":
+                                rowTextView.setCompoundDrawablesWithIntrinsicBounds(
+                                        R.drawable.germanyicon, 0, 0, 0);
+                                break;
                         }
                         rowTextView.setCompoundDrawablePadding(50);
 
@@ -161,7 +148,7 @@ public class ManageActivity extends AppCompatActivity {
 
                                 //join to add user to meet up
                                 Button Remove = (Button) dialogView.findViewById(R.id.JoinButton);
-                                Remove.setText("Remove");
+                                Remove.setText(getResources().getString(R.string.remove));
                                 Remove.setOnClickListener(new View.OnClickListener() {
                                     public void onClick(View v) {
 
@@ -214,34 +201,11 @@ public class ManageActivity extends AppCompatActivity {
 
     }
 
-
-    //Convert to get address
-    public LatLng getLocationFromAddress(Context context, String strAddress) {
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        LatLng p1 = null;
-
-        try {
-            address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
-                return null;
-            }
-            Address location = address.get(0);
-            location.getLatitude();
-            location.getLongitude();
-
-            p1 = new LatLng(location.getLatitude(), location.getLongitude());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return p1;
-
-    }
-
     @Override
     public void onBackPressed(){
         //set to home screen on back button
         Intent intent = new Intent(ManageActivity.this, MainActivity.class);
-        startActivity(intent);    }
+        startActivity(intent);
+    }
 
 }
