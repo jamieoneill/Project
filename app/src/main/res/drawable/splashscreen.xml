@@ -8,9 +8,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/talking"
+            android:src="@drawable/chat_icon"
             />
     </item>
-
 </layer-list>
-    <!-- android:src="@mipmap/ic_launcher" -->

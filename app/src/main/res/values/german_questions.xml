@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Questions structure -->
+    <!--Question Type, the question, the answer -->
+
+
+    <!-- Matching game question and answer format -->
+    <!--<item>MatchingQuestion,none,Well done</item>-->
+    <!--<item>1Woman,2Frau,3Man,4Mann,5Boy,6Junge</item> -->
+
 
     <!--basics questions -->
     <string-array name="German_Basics_questions_array">
-                R.array.German_basics_questions_array
+        R.array.German_basics_questions_array
         <item>ImageQuestion,Which of these is \"man\",Mann</item>
         <item>ImageQuestion,Which of these is \"boy\",Junge</item>
         <item>ImageQuestion,Which of these is \"woman\",Frau</item>

@@ -224,7 +224,7 @@ public class GameActivity extends AppCompatActivity {
         String false3 = parts2[2];
 
         //shuffle false answers array
-        ArrayList allButtons = new ArrayList();
+        final ArrayList allButtons = new ArrayList();
         Collections.addAll(allButtons, parts2);
         Collections.shuffle(allButtons);
 
@@ -492,6 +492,130 @@ public class GameActivity extends AppCompatActivity {
                         checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo, userlanguage, lesson);
                     }
                 });
+                break;
+            case "MatchingQuestion":
+                //handle question here
+                RelativeLayout MatchingQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
+                MatchingQuestionView.setVisibility(View.VISIBLE);
+                TextView questionLine = (TextView) findViewById(R.id.questionLine1);
+                questionLine.setVisibility(View.GONE);
+
+                //set goal
+                goalLbl.setText(getResources().getString(R.string.MatchTheWords));
+
+                //disable button
+                confirm.setEnabled(false);
+
+                //button layout
+                final LinearLayout buttonLayout11 = (LinearLayout) findViewById(R.id.buttonLine1);
+                final LinearLayout buttonLayout22 = (LinearLayout) findViewById(R.id.buttonLine2);
+                final LinearLayout buttonLayout33 = (LinearLayout) findViewById(R.id.buttonLine3);
+
+                //set vars for game
+                final int[] count = {0};
+                final int[] selected = new int[1];
+                final int[] previous = new int[1];
+                final Button[] previousButton = new Button[1];
+                final int[] correctCount = {0};
+
+                for (int i = 0; i < allButtons.size(); i++) {
+
+                    String buttonText = String.valueOf(allButtons.get(i));
+                    final Button addingButton = new Button(GameActivity.this);
+
+                    //remove number from text
+                    String word = buttonText.substring(1);
+                    final int number = Integer.parseInt(buttonText.substring(0, 1));
+
+                    //set button
+                    addingButton.setText(word);
+                    addingButton.setTransformationMethod(null);
+                    addingButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            if (count[0] == 1){
+                                //this is the second selected button
+                                selected[0] = number;
+
+                                //set correct matches
+                                if ((previous[0] == 1 || previous[0] == 2) && (selected[0] == 1 || selected[0] == 2)) {
+                                    Log.d("HERE", " correct");
+                                    addingButton.setEnabled(false);
+                                    correctCount[0] = correctCount[0] + 1;
+                                }
+                                else if ((previous[0] == 3 || previous[0] == 4) && (selected[0] == 3 || selected[0] == 4)) {
+                                    Log.d("HERE", " correct");
+                                    addingButton.setEnabled(false);
+                                    correctCount[0] = correctCount[0] + 1;
+                                }
+                                else if ((previous[0] == 5 || previous[0] == 6) && (selected[0] == 5 || selected[0] == 6)) {
+                                    Log.d("HERE", " correct");
+                                    addingButton.setEnabled(false);
+                                    correctCount[0] = correctCount[0] + 1;
+                                }
+                                else if ((previous[0] == 7 || previous[0] == 8) && (selected[0] == 7 || selected[0] == 8)) {
+                                    Log.d("HERE", " correct");
+                                    addingButton.setEnabled(false);
+                                    correctCount[0] = correctCount[0] + 1;
+                                }
+                                else{
+                                    //false match. re-enable buttons
+                                    Log.d("HERE", " FALSE");
+                                    previousButton[0].setEnabled(true);
+                                }
+
+                                //reset values
+                                count[0] = 0;
+                                previous[0] = 0;
+                                selected[0] = 0;
+
+                                //check for finish of game
+                                if(correctCount[0] == allButtons.size() / 2){
+                                    //enable continue button
+                                    confirm.setEnabled(true);
+                                }
+
+                            }
+                            else{
+                                //get the first button selected
+                                previous[0] = number;
+                                count[0] = 1;
+
+                                previousButton[0] = addingButton;
+                                previousButton[0].setEnabled(false);
+                            }
+
+                        }
+                    });
+
+                    //add the buttons to the layout
+                    if (buttonLayout11.getChildCount() <= 2) {
+                        buttonLayout11.addView(addingButton);
+                    } else if (buttonLayout11.getChildCount() > 2 && buttonLayout22.getChildCount() <= 2) {
+                        buttonLayout22.addView(addingButton);
+                    } else {
+                        buttonLayout33.addView(addingButton);
+                    }
+                }//end for loop
+
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                       String givenAnswer = "Well done";
+
+                        //reset buttons
+                        buttonLayout11.removeAllViews();
+                        buttonLayout22.removeAllViews();
+                        buttonLayout33.removeAllViews();
+
+                        //check answer
+                        checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo, userlanguage, lesson);
+                    }
+                });
+
+
                 break;
         }
     }

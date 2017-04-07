@@ -29,10 +29,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-/**
- * Created by jamie on 06/10/2016.
- */
-
 public class SignInActivity  extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
     private GoogleApiClient mGoogleApiClient;
 
@@ -40,10 +36,19 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    static boolean calledAlready = false;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
+        //database ref
+        if (!calledAlready)
+        {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            calledAlready = true;
+        }
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
