@@ -70,6 +70,8 @@
     <string name="MeetupsAttended">Meetups Attended:</string>
     <string name="NoMeetups">No meet ups scheduled</string>
     <string name="MatchTheWords">Match the words:</string>
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">

@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -366,6 +369,8 @@ public class GameActivity extends AppCompatActivity {
                 TextView questionText = (TextView) findViewById(R.id.buttonQuestionTextview);
                 questionText.setText(question);
                 final TextView textLine = (TextView) findViewById(R.id.questionInput);
+                TextView questionLine = (TextView) findViewById(R.id.questionLine1);
+                questionLine.setVisibility(View.VISIBLE);
 
                 //disable button
                 confirm.setEnabled(false);
@@ -497,8 +502,8 @@ public class GameActivity extends AppCompatActivity {
                 //handle question here
                 RelativeLayout MatchingQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
                 MatchingQuestionView.setVisibility(View.VISIBLE);
-                TextView questionLine = (TextView) findViewById(R.id.questionLine1);
-                questionLine.setVisibility(View.GONE);
+                TextView questionLine2 = (TextView) findViewById(R.id.questionLine1);
+                questionLine2.setVisibility(View.GONE);
 
                 //set goal
                 goalLbl.setText(getResources().getString(R.string.MatchTheWords));
@@ -534,36 +539,52 @@ public class GameActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
 
+                            //set up for toast when correct
+                            Toast toast = new Toast(getApplicationContext());
+                            LayoutInflater inflater=getLayoutInflater();
+                            View customToastroot;
+                            TextView messageText;
+                            customToastroot =inflater.inflate(R.layout.toast_green, null);
+                            messageText = (TextView)customToastroot.findViewById(R.id.toastMessage);
+                            messageText.setText(getResources().getString(R.string.correct));
+
                             if (count[0] == 1){
                                 //this is the second selected button
                                 selected[0] = number;
 
                                 //set correct matches
                                 if ((previous[0] == 1 || previous[0] == 2) && (selected[0] == 1 || selected[0] == 2)) {
-                                    Log.d("HERE", " correct");
                                     addingButton.setEnabled(false);
                                     correctCount[0] = correctCount[0] + 1;
                                 }
                                 else if ((previous[0] == 3 || previous[0] == 4) && (selected[0] == 3 || selected[0] == 4)) {
-                                    Log.d("HERE", " correct");
                                     addingButton.setEnabled(false);
                                     correctCount[0] = correctCount[0] + 1;
                                 }
                                 else if ((previous[0] == 5 || previous[0] == 6) && (selected[0] == 5 || selected[0] == 6)) {
-                                    Log.d("HERE", " correct");
                                     addingButton.setEnabled(false);
                                     correctCount[0] = correctCount[0] + 1;
                                 }
                                 else if ((previous[0] == 7 || previous[0] == 8) && (selected[0] == 7 || selected[0] == 8)) {
-                                    Log.d("HERE", " correct");
                                     addingButton.setEnabled(false);
                                     correctCount[0] = correctCount[0] + 1;
                                 }
                                 else{
                                     //false match. re-enable buttons
-                                    Log.d("HERE", " FALSE");
                                     previousButton[0].setEnabled(true);
+
+                                    //change toast
+                                    customToastroot =inflater.inflate(R.layout.toast_red, null);
+                                    messageText = (TextView)customToastroot.findViewById(R.id.toastMessage);
+                                    messageText.setText(getResources().getString(R.string.incorrect));
+
                                 }
+
+                                //show result
+                                toast.setView(customToastroot);
+                                toast.setGravity(0, 0, 800);
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.show();
 
                                 //reset values
                                 count[0] = 0;
