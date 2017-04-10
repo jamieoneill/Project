@@ -2,7 +2,7 @@
 <resources>
 
 <!--basics questions -->
-<string-array name="French_Basics_questions_array">
+<string-array name="French_Basics1_questions_array">
     R.array.French_basics_questions_array
     <item>ImageQuestion,Which of these is \"man\",Homme</item>
     <item>ImageQuestion,Which of these is \"boy\",Garçon</item>
@@ -17,7 +17,7 @@
 </string-array>
 
 <!--basics questions -->
-<string-array name="French_Basics_false_array">
+<string-array name="French_Basics1_false_array">
     R.array.French_basics_questions_array
     <item>Femme,Pain,Garçon</item>
     <item>Femme,Eau,Homme</item>

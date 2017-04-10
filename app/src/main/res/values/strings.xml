@@ -72,6 +72,19 @@
     <string name="MatchTheWords">Match the words:</string>
     <string name="correct">Correct</string>
     <string name="incorrect">Incorrect</string>
+    <string name="lesson">Lesson </string>
+    <string name="begin">Begin</string>
+
+    <!-- text to display on lesson -->
+    <!-- German -->
+    <string name="German_Basics1">Mann, Frau, Junge, ich, bin, ein, eine</string>
+
+    <!-- Spanish -->
+    <string name="Spanish_Basics1">Hombre, Mujer, Chico, yo, soy, un, una</string>
+
+    <!-- French -->
+    <string name="French_Basics1">Homme, Femme, Garçon, je, suis, un, une</string>
+
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">

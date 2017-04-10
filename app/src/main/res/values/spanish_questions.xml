@@ -2,7 +2,7 @@
 <resources>
 
     <!--basics questions -->
-    <string-array name="Spanish_Basics_questions_array">
+    <string-array name="Spanish_Basics1_questions_array">
         R.array.Spanish_basics_questions_array
         <item>ImageQuestion,Which of these is \"man\",Hombre</item>
         <item>ImageQuestion,Which of these is \"boy\",Chico</item>
@@ -17,7 +17,7 @@
     </string-array>
 
     <!--basics questions -->
-    <string-array name="Spanish_Basics_false_array">
+    <string-array name="Spanish_Basics1_false_array">
         R.array.Spanish_basics_questions_array
         <item>Mujer,El pan,Chico</item>
         <item>Mujer,Agua,Hombre</item>

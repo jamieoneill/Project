@@ -7,15 +7,22 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +34,8 @@ import java.util.ArrayList;
 
 public class LearnFragment extends Fragment implements View.OnClickListener {
 
+    private AlertDialog alertDialog;
+    private String userLanguage;
     // get user info from profile class
     final UserProfileActivity.getUserProfile getUserProfile = new UserProfileActivity().new getUserProfile();
 
@@ -44,7 +53,7 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String userLanguage = dataSnapshot.child("Language").getValue(String.class);
+                userLanguage = dataSnapshot.child("Language").getValue(String.class);
                 final String Level = dataSnapshot.child("Level").getValue(String.class);
 
                 setProgressBars(v, userLanguage);
@@ -72,17 +81,30 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        //start intents on click
-        Intent intent;
+        //get lesson
         RelativeLayout parent = (RelativeLayout) v.getParent();
         TextView myLesson = (TextView) parent.getChildAt(1);
 
+        //get views for dialog
+        View dialogView = View.inflate(getActivity(), R.layout.lesson_selector, null);
+        alertDialog = new AlertDialog.Builder(getActivity()).create();
+
+        // set dialog
+        alertDialog.setView(dialogView);
+        CardPagerAdapter mCardAdapter;
+        ViewPager mViewPager;
+
+        mViewPager = (ViewPager) dialogView.findViewById(R.id.viewPager);
+        mCardAdapter = new CardPagerAdapter();
+        int lessonCount;
+        String lessonName = myLesson.getText().toString();
+
         switch (v.getId()) {
             case R.id.basicsBtn:
-                //start game
-                intent = new Intent(getActivity(), GameActivity.class);
-                intent.putExtra("Lesson",myLesson.getText().toString());
-                startActivity(intent);
+
+                //add a card for the same number of the lesson count
+                lessonCount = 3;
+                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount));
 
                 break;
             case R.id.phrasesBtn:
@@ -90,6 +112,11 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
                 break;
 
         }
+
+        mViewPager.setAdapter(mCardAdapter);
+        mViewPager.setOffscreenPageLimit(3);
+        alertDialog.show();
+
     }
 
     public void setProgressBars( View v, String userLanguage){
@@ -117,7 +144,7 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
             int thisLessonScore = Prefs.getInt(userLanguage + myLesson.getText().toString(), 0);
             myProgressBar.setProgress(thisLessonScore * 10);
 
-            //add a start to 100% lessons
+            //add a star to 100% lessons
             if (myProgressBar.getProgress() == 100){
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 lp.addRule(RelativeLayout.BELOW, myLesson.getId());
@@ -129,6 +156,25 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
                 parent.addView(myimage, lp);
             }
 
+        }
+
+    }
+
+    public static int getStringIdentifier(Context context, String language, String lesson, int number) {
+        return context.getResources().getIdentifier(language+"_"+lesson+number, "string", context.getPackageName());
+    }
+
+    public CardItem addMyCard(CardPagerAdapter mCardAdapter,String lessonName, int lessonCount){
+        //this will add a card with the correct information and link to game
+       return new CardItem(getResources().getString(R.string.lesson) + " " + String.valueOf(mCardAdapter.getCount() + 1 + " of " + lessonCount), getStringIdentifier(getActivity(), userLanguage, lessonName,mCardAdapter.getCount() + 1), getActivity(), GameActivity.class, lessonName + String.valueOf(mCardAdapter.getCount() + 1));
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        // hide dialog
+        if(alertDialog != null && alertDialog.isShowing()){
+            alertDialog.dismiss();
         }
 
     }
