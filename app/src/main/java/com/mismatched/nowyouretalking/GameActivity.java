@@ -2,7 +2,10 @@ package com.mismatched.nowyouretalking;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -236,6 +239,10 @@ public class GameActivity extends AppCompatActivity {
         //set goal label
         TextView goalLbl = (TextView) findViewById(R.id.goalLable);
 
+        //get button background
+        Button newButton = new Button(GameActivity.this);
+        final Drawable buttonBackground = newButton.getBackground();
+
         //hidelayouts
         hideAllViews();
 
@@ -368,6 +375,7 @@ public class GameActivity extends AppCompatActivity {
                 //set question
                 TextView questionText = (TextView) findViewById(R.id.buttonQuestionTextview);
                 questionText.setText(question);
+                questionText.setVisibility(View.VISIBLE);
                 final TextView textLine = (TextView) findViewById(R.id.questionInput);
                 TextView questionLine = (TextView) findViewById(R.id.questionLine1);
                 questionLine.setVisibility(View.VISIBLE);
@@ -379,7 +387,6 @@ public class GameActivity extends AppCompatActivity {
                 final LinearLayout buttonLayout1 = (LinearLayout) findViewById(R.id.buttonLine1);
                 final LinearLayout buttonLayout2 = (LinearLayout) findViewById(R.id.buttonLine2);
                 final LinearLayout buttonLayout3 = (LinearLayout) findViewById(R.id.buttonLine3);
-
 
                 for (int i = 0; i < allButtons.size(); i++) {
 
@@ -402,6 +409,7 @@ public class GameActivity extends AppCompatActivity {
 
                             //// TODO: 08/03/2017 fix first word not being rewritten
                             //check how to handle word
+
                             for (int i = 0; i < exsistingArray.length; i++) {
 
                                 String currentword = exsistingArray[i];
@@ -410,6 +418,11 @@ public class GameActivity extends AppCompatActivity {
                                     //remove the word
                                     String myString = exsistingText.replaceAll("\\b\\s" + addedText + "\\b", "");
                                     textLine.setText(myString);
+                                    //change button color
+                                    addingButton.setBackground(buttonBackground);
+                                    addingButton.setTextColor(Color.BLACK);
+
+
                                     break;
                                 } else if (i < exsistingArray.length - 1 && !currentword.equals(addedText)) {
                                     //do nothing in word that is not equal
@@ -417,6 +430,11 @@ public class GameActivity extends AppCompatActivity {
                                 } else {
                                     //add word to line
                                     textLine.append(" " + addedText);
+                                    //change button color
+                                    addingButton.setTextColor(Color.WHITE);
+                                    addingButton.setBackgroundResource(R.drawable.circle_button);
+
+
                                 }
                             }//end for
 
@@ -504,6 +522,8 @@ public class GameActivity extends AppCompatActivity {
                 MatchingQuestionView.setVisibility(View.VISIBLE);
                 TextView questionLine2 = (TextView) findViewById(R.id.questionLine1);
                 questionLine2.setVisibility(View.GONE);
+                TextView questionText2 = (TextView) findViewById(R.id.buttonQuestionTextview);
+                questionText2.setVisibility(View.GONE);
 
                 //set goal
                 goalLbl.setText(getResources().getString(R.string.MatchTheWords));
@@ -572,6 +592,7 @@ public class GameActivity extends AppCompatActivity {
                                 else{
                                     //false match. re-enable buttons
                                     previousButton[0].setEnabled(true);
+                                    previousButton[0].setBackground(buttonBackground);
 
                                     //change toast
                                     customToastroot =inflater.inflate(R.layout.toast_red, null);
@@ -579,6 +600,9 @@ public class GameActivity extends AppCompatActivity {
                                     messageText.setText(getResources().getString(R.string.incorrect));
 
                                 }
+
+                                //change button back
+                                previousButton[0].setBackground(buttonBackground);
 
                                 //show result
                                 toast.setView(customToastroot);
@@ -605,6 +629,7 @@ public class GameActivity extends AppCompatActivity {
 
                                 previousButton[0] = addingButton;
                                 previousButton[0].setEnabled(false);
+                                previousButton[0].setBackgroundResource(R.drawable.circle_button);
                             }
 
                         }

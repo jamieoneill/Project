@@ -25,7 +25,8 @@
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:layout_marginTop="5dp"/>
 
             <TextView
                 android:id="@+id/contentTextView"
@@ -40,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:id="@+id/lessonButton"
-                android:text="@string/begin" />
+                android:text="@string/begin"
+                />
         </LinearLayout>
 
         <ImageView

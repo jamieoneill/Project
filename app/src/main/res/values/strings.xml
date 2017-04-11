@@ -78,12 +78,19 @@
     <!-- text to display on lesson -->
     <!-- German -->
     <string name="German_Basics1">Mann, Frau, Junge, ich, bin, ein, eine</string>
+    <string name="German_Basics2">du, bist, Kind, Madchen, und</string>
+    <string name="German_Basics3">Bort, er, sie, es, ist, trinken, Wasser</string>
 
     <!-- Spanish -->
     <string name="Spanish_Basics1">Hombre, Mujer, Chico, yo, soy, un, una</string>
+    <string name="Spanish_Basics2">tu, eres, nino, nina, y</string>
+    <string name="Spanish_Basics3">El pan, él, ella, es, bebida, agua</string>
 
     <!-- French -->
     <string name="French_Basics1">Homme, Femme, Garçon, je, suis, un, une</string>
+    <string name="French_Basics2">tu, es, enfant, fille, suis, et</string>
+    <string name="French_Basics3">pain, il, elle, c\'est, buvant, eau</string>
+
 
 
     <!--numbers 1 - 20 -->

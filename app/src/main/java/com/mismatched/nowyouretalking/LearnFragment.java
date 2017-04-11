@@ -105,6 +105,8 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
                 //add a card for the same number of the lesson count
                 lessonCount = 3;
                 mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount));
+                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount));
+                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount));
 
                 break;
             case R.id.phrasesBtn:

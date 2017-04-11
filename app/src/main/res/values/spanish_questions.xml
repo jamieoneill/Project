@@ -5,13 +5,13 @@
     <string-array name="Spanish_Basics1_questions_array">
         R.array.Spanish_basics_questions_array
         <item>ImageQuestion,Which of these is \"man\",Hombre</item>
-        <item>ImageQuestion,Which of these is \"boy\",Chico</item>
+        <item>ImageQuestion,Which of these is \"boy\",el nino</item>
         <item>ImageQuestion,Which of these is \"woman\",Mujer</item>
         <item>TranslateQuestion,Una mujer,A woman</item>
         <item>TranslateQuestion,Un hombre,A man</item>
         <item>ButtonQuestion,Soy un hombre, I am a man</item>
         <item>ButtonQuestion,A Woman, Una Mujer</item>
-        <item>ButtonQuestion,Boy, Chico</item>
+        <item>ButtonQuestion,Boy, nino</item>
         <item>ButtonQuestion,I am a woman, Soy una Mujer</item>
         <item>TranslateQuestion,Chico,Boy</item>
     </string-array>
@@ -19,15 +19,15 @@
     <!--basics questions -->
     <string-array name="Spanish_Basics1_false_array">
         R.array.Spanish_basics_questions_array
-        <item>Mujer,El pan,Chico</item>
+        <item>Mujer,El pan,el nino</item>
         <item>Mujer,Agua,Hombre</item>
         <item>El pan,Chico,Hombre</item>
         <item>none,none,none</item>
         <item>none,none,none</item>
         <item>I,am,a,man,woman,and,girl,child</item>
-        <item>Una,Mujer,hombre,un,yo,chico</item>
-        <item>Chico,yo,un,mujer,hombre</item>
-        <item>Soy una,Mujer,soy un,hombre,chico</item>
+        <item>Una,Mujer,hombre,un,yo,nino</item>
+        <item>nino,yo,un,mujer,hombre</item>
+        <item>Soy una,Mujer,soy un,hombre,nino</item>
         <item>none,none,none</item>
     </string-array>
 

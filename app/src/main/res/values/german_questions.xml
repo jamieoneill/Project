@@ -10,6 +10,7 @@
 
 
     <!--basics questions -->
+    <!-- Lesson 1 -->
     <string-array name="German_Basics1_questions_array">
         R.array.German_basics_questions_array
         <item>ImageQuestion,Which of these is \"man\",Mann</item>
@@ -24,7 +25,6 @@
         <item>TranslateQuestion,Junge,Boy</item>
     </string-array>
 
-    <!--basics questions -->
     <string-array name="German_Basics1_false_array">
         R.array.German_basics_questions_array
         <item>Frau,Brot,Junge</item>
@@ -39,4 +39,32 @@
         <item>none,none,none</item>
     </string-array>
 
+    <!-- Lesson 2 -->
+    <string-array name="German_Basics2_questions_array">
+        R.array.German_basics_questions_array
+        <item>ImageQuestion,Which of these is \"girl\",Madchen</item>
+        <item>TranslateQuestion,Ein Kind,A child</item>
+        <item>ButtonQuestion,Eine Frau und ein Mann, A woman and a man</item>
+        <item>TranslateQuestion,Du bist ein Kind,You are a child</item>
+        <item>TranslateQuestion,David du bist ein Mann,David you are a man</item>
+        <item>ButtonQuestion,Maria du bist eine Frau, Maria you are a woman</item>
+        <item>ButtonQuestion,A Woman and a man, Eine Frau und ein Mann</item>
+        <item>ButtonQuestion,Ein Madchen, A girl</item>
+        <item>MatchingQuestion,none,Well done</item>
+        <item>MatchingQuestion,none,Well done</item>
+    </string-array>
+
+    <string-array name="German_Basics2_false_array">
+        R.array.German_basics_questions_array
+        <item>Mann,Brot,Wasser</item>
+        <item>none,none,none</item>
+        <item>A,woman,and,a,man,you,water,are,girl</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>Maria,you,are,a,woman,man,and,drinks,boy</item>
+        <item>Eine,Frau,und,ein,Mann,madchen,bist,kind,du</item>
+        <item>A,girl,he,bread,she,it</item>
+        <item>1Madchen,2girl,3Junge,4boy,5bist,6are,7a,8eine</item>
+        <item>1und,2and,3woman,4Frau,5you,6du,7Kind,8child</item>
+    </string-array>
 </resources>
