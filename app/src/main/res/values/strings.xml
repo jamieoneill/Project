@@ -74,6 +74,10 @@
     <string name="incorrect">Incorrect</string>
     <string name="lesson">Lesson </string>
     <string name="begin">Begin</string>
+    <string name="MissingGoal">Fill in the blank in this sentence:</string>
+    <string name="enterWord">Enter word</string>
+    <string name="TranslateImageGoal">Translate this word:</string>
+
 
     <!-- text to display on lesson -->
     <!-- German -->
