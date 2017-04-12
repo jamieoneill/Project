@@ -77,6 +77,7 @@
     <string name="MissingGoal">Fill in the blank in this sentence:</string>
     <string name="enterWord">Enter word</string>
     <string name="TranslateImageGoal">Translate this word:</string>
+    <string name="redo">Redo</string>
 
 
     <!-- text to display on lesson -->

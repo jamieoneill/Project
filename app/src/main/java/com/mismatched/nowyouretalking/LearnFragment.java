@@ -5,24 +5,21 @@ package com.mismatched.nowyouretalking;
  */
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -104,9 +101,9 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
 
                 //add a card for the same number of the lesson count
                 lessonCount = 3;
-                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount));
-                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount));
-                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount));
+                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
+                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
+                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
 
                 break;
             case R.id.phrasesBtn:
@@ -143,8 +140,13 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
 
             //get score from prefs
             SharedPreferences Prefs = getActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
-            int thisLessonScore = Prefs.getInt(userLanguage + myLesson.getText().toString(), 0);
-            myProgressBar.setProgress(thisLessonScore * 10);
+            int LessonScore1 = Prefs.getInt(userLanguage + myLesson.getText().toString() + "1", 0);
+            int LessonScore2 = Prefs.getInt(userLanguage + myLesson.getText().toString() + "2", 0);
+            int LessonScore3 = Prefs.getInt(userLanguage + myLesson.getText().toString() + "3", 0);
+
+            //sum of lessons displays
+            int result = (LessonScore1 + LessonScore2 + LessonScore3) / 3;
+            myProgressBar.setProgress(result * 10);
 
             //add a star to 100% lessons
             if (myProgressBar.getProgress() == 100){
@@ -154,6 +156,8 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
 
                 ImageView myimage = new ImageView(getActivity());
                 myimage.setBackgroundResource(R.drawable.star);
+                myProgressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.Gold), PorterDuff.Mode.SRC_IN);
+
 
                 parent.addView(myimage, lp);
             }
@@ -166,9 +170,9 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
         return context.getResources().getIdentifier(language+"_"+lesson+number, "string", context.getPackageName());
     }
 
-    public CardItem addMyCard(CardPagerAdapter mCardAdapter,String lessonName, int lessonCount){
+    public CardItem addMyCard(CardPagerAdapter mCardAdapter,String lessonName, int lessonCount, String userLanguage){
         //this will add a card with the correct information and link to game
-       return new CardItem(getResources().getString(R.string.lesson) + " " + String.valueOf(mCardAdapter.getCount() + 1 + " of " + lessonCount), getStringIdentifier(getActivity(), userLanguage, lessonName,mCardAdapter.getCount() + 1), getActivity(), GameActivity.class, lessonName + String.valueOf(mCardAdapter.getCount() + 1));
+       return new CardItem(getResources().getString(R.string.lesson) + " " + String.valueOf(mCardAdapter.getCount() + 1 + " of " + lessonCount), getStringIdentifier(getActivity(), userLanguage, lessonName,mCardAdapter.getCount() + 1), getActivity(), GameActivity.class, lessonName + String.valueOf(mCardAdapter.getCount() + 1), userLanguage);
     }
 
     @Override

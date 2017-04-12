@@ -9,13 +9,15 @@ public class CardItem {
     private Class mClassResource;
     private Activity mActivityResource;
     private String mLessonResource;
+    private String mUserLanguage;
 
-    public CardItem(String title, int text, Activity myActivity, Class myClass, String myLesson) {
+    public CardItem(String title, int text, Activity myActivity, Class myClass, String myLesson, String userLanguage) {
         mTitleResource = title;
         mTextResource = text;
         mClassResource = myClass;
         mActivityResource = myActivity;
         mLessonResource = myLesson;
+        mUserLanguage = userLanguage;
     }
 
     public int getText() {
@@ -36,4 +38,7 @@ public class CardItem {
         return mLessonResource;
     }
 
+    public String getUserLanguage() {
+        return mUserLanguage;
+    }
 }
