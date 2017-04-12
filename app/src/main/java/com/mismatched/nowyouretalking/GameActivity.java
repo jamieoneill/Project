@@ -523,9 +523,9 @@ public class GameActivity extends AppCompatActivity {
                 RelativeLayout MatchingQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
                 MatchingQuestionView.setVisibility(View.VISIBLE);
                 TextView questionLine2 = (TextView) findViewById(R.id.questionLine1);
-                questionLine2.setVisibility(View.GONE);
+                questionLine2.setVisibility(View.INVISIBLE);
                 TextView questionText2 = (TextView) findViewById(R.id.buttonQuestionTextview);
-                questionText2.setVisibility(View.GONE);
+                questionText2.setVisibility(View.INVISIBLE);
 
                 //set goal
                 goalLbl.setText(getResources().getString(R.string.MatchTheWords));
@@ -673,7 +673,14 @@ public class GameActivity extends AppCompatActivity {
                 TextView missingQuestionText = (TextView) findViewById(R.id.missingQuestionTextview);
                 missingQuestionText.setText(question);
 
+                //put back all views
                 final RadioGroup missingGroup = (RadioGroup) findViewById(R.id.missingButtonGroup);
+                missingGroup.getChildAt(0).setVisibility(View.VISIBLE);
+                missingGroup.getChildAt(1).setVisibility(View.VISIBLE);
+                missingGroup.getChildAt(2).setVisibility(View.VISIBLE);
+                missingGroup.getChildAt(3).setVisibility(View.VISIBLE);
+                missingGroup.clearCheck();
+
                 final String[] givenAnswer = new String[1];
 
                 //set text on buttons or hide it
@@ -693,13 +700,16 @@ public class GameActivity extends AppCompatActivity {
                         confirm.setEnabled(true);
 
                         RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
-                        givenAnswer[0] = String.valueOf(radioButton.getText());
+                        if (radioButton != null){
+                            givenAnswer[0] = String.valueOf(radioButton.getText());
+                        }
                     }
                 });
 
                 confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         //check answer
                         checkAnswer(questionNumber, answer, givenAnswer[0], questionInfo, falseInfo, userlanguage, lesson);
                     }

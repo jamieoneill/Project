@@ -73,4 +73,35 @@
         <item>1Madchen,2girl,3Junge,4boy,5bist,6are,7a,8eine</item>
         <item>1und,2and,3woman,4Frau,5you,6du,7Kind,8child</item>
     </string-array>
+
+    <!-- Lesson 3 -->
+    <string-array name="German_Basics3_questions_array">
+        R.array.German_basics_questions_array
+        <item>ImageQuestion,Which of these is \"water\",Wasser</item>
+        <item>TranslateQuestion,Brot und wasser,Bread and water</item>
+        <item>ButtonQuestion,Ein Madchen trinkt, A girl is drinking</item>
+        <item>TranslateImageQuestion,Water,Wasser</item>
+        <item>MatchingQuestion,none,Well done</item>
+        <item>MatchingQuestion,none,Well done</item>
+        <item>MissingQuestion,Du ....... eine Frau und ich bin ein Mann,bist</item>
+        <item>ButtonQuestion,Sie ist eine Frau, She is a woman</item>
+        <item>TranslateImageQuestion,Bread,Brot</item>
+        <item>MissingQuestion,Du ....... ein Junge,bist</item>
+    </string-array>
+
+    <string-array name="German_Basics3_false_array">
+        R.array.German_basics_questions_array
+        <item>Mann,Brot,Frau</item>
+        <item>none,none,none</item>
+        <item>is,girl,it,are,water,drinking,A</item>
+        <item>none,none,none</item>
+        <item>1eine,2a,3Kind,4child,5es,6it,7drinks,8trinkt</item>
+        <item>1I,2ich,3er,4he,5bist,6are,7sie,8she</item>
+        <item>bist,bin,none,none</item>
+        <item>She,is,a,woman,and,boy,girl,child</item>
+        <item>none,none,none</item>
+        <item>bist,bin,none,none</item>
+    </string-array>
+
+
 </resources>
