@@ -2,6 +2,7 @@
 <resources>
 
     <!--basics questions -->
+    <!-- Lesson 1 -->
     <string-array name="Spanish_Basics1_questions_array">
         R.array.Spanish_basics_questions_array
         <item>ImageQuestion,Which of these is \"man\",Hombre</item>
@@ -16,7 +17,6 @@
         <item>TranslateQuestion,Chico,Boy</item>
     </string-array>
 
-    <!--basics questions -->
     <string-array name="Spanish_Basics1_false_array">
         R.array.Spanish_basics_questions_array
         <item>Mujer,El pan,el nino</item>
@@ -29,6 +29,64 @@
         <item>nino,yo,un,mujer,hombre</item>
         <item>Soy una,Mujer,soy un,hombre,nino</item>
         <item>none,none,none</item>
+    </string-array>
+
+    <!-- Lesson 2 -->
+    <string-array name="Spanish_Basics2_questions_array">
+        R.array.Spanish_basics_questions_array
+        <item>ImageQuestion,Which of these is \"girl\",Nina</item>
+        <item>TranslateQuestion,El Nino,A child</item>
+        <item>ButtonQuestion,Una mujer y un hombre, A woman and a man</item>
+        <item>TranslateQuestion,eres un niño,You are a child</item>
+        <item>TranslateQuestion,David Eres un hombre,David you are a man</item>
+        <item>ButtonQuestion,Maria tu eres una mujer, Maria you are a woman</item>
+        <item>ButtonQuestion,A Woman and a man, Una mujer y un hombre</item>
+        <item>ButtonQuestion,Una niña, A girl</item>
+        <item>MatchingQuestion,none,Well done</item>
+        <item>MatchingQuestion,none,Well done</item>
+    </string-array>
+
+    <string-array name="Spanish_Basics2_false_array">
+        R.array.Spanish_basics_questions_array
+        <item>Hombre,El pan,Agua</item>
+        <item>none,none,none</item>
+        <item>A,woman,and,a,man,you,water,are,girl</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>Maria,you,are,a,woman,man,and,drinks,boy</item>
+        <item>Una,mujer,y,un,hombre,nina,eres,nino,tu</item>
+        <item>A,girl,he,bread,she,it</item>
+        <item>1mujer,2girl,3nino,4boy,5eres,6are,7a,8un</item>
+        <item>1y,2and,3woman,4mujer,5you,6tu,7nino,8child</item>
+    </string-array>
+
+    <!-- Lesson 3 -->
+    <string-array name="Spanish_Basics3_questions_array">
+        R.array.Spanish_basics_questions_array
+        <item>ImageQuestion,Which of these is \"water\",Agua</item>
+        <item>TranslateQuestion,El pan und Agua,Bread and water</item>
+        <item>ButtonQuestion,Una niña está bebiendo, A girl is drinking</item>
+        <item>TranslateImageQuestion,Water,Agua</item>
+        <item>MatchingQuestion,none,Well done</item>
+        <item>MatchingQuestion,none,Well done</item>
+        <item>MissingQuestion,...... una mujer y yo soy un hombre,Tu eres</item>
+        <item>ButtonQuestion,Ella es una mujer, She is a woman</item>
+        <item>TranslateImageQuestion,Bread,El pan</item>
+        <item>MissingQuestion,tu ...... un chico,eres</item>
+    </string-array>
+
+    <string-array name="Spanish_Basics3_false_array">
+        R.array.Spanish_basics_questions_array
+        <item>Hombre,El pan,Mujer</item>
+        <item>none,none,none</item>
+        <item>is,girl,it,are,water,drinking,A</item>
+        <item>none,none,none</item>
+        <item>1un,2a,3nino,4child,5eso,6it,7drinks,8bebidas</item>
+        <item>1I,2Yo,3el,4he,5eres,6are,7ella,8she</item>
+        <item>Tu eres,Yo soy,none,none</item>
+        <item>She,is,a,woman,and,boy,girl,child</item>
+        <item>none,none,none</item>
+        <item>eres,soy,none,none</item>
     </string-array>
 
 </resources>
