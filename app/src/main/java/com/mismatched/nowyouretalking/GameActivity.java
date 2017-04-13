@@ -64,7 +64,6 @@ public class GameActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 final String userLanguage = dataSnapshot.child("Language").getValue(String.class);
-                final String Level = dataSnapshot.child("Level").getValue(String.class);
 
                 //get question list
                 getQuestionList(lesson, userLanguage);
@@ -183,13 +182,6 @@ public class GameActivity extends AppCompatActivity {
                             recreate();
                         }
                     });
-
-                    //update score
-                    // get user details
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference userRef = database.getReference("Users/" + getUserProfile.uid);
-
-                    //userRef.child("Level").setValue(score);
 
                     //check if score is higher and update
                     SharedPreferences Prefs = getSharedPreferences("Prefs", MODE_PRIVATE);
@@ -315,7 +307,7 @@ public class GameActivity extends AppCompatActivity {
                 b_three.setText(answersShuffled.get(2).toString());
                 b_four.setText(answersShuffled.get(3).toString());
 
-                ArrayList<View> radiobuttons = new ArrayList<View>();
+                ArrayList<View> radiobuttons = new ArrayList<>();
                 radiobuttons.add(b_one);
                 radiobuttons.add(b_two);
                 radiobuttons.add(b_three);

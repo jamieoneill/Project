@@ -86,8 +86,6 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                     //set... name, email and level
                     myRef.child(uid).child("Name").setValue(user.getDisplayName());
                     myRef.child(uid).child("Email").setValue(user.getEmail());
-                    myRef.child(uid).child("Level").setValue("test");
-
 
                     final String[] result = new String[1];
                     // check if a language is selected
@@ -105,6 +103,7 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         myRef.child(uid).child("Language").setValue(languages[which]);
+                                        myRef.child(uid).child(languages[which]+"Level").setValue(0);
 
                                         //start main after user picks
                                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);

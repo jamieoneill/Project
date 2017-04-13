@@ -78,6 +78,10 @@
     <string name="enterWord">Enter word</string>
     <string name="TranslateImageGoal">Translate this word:</string>
     <string name="redo">Redo</string>
+    <string name="Locations">Locations</string>
+    <string name="Adjectives">Adjectives</string>
+    <string name="Congratulations">Congratulations</string>
+    <string name="Level">Level</string>
 
 
     <!-- text to display on lesson -->
