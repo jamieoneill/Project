@@ -125,9 +125,11 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
 
         // set dialog
         alertDialog.setView(dialogView);
+
+        // items for cardview
         CardPagerAdapter mCardAdapter;
         ViewPager mViewPager;
-
+        ShadowTransformer mCardShadowTransformer;
         mViewPager = (ViewPager) dialogView.findViewById(R.id.viewPager);
         mCardAdapter = new CardPagerAdapter();
         int lessonCount;
@@ -141,6 +143,9 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
                 mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
                 mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
                 mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
+                mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+                mViewPager.setPageTransformer(false, mCardShadowTransformer);
+
                 break;
             case R.id.phrasesBtn:
                 //do something
