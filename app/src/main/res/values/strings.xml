@@ -69,6 +69,47 @@
     <string name="stats">Stats</string>
     <string name="MeetupsAttended">Meetups Attended:</string>
     <string name="NoMeetups">No meet ups scheduled</string>
+    <string name="MatchTheWords">Match the words:</string>
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
+    <string name="lesson">Lesson </string>
+    <string name="begin">Begin</string>
+    <string name="MissingGoal">Fill in the blank in this sentence:</string>
+    <string name="enterWord">Enter word</string>
+    <string name="TranslateImageGoal">Translate this word:</string>
+    <string name="redo">Redo</string>
+    <string name="Locations">Locations</string>
+    <string name="Adjectives">Adjectives</string>
+    <string name="Congratulations">Congratulations</string>
+    <string name="Level">Level</string>
+    <string name="locked">Locked</string>
+    <string name="needToComplete">Locked, complete previous activities to open</string>
+
+    <!-- text to display on lesson -->
+    <!-- German -->
+    <string name="German_Basics1">Mann, Frau, Junge, ich, bin, ein, eine</string>
+    <string name="German_Basics2">du, bist, Kind, Madchen, und</string>
+    <string name="German_Basics3">Bort, er, sie, es, ist, trinken, Wasser</string>
+
+    <string name="German_Phrases1">hallo, tschuss, danke, bitte, ja, nine</string>
+    <string name="German_Phrases2">guten morgen, guten tag, guten abend, willkommen</string>
+
+    <!-- Spanish -->
+    <string name="Spanish_Basics1">Hombre, Mujer, Chico, yo, soy, un, una</string>
+    <string name="Spanish_Basics2">tu, eres, nino, nina, y</string>
+    <string name="Spanish_Basics3">El pan, él, ella, es, bebida, agua</string>
+
+    <string name="Spanish_Phrases1">hola, adios, gracias, por favor, Si, no</string>
+    <string name="Spanish_Phrases2">buenos dias, buen día, buena noches, bienvenido, de nada</string>
+
+    <!-- French -->
+    <string name="French_Basics1">Homme, Femme, Garçon, je, suis, un, une</string>
+    <string name="French_Basics2">tu, es, enfant, fille, suis, et</string>
+    <string name="French_Basics3">pain, il, elle, c\'est, buvant, eau</string>
+
+    <string name="French_Phrases1">bonjour, Au Revoir, merci, s\'il vous plait, oui, non</string>
+    <string name="French_Phrases2">bonne Matin, bonne journée, bonsoir, bienvenue</string>
+
 
     <!--numbers 1 - 20 -->
     <string-array name="onetotwenty_array">

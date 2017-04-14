@@ -2,13 +2,16 @@ package com.mismatched.nowyouretalking;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -17,8 +20,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,7 +64,6 @@ public class GameActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 final String userLanguage = dataSnapshot.child("Language").getValue(String.class);
-                final String Level = dataSnapshot.child("Level").getValue(String.class);
 
                 //get question list
                 getQuestionList(lesson, userLanguage);
@@ -85,7 +89,7 @@ public class GameActivity extends AppCompatActivity {
         // hide keyboard if showing
         View keyboardView = this.getCurrentFocus();
         if (keyboardView != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(keyboardView.getWindowToken(), 0);
         }
 
@@ -153,11 +157,11 @@ public class GameActivity extends AppCompatActivity {
                     endScore.setText(score + "/10");
 
                     TextView endMessage = (TextView) findViewById(R.id.endMessage);
-                    if(score == 10){
+                    if (score == 10) {
                         endMessage.setText(getResources().getString(R.string.EndMessageGood));
-                    }else if(score < 10 && score > 6){
+                    } else if (score < 10 && score > 6) {
                         endMessage.setText(getResources().getString(R.string.EndMessageMiddle));
-                    }else if(score < 7){
+                    } else if (score < 7) {
                         endMessage.setText(getResources().getString(R.string.EndMessageBad));
                     }
 
@@ -173,18 +177,11 @@ public class GameActivity extends AppCompatActivity {
                     tryAgainBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            View vg = findViewById (R.id.gameLayout);
+                            View vg = findViewById(R.id.gameLayout);
                             vg.invalidate();
                             recreate();
                         }
                     });
-
-                    //update score
-                    // get user details
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference userRef = database.getReference("Users/" + getUserProfile.uid);
-
-                    //userRef.child("Level").setValue(score);
 
                     //check if score is higher and update
                     SharedPreferences Prefs = getSharedPreferences("Prefs", MODE_PRIVATE);
@@ -206,7 +203,6 @@ public class GameActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     private void loadNextQuestion(final int questionNumber, final String[] questionInfo, final String[] falseInfo, final String userlanguage, final String lesson) {
@@ -224,7 +220,7 @@ public class GameActivity extends AppCompatActivity {
         String false3 = parts2[2];
 
         //shuffle false answers array
-        ArrayList allButtons = new ArrayList();
+        final ArrayList allButtons = new ArrayList();
         Collections.addAll(allButtons, parts2);
         Collections.shuffle(allButtons);
 
@@ -232,6 +228,10 @@ public class GameActivity extends AppCompatActivity {
         final Button confirm = (Button) findViewById(R.id.checkAnswerBtn);
         //set goal label
         TextView goalLbl = (TextView) findViewById(R.id.goalLable);
+
+        //get button background
+        Button newButton = new Button(GameActivity.this);
+        final Drawable buttonBackground = newButton.getBackground();
 
         //hidelayouts
         hideAllViews();
@@ -307,18 +307,18 @@ public class GameActivity extends AppCompatActivity {
                 b_three.setText(answersShuffled.get(2).toString());
                 b_four.setText(answersShuffled.get(3).toString());
 
-                ArrayList<View> radiobuttons = new ArrayList<View>();
+                ArrayList<View> radiobuttons = new ArrayList<>();
                 radiobuttons.add(b_one);
                 radiobuttons.add(b_two);
                 radiobuttons.add(b_three);
                 radiobuttons.add(b_four);
 
 
-                for(View current : radiobuttons){
+                for (View current : radiobuttons) {
                     //get the imageview for this button
                     RelativeLayout parent = (RelativeLayout) current.getParent();
                     ImageView myimage = (ImageView) parent.getChildAt(0);
-                    TextView textFromButton = (TextView)current;
+                    TextView textFromButton = (TextView) current;
 
                     //pass text into image helper
                     ImageHelper imageHelperClass = new ImageHelper();
@@ -365,7 +365,10 @@ public class GameActivity extends AppCompatActivity {
                 //set question
                 TextView questionText = (TextView) findViewById(R.id.buttonQuestionTextview);
                 questionText.setText(question);
+                questionText.setVisibility(View.VISIBLE);
                 final TextView textLine = (TextView) findViewById(R.id.questionInput);
+                TextView questionLine = (TextView) findViewById(R.id.questionLine1);
+                questionLine.setVisibility(View.VISIBLE);
 
                 //disable button
                 confirm.setEnabled(false);
@@ -374,7 +377,6 @@ public class GameActivity extends AppCompatActivity {
                 final LinearLayout buttonLayout1 = (LinearLayout) findViewById(R.id.buttonLine1);
                 final LinearLayout buttonLayout2 = (LinearLayout) findViewById(R.id.buttonLine2);
                 final LinearLayout buttonLayout3 = (LinearLayout) findViewById(R.id.buttonLine3);
-
 
                 for (int i = 0; i < allButtons.size(); i++) {
 
@@ -397,6 +399,7 @@ public class GameActivity extends AppCompatActivity {
 
                             //// TODO: 08/03/2017 fix first word not being rewritten
                             //check how to handle word
+
                             for (int i = 0; i < exsistingArray.length; i++) {
 
                                 String currentword = exsistingArray[i];
@@ -405,6 +408,11 @@ public class GameActivity extends AppCompatActivity {
                                     //remove the word
                                     String myString = exsistingText.replaceAll("\\b\\s" + addedText + "\\b", "");
                                     textLine.setText(myString);
+                                    //change button color
+                                    addingButton.setBackground(buttonBackground);
+                                    addingButton.setTextColor(Color.BLACK);
+
+
                                     break;
                                 } else if (i < exsistingArray.length - 1 && !currentword.equals(addedText)) {
                                     //do nothing in word that is not equal
@@ -412,6 +420,11 @@ public class GameActivity extends AppCompatActivity {
                                 } else {
                                     //add word to line
                                     textLine.append(" " + addedText);
+                                    //change button color
+                                    addingButton.setTextColor(Color.WHITE);
+                                    addingButton.setBackgroundResource(R.drawable.circle_button);
+
+
                                 }
                             }//end for
 
@@ -468,10 +481,12 @@ public class GameActivity extends AppCompatActivity {
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                         confirm.setEnabled(true);
                     }
+
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                     }
+
                     @Override
                     public void afterTextChanged(Editable s) {
 
@@ -492,6 +507,261 @@ public class GameActivity extends AppCompatActivity {
                         checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo, userlanguage, lesson);
                     }
                 });
+                break;
+            case "MatchingQuestion":
+                //handle question here
+                RelativeLayout MatchingQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
+                MatchingQuestionView.setVisibility(View.VISIBLE);
+                TextView questionLine2 = (TextView) findViewById(R.id.questionLine1);
+                questionLine2.setVisibility(View.INVISIBLE);
+                TextView questionText2 = (TextView) findViewById(R.id.buttonQuestionTextview);
+                questionText2.setVisibility(View.INVISIBLE);
+
+                //set goal
+                goalLbl.setText(getResources().getString(R.string.MatchTheWords));
+
+                //disable button
+                confirm.setEnabled(false);
+
+                //button layout
+                final LinearLayout buttonLayout11 = (LinearLayout) findViewById(R.id.buttonLine1);
+                final LinearLayout buttonLayout22 = (LinearLayout) findViewById(R.id.buttonLine2);
+                final LinearLayout buttonLayout33 = (LinearLayout) findViewById(R.id.buttonLine3);
+
+                //set vars for game
+                final int[] count = {0};
+                final int[] selected = new int[1];
+                final int[] previous = new int[1];
+                final Button[] previousButton = new Button[1];
+                final int[] correctCount = {0};
+
+                for (int i = 0; i < allButtons.size(); i++) {
+
+                    String buttonText = String.valueOf(allButtons.get(i));
+                    final Button addingButton = new Button(GameActivity.this);
+
+                    //remove number from text
+                    String word = buttonText.substring(1);
+                    final int number = Integer.parseInt(buttonText.substring(0, 1));
+
+                    //set button
+                    addingButton.setText(word);
+                    addingButton.setTransformationMethod(null);
+                    addingButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            //set up for toast when correct
+                            Toast toast = new Toast(getApplicationContext());
+                            LayoutInflater inflater = getLayoutInflater();
+                            View customToastroot;
+                            TextView messageText;
+                            customToastroot = inflater.inflate(R.layout.toast_green, null);
+                            messageText = (TextView) customToastroot.findViewById(R.id.toastMessage);
+                            messageText.setText(getResources().getString(R.string.correct));
+
+                            if (count[0] == 1) {
+                                //this is the second selected button
+                                selected[0] = number;
+
+                                //set correct matches
+                                if ((previous[0] == 1 || previous[0] == 2) && (selected[0] == 1 || selected[0] == 2)) {
+                                    addingButton.setEnabled(false);
+                                    correctCount[0] = correctCount[0] + 1;
+                                } else if ((previous[0] == 3 || previous[0] == 4) && (selected[0] == 3 || selected[0] == 4)) {
+                                    addingButton.setEnabled(false);
+                                    correctCount[0] = correctCount[0] + 1;
+                                } else if ((previous[0] == 5 || previous[0] == 6) && (selected[0] == 5 || selected[0] == 6)) {
+                                    addingButton.setEnabled(false);
+                                    correctCount[0] = correctCount[0] + 1;
+                                } else if ((previous[0] == 7 || previous[0] == 8) && (selected[0] == 7 || selected[0] == 8)) {
+                                    addingButton.setEnabled(false);
+                                    correctCount[0] = correctCount[0] + 1;
+                                } else {
+                                    //false match. re-enable buttons
+                                    previousButton[0].setEnabled(true);
+                                    previousButton[0].setBackground(buttonBackground);
+
+                                    //change toast
+                                    customToastroot = inflater.inflate(R.layout.toast_red, null);
+                                    messageText = (TextView) customToastroot.findViewById(R.id.toastMessage);
+                                    messageText.setText(getResources().getString(R.string.incorrect));
+
+                                }
+
+                                //change button back
+                                previousButton[0].setBackground(buttonBackground);
+
+                                //show result
+                                toast.setView(customToastroot);
+                                toast.setGravity(0, 0, 800);
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.show();
+
+                                //reset values
+                                count[0] = 0;
+                                previous[0] = 0;
+                                selected[0] = 0;
+
+                                //check for finish of game
+                                if (correctCount[0] == allButtons.size() / 2) {
+                                    //enable continue button
+                                    confirm.setEnabled(true);
+                                }
+
+                            } else {
+                                //get the first button selected
+                                previous[0] = number;
+                                count[0] = 1;
+
+                                previousButton[0] = addingButton;
+                                previousButton[0].setEnabled(false);
+                                previousButton[0].setBackgroundResource(R.drawable.circle_button);
+                            }
+
+                        }
+                    });
+
+                    //add the buttons to the layout
+                    if (buttonLayout11.getChildCount() <= 2) {
+                        buttonLayout11.addView(addingButton);
+                    } else if (buttonLayout11.getChildCount() > 2 && buttonLayout22.getChildCount() <= 2) {
+                        buttonLayout22.addView(addingButton);
+                    } else {
+                        buttonLayout33.addView(addingButton);
+                    }
+                }//end for loop
+
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String givenAnswer = "Well done";
+
+                        //reset buttons
+                        buttonLayout11.removeAllViews();
+                        buttonLayout22.removeAllViews();
+                        buttonLayout33.removeAllViews();
+
+                        //check answer
+                        checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo, userlanguage, lesson);
+                    }
+                });
+                break;
+            case "MissingQuestion":
+                //handle question here
+                LinearLayout missingQuestionView = (LinearLayout) findViewById(R.id.missingQuestionLayout);
+                missingQuestionView.setVisibility(View.VISIBLE);
+
+                //set goal
+                goalLbl.setText(getResources().getString(R.string.MissingGoal));
+
+                //disable button
+                confirm.setEnabled(false);
+
+                //set question
+                TextView missingQuestionText = (TextView) findViewById(R.id.missingQuestionTextview);
+                missingQuestionText.setText(question);
+
+                //put back all views
+                final RadioGroup missingGroup = (RadioGroup) findViewById(R.id.missingButtonGroup);
+                missingGroup.getChildAt(0).setVisibility(View.VISIBLE);
+                missingGroup.getChildAt(1).setVisibility(View.VISIBLE);
+                missingGroup.getChildAt(2).setVisibility(View.VISIBLE);
+                missingGroup.getChildAt(3).setVisibility(View.VISIBLE);
+                missingGroup.clearCheck();
+
+                final String[] givenAnswer = new String[1];
+
+                //set text on buttons or hide it
+                for (int i = 0; i < allButtons.size(); i++) {
+                    RadioButton currentButton = (RadioButton) missingGroup.getChildAt(i);
+                    if (String.valueOf(allButtons.get(i)).equals("none")) {
+                        currentButton.setVisibility(View.GONE);
+                    } else {
+                        currentButton.setText(String.valueOf(allButtons.get(i)));
+                    }
+                }
+
+                //get selected button
+                missingGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        confirm.setEnabled(true);
+
+                        RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
+                        if (radioButton != null){
+                            givenAnswer[0] = String.valueOf(radioButton.getText());
+                        }
+                    }
+                });
+
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        //check answer
+                        checkAnswer(questionNumber, answer, givenAnswer[0], questionInfo, falseInfo, userlanguage, lesson);
+                    }
+                });
+
+                break;
+            case "TranslateImageQuestion":
+                //handle question here
+                LinearLayout translateImageQuestionView = (LinearLayout) findViewById(R.id.translateImageQuestionLayout);
+                translateImageQuestionView.setVisibility(View.VISIBLE);
+
+                //set goal
+                goalLbl.setText(getResources().getString(R.string.TranslateImageGoal));
+
+                //disable button
+                confirm.setEnabled(false);
+
+                //set question
+                TextView translateImageQuestionText = (TextView) findViewById(R.id.translateImageQuestionTextview);
+                translateImageQuestionText.setText(question);
+
+                //pass text into image helper
+                ImageHelper imageHelperClass = new ImageHelper();
+                int selectedImage = imageHelperClass.getImageForView(question);
+
+                //set image from imageHelper
+                ImageView myimageView = (ImageView) findViewById(R.id.translateImageImageview);
+                myimageView.setBackgroundResource(selectedImage);
+
+                //get input
+                final EditText inputText = (EditText) findViewById(R.id.translateImageInput);
+                inputText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        confirm.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String givenAnswer = inputText.getText().toString();
+
+                        //reset input
+                        inputText.getText().clear();
+
+                        //check answer
+                        checkAnswer(questionNumber, answer, givenAnswer, questionInfo, falseInfo, userlanguage, lesson);
+                    }
+                });
+
                 break;
         }
     }
@@ -516,18 +786,22 @@ public class GameActivity extends AppCompatActivity {
         loadNextQuestion(0, questionInfo, wrongAnswers, language, lesson);
     }
 
-    private void hideAllViews(){
+    private void hideAllViews() {
         //layouts
         RelativeLayout imageQuestionView = (RelativeLayout) findViewById(R.id.imageQuestionLayout);
         RelativeLayout buttonQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
         RelativeLayout translateQuestionView = (RelativeLayout) findViewById(R.id.translateQuestionLayout);
+        LinearLayout missingQuestionView = (LinearLayout) findViewById(R.id.missingQuestionLayout);
         RelativeLayout resultView = (RelativeLayout) findViewById(R.id.resultLayout);
         RelativeLayout endGameView = (RelativeLayout) findViewById(R.id.endGameLayout);
+        LinearLayout translateImageQuestionLayout = (LinearLayout) findViewById(R.id.translateImageQuestionLayout);
 
         //hide views
         imageQuestionView.setVisibility(View.GONE);
         buttonQuestionView.setVisibility(View.GONE);
         translateQuestionView.setVisibility(View.GONE);
+        missingQuestionView.setVisibility(View.GONE);
+        translateImageQuestionLayout.setVisibility(View.GONE);
         resultView.setVisibility(View.GONE);
         endGameView.setVisibility(View.GONE);
     }

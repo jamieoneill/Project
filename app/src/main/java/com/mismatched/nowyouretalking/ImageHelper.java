@@ -15,7 +15,7 @@ public class ImageHelper {
             int Selected = R.drawable.man;
 
             return Selected;
-        }else if (imageText.equals("Boy")|| imageText.equals("Junge") || imageText.equals("Chico") || imageText.equals("Garçon")){
+        }else if (imageText.equals("Boy")|| imageText.equals("Junge") || imageText.equals("el nino") || imageText.equals("Garçon")){
 
             int Selected = R.drawable.boy;
 
@@ -35,6 +35,12 @@ public class ImageHelper {
         } else if (imageText.equals("Water")|| imageText.equals("Wasser") || imageText.equals("Agua") || imageText.equals("Eau")){
 
             int Selected = R.drawable.water;
+
+            return Selected;
+        }
+        else if (imageText.equals("Girl")|| imageText.equals("Madchen") || imageText.equals("Nina") || imageText.equals("Fille")){
+
+            int Selected = R.drawable.girl;
 
             return Selected;
         }

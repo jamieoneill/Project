@@ -15,7 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
             >
 
             <RelativeLayout
@@ -49,10 +51,9 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentLeft="true"
                 android:layout_below="@id/basicsText"
                 android:id="@+id/progressBarBasics" />
-
 
             </RelativeLayout>
 
@@ -77,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/phrasesBtn"
-                android:text="@string/Phrases"
+                android:text="@string/Locked"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/Black"
                 android:textStyle="bold"
@@ -87,7 +88,7 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_below="@id/phrasesText"
                     android:id="@+id/progressBarPhrases" />
         </RelativeLayout>
@@ -114,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/basics2Btn"
-                android:text="@string/Basics2"
+                android:text="@string/Locked"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/Black"
                 android:textStyle="bold"
@@ -124,7 +125,7 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentLeft="true"
                 android:layout_below="@id/basics2Text"
                 android:id="@+id/progressBarBasics2" />
 
@@ -151,7 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/animalsBtn"
-                    android:text="@string/Animals"
+                    android:text="@string/Locked"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/Black"
                     android:textStyle="bold"
@@ -161,7 +162,7 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_below="@id/animalsText"
                     android:id="@+id/progressBarAnimals" />
             </RelativeLayout>
@@ -187,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/foodBtn"
-                    android:text="@string/Food"
+                    android:text="@string/Locked"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/Black"
                     android:textStyle="bold"
@@ -197,7 +198,7 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_below="@id/foodText"
                     android:id="@+id/progressBarFood" />
             </RelativeLayout>
@@ -208,15 +209,15 @@
                 android:orientation="vertical"
                 android:layout_below="@id/animalsLayout"
                 android:layout_alignParentLeft="true"
-                android:id="@+id/pluralsLayout"
+                android:id="@+id/locationsLayout"
                 android:layout_marginBottom="20dp"
                 >
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/pluralsBtn"
-                    android:background="@drawable/animals"
+                    android:id="@+id/locationsBtn"
+                    android:background="@drawable/location"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
@@ -224,11 +225,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/pluralsBtn"
+                    android:layout_below="@id/locationsBtn"
                     android:text="@string/Locked"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/Black"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:id="@+id/locationsText"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/locationsText"
+                    android:id="@+id/progressBarLocations" />
             </RelativeLayout>
 
 
@@ -246,7 +256,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/adjectivesBtn"
-                    android:background="@drawable/apple"
+                    android:background="@drawable/blackboard"
                     android:layout_centerHorizontal="true"/>
 
                 <TextView
@@ -256,7 +266,16 @@
                     android:text="@string/Locked"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/Black"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:id="@+id/adjectivesText"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/adjectivesText"
+                    android:id="@+id/progressBarAdjectives" />
             </RelativeLayout>
 
 

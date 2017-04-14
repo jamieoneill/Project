@@ -1,34 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--basics questions -->
-<string-array name="French_Basics_questions_array">
-    R.array.French_basics_questions_array
-    <item>ImageQuestion,Which of these is \"man\",Homme</item>
-    <item>ImageQuestion,Which of these is \"boy\",Garçon</item>
-    <item>ImageQuestion,Which of these is \"woman\",Femme</item>
-    <item>TranslateQuestion,Une femme,A woman</item>
-    <item>TranslateQuestion,Un homme,A man</item>
-    <item>ButtonQuestion,Je suis un homme, I am a man</item>
-    <item>ButtonQuestion,A Woman, Une Femme</item>
-    <item>ButtonQuestion,Boy, Garçon</item>
-    <item>ButtonQuestion,I am a woman, Je suis une Femme</item>
-    <item>TranslateQuestion,Garçon,Boy</item>
-</string-array>
+    <!--basics questions -->
+    <!-- Lesson 1-->
+    <string-array name="French_Basics1_questions_array">
+        R.array.French_basics_questions_array
+        <item>ImageQuestion,Which of these is \"man\",Homme</item>
+        <item>ImageQuestion,Which of these is \"boy\",Garçon</item>
+        <item>ImageQuestion,Which of these is \"woman\",Femme</item>
+        <item>TranslateQuestion,Une femme,A woman</item>
+        <item>TranslateQuestion,Un homme,A man</item>
+        <item>ButtonQuestion,Je suis un homme, I am a man</item>
+        <item>ButtonQuestion,A Woman, Une Femme</item>
+        <item>ButtonQuestion,Boy, Garçon</item>
+        <item>ButtonQuestion,I am a woman, Je suis une Femme</item>
+        <item>TranslateQuestion,Garçon,Boy</item>
+    </string-array>
 
-<!--basics questions -->
-<string-array name="French_Basics_false_array">
-    R.array.French_basics_questions_array
-    <item>Femme,Pain,Garçon</item>
-    <item>Femme,Eau,Homme</item>
-    <item>Pain,Garçon,Homme</item>
-    <item>none,none,none</item>
-    <item>none,none,none</item>
-    <item>I,am,a,man,woman,and,girl,child</item>
-    <item>Une,Femme,Homme,un,je,garçon</item>
-    <item>Garçon,un,je,femme,homme</item>
-    <item>Je,suis,une,Femme,femme,homme,garçon</item>
-    <item>none,none,none</item>
-</string-array>
+    <string-array name="French_Basics1_false_array">
+        R.array.French_basics_questions_array
+        <item>Femme,Pain,Garçon</item>
+        <item>Femme,Eau,Homme</item>
+        <item>Pain,Garçon,Homme</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>I,am,a,man,woman,and,girl,child</item>
+        <item>Une,Femme,Homme,un,je,garçon</item>
+        <item>Garçon,un,je,femme,homme</item>
+        <item>Je,suis,une,Femme,femme,homme,garçon</item>
+        <item>none,none,none</item>
+    </string-array>
+
+    <!-- Lesson 2 -->
+    <string-array name="French_Basics2_questions_array">
+        R.array.French_basics_questions_array
+        <item>ImageQuestion,Which of these is \"girl\",Fille</item>
+        <item>TranslateQuestion,Un enfant,A child</item>
+        <item>ButtonQuestion,Une femme et un homme, A woman and a man</item>
+        <item>TranslateQuestion,Tu es un enfant,You are a child</item>
+        <item>TranslateQuestion,David tu es un homme,David you are a man</item>
+        <item>ButtonQuestion,Maria tu es une femme, Maria you are a woman</item>
+        <item>ButtonQuestion,A Woman and a man, Une femme et un homme</item>
+        <item>ButtonQuestion,Une fille, A girl</item>
+        <item>MatchingQuestion,none,Well done</item>
+        <item>MatchingQuestion,none,Well done</item>
+    </string-array>
+
+    <string-array name="French_Basics2_false_array">
+        R.array.French_basics_questions_array
+        <item>Homme,Pain,Eau</item>
+        <item>none,none,none</item>
+        <item>A,woman,and,a,man,you,water,are,girl</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>Maria,you,are,a,woman,man,and,drinks,boy</item>
+        <item>Une,femme,et,un,homme,fille,es,enfant,tu</item>
+        <item>A,girl,he,bread,she,it</item>
+        <item>1Fille,2girl,3Enfant,4boy,5es,6are,7a,8une</item>
+        <item>1et,2and,3woman,4Fille,5you,6tu,7Enfant,8child</item>
+    </string-array>
+
+    <!-- Lesson 3 -->
+    <string-array name="French_Basics3_questions_array">
+        R.array.French_basics_questions_array
+        <item>ImageQuestion,Which of these is \"water\",Eau</item>
+        <item>TranslateQuestion,Pain und eau,Bread and water</item>
+        <item>ButtonQuestion,Une fille boit, A girl is drinking</item>
+        <item>TranslateImageQuestion,Water,Eau</item>
+        <item>MatchingQuestion,none,Well done</item>
+        <item>MatchingQuestion,none,Well done</item>
+        <item>MissingQuestion,Tu ..... une femme et je suis un homme,es</item>
+        <item>ButtonQuestion,Elle est une femme, She is a woman</item>
+        <item>TranslateImageQuestion,Bread,Pain</item>
+        <item>MissingQuestion,Tu ..... un garçon,es</item>
+    </string-array>
+
+    <string-array name="French_Basics3_false_array">
+        R.array.French_basics_questions_array
+        <item>Homme,Pain,Femme</item>
+        <item>none,none,none</item>
+        <item>is,girl,it,are,water,drinking,A</item>
+        <item>none,none,none</item>
+        <item>1une,2a,3Enfant,4child,5ce,6it,7drinks,8boit</item>
+        <item>1Je,2ich,3il,4he,5es,6are,7she,8elle</item>
+        <item>es,suis,none,none</item>
+        <item>She,is,a,woman,and,boy,girl,child</item>
+        <item>none,none,none</item>
+        <item>es,suis,none,none</item>
+    </string-array>
+
+    <!--phrases questions -->
+    <!-- Lesson 1 -->
+    <string-array name="French_Phrases1_questions_array">
+        R.array.French_phrases_questions_array
+        <item>TranslateQuestion,Au Revoir,Bye</item>
+        <item>ButtonQuestion,Oui, Yes</item>
+        <item>TranslateQuestion,Bonjour,Hello</item>
+        <item>ButtonQuestion,Non, No</item>
+        <item>ButtonQuestion,s\'il vous plait, Please</item>
+        <item>ButtonQuestion,Thanks, Merci</item>
+        <item>TranslateQuestion,Yes hello,Oui bonjour</item>
+        <item>ButtonQuestion,Nein, danke, Non merci</item>
+        <item>TranslateQuestion,Bye,Au revoir</item>
+        <item>TranslateQuestion,Thank you Emma,Merci emma</item>
+    </string-array>
+
+    <string-array name="French_Phrases1_false_array">
+        R.array.French_phrases_questions_array
+        <item>none,none,none</item>
+        <item>Yes,hello,bye,no,well</item>
+        <item>none,none,none</item>
+        <item>No,yes,please,hello,bye</item>
+        <item>You,are,welcome,well,see,goodbye</item>
+        <item>Merci,s\'il vous plait,non,oui,bonjour</item>
+        <item>none,none,none</item>
+        <item>No,thank,you,later,are,exactly,bye</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+    </string-array>
+
+    <!-- Lesson 2 -->
+    <string-array name="French_Phrases2_questions_array">
+        R.array.French_phrases_questions_array
+        <item>TranslateQuestion,Bonne journée,Good day</item>
+        <item>ButtonQuestion,Bonsoir, Good evening</item>
+        <item>TranslateQuestion,Bienvenue,Welcome</item>
+        <item>TranslateQuestion,Bonne matin,Good morning</item>
+        <item>ButtonQuestion,Bonne journée, Good day</item>
+        <item>ButtonQuestion,Good evening, Bonsoir</item>
+        <item>TranslateQuestion,Hello good day,Bonjour bonne matin</item>
+        <item>TranslateQuestion,Bye David,Au Revoir David</item>
+        <item>ButtonQuestion,Good morning, Bonne journee</item>
+        <item>ButtonQuestion,Yes please, Oui s\'il vous plait</item>
+    </string-array>
+
+    <string-array name="French_Phrases2_false_array">
+        R.array.French_phrases_questions_array
+        <item>none,none,none</item>
+        <item>Good,evening,by,hello,no,well</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>Bonne,day,you,all,morning,evening</item>
+        <item>Bonsoir,journee,bienvenue,matin,s\'il vous plait,oui</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>Bonne,matin,bienvenue,bonjour,non,oui</item>
+        <item>Oui,s\'il vous plait,bonjour,soir,journée,none,enfant</item>
+    </string-array>
+
 
 </resources>
