@@ -3,7 +3,10 @@ package com.mismatched.nowyouretalking;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.view.View;
-
+/**
+ * Code for card Adapter taken from Rúben Sousa
+ * https://github.com/rubensousa/ViewPagerCards/
+ */
 public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPager.PageTransformer {
 
     private ViewPager mViewPager;

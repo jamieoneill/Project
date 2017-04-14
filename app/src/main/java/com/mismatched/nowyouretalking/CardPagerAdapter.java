@@ -19,6 +19,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Code for card Adapter taken from Rúben Sousa
+ * https://github.com/rubensousa/ViewPagerCards/
+ *
+ * this code has been modified to suit my needs such as setting views and adding intents to open activity's
+ */
 
 public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 

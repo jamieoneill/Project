@@ -89,4 +89,64 @@
         <item>eres,soy,none,none</item>
     </string-array>
 
+    <!--phrases questions -->
+    <!-- Lesson 1 -->
+    <string-array name="Spanish_Phrases1_questions_array">
+        R.array.Spanish_phrases_questions_array
+        <item>TranslateQuestion,Adios,Bye</item>
+        <item>ButtonQuestion,Si, Yes</item>
+        <item>TranslateQuestion,hola,Hello</item>
+        <item>ButtonQuestion,Gracias, Thank you</item>
+        <item>ButtonQuestion,Por favor, Please</item>
+        <item>ButtonQuestion,Thanks, Gracias</item>
+        <item>TranslateQuestion,Yes hello,Si hola</item>
+        <item>ButtonQuestion,no gracias, No thank you</item>
+        <item>TranslateQuestion,Bye,Adios</item>
+        <item>TranslateQuestion,Thank you Emma,Gracias emma</item>
+    </string-array>
+
+    <string-array name="Spanish_Phrases1_false_array">
+        R.array.Spanish_phrases_questions_array
+        <item>none,none,none</item>
+        <item>Yes,hello,bye,no,well</item>
+        <item>none,none,none</item>
+        <item>Thank,you,yes,please,hello,bye</item>
+        <item>You,are,welcome,well,see,goodbye</item>
+        <item>Gracias,por favor,no,si,eres</item>
+        <item>none,none,none</item>
+        <item>No,thank,you,later,are,exactly,bye</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+    </string-array>
+
+    <!-- Lesson 2 -->
+    <string-array name="Spanish_Phrases2_questions_array">
+        R.array.Spanish_phrases_questions_array
+        <item>TranslateQuestion,Buen día,Good day</item>
+        <item>ButtonQuestion,Buena noches, Good night</item>
+        <item>TranslateQuestion,Bienvenido,Welcome</item>
+        <item>TranslateQuestion,buenos dias,Good morning</item>
+        <item>ButtonQuestion,Buen día, Good day</item>
+        <item>ButtonQuestion,Good night, Buena noches</item>
+        <item>TranslateQuestion,Hello, good day,Hola buen día</item>
+        <item>TranslateQuestion,Bye David,adios David</item>
+        <item>ButtonQuestion,Good morning, Buenos dias</item>
+        <item>ButtonQuestion,Yes please, Si por favor</item>
+    </string-array>
+
+    <string-array name="Spanish_Phrases2_false_array">
+        R.array.Spanish_phrases_questions_array
+        <item>none,none,none</item>
+        <item>Good,night,by,hello,no,well</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>Good,day,you,all,morning,night</item>
+        <item>Buena,noches,bienvenido,día,por favor,si</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>Buenos,dias,bienvenido,hola,por favor,gracias</item>
+        <item>Si,por favor,halo,noches,día,no,adios</item>
+    </string-array>
+
+
 </resources>

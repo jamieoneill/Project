@@ -3,7 +3,6 @@
     <!--Questions structure -->
     <!--Question Type, the question, the answer -->
 
-
     <!-- Matching game question and answer format -->
     <!--<item>MatchingQuestion,none,Well done</item>-->
     <!--<item>1Woman,2Frau,3Man,4Mann,5Boy,6Junge</item> -->
@@ -13,7 +12,6 @@
 
     <!--<item>TranslateImageQuestion,Bread,Brot</item>-->
     <!--<item>none,none,none</item>-->
-
 
     <!--basics questions -->
     <!-- Lesson 1 -->
@@ -103,5 +101,63 @@
         <item>bist,bin,none,none</item>
     </string-array>
 
+    <!--phrases questions -->
+    <!-- Lesson 1 -->
+    <string-array name="German_Phrases1_questions_array">
+        R.array.German_phrases_questions_array
+        <item>TranslateQuestion,Tschuss,Bye</item>
+        <item>ButtonQuestion,Ja, Yes</item>
+        <item>TranslateQuestion,Hallo,Hello</item>
+        <item>ButtonQuestion,Nein, No</item>
+        <item>ButtonQuestion,Bitte, You are welcome</item>
+        <item>ButtonQuestion,Thanks, Danke</item>
+        <item>TranslateQuestion,Yes hello,Ja hallo</item>
+        <item>ButtonQuestion,Nein, danke, No thank you</item>
+        <item>TranslateQuestion,Bye,Tschuss</item>
+        <item>TranslateQuestion,Thank you Emma,Danke emma</item>
+    </string-array>
+
+    <string-array name="German_Phrases1_false_array">
+        R.array.German_phrases_questions_array
+        <item>none,none,none</item>
+        <item>Yes,hello,bye,no,well</item>
+        <item>none,none,none</item>
+        <item>No,yes,please,hello,bye</item>
+        <item>You,are,welcome,well,see,goodbye</item>
+        <item>Danke,willkommen,nine,ja,genau</item>
+        <item>none,none,none</item>
+        <item>No,thank,you,later,are,exactly,bye</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+    </string-array>
+
+    <!-- Lesson 2 -->
+    <string-array name="German_Phrases2_questions_array">
+        R.array.German_phrases_questions_array
+        <item>TranslateQuestion,Guten Tag,Good day</item>
+        <item>ButtonQuestion,Guten Abend, Good evening</item>
+        <item>TranslateQuestion,Willkommen,Welcome</item>
+        <item>TranslateQuestion,Guten Morgen,Good morning</item>
+        <item>ButtonQuestion,Guten Tag, Good day</item>
+        <item>ButtonQuestion,Good evening, Guten abend</item>
+        <item>TranslateQuestion,Hello good day,Hallo guten tag</item>
+        <item>TranslateQuestion,Bye David,Tschuss David</item>
+        <item>ButtonQuestion,Good morning, Guten morgen</item>
+        <item>ButtonQuestion,Yes please, Ja bitte</item>
+    </string-array>
+
+    <string-array name="German_Phrases2_false_array">
+        R.array.German_phrases_questions_array
+        <item>none,none,none</item>
+        <item>Good,evening,by,hello,no,well</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>Good,day,you,all,morning,evening</item>
+        <item>Guten,abend,willkommen,morgen,bitte,ja</item>
+        <item>none,none,none</item>
+        <item>none,none,none</item>
+        <item>Guten,morgen,willkommen,hallo,bitte,danke</item>
+        <item>Ja,bitte,hallo,abend,tag,nein,kind</item>
+    </string-array>
 
 </resources>

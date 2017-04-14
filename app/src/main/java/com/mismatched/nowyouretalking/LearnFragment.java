@@ -64,39 +64,39 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
                 ImageButton basicsBtn = (ImageButton) v.findViewById(R.id.basicsBtn);
                 basicsBtn.setOnClickListener(LearnFragment.this);
                 ImageButton phrasesBtn = (ImageButton) v.findViewById(R.id.phrasesBtn);
+                phrasesBtn.setOnClickListener(LearnFragment.this);
                 ImageButton basics2Btn = (ImageButton) v.findViewById(R.id.basics2Btn);
+                basics2Btn.setOnClickListener(LearnFragment.this);
                 ImageButton foodBtn = (ImageButton) v.findViewById(R.id.foodBtn);
+                foodBtn.setOnClickListener(LearnFragment.this);
                 ImageButton locationsBtn = (ImageButton) v.findViewById(R.id.locationsBtn);
+                locationsBtn.setOnClickListener(LearnFragment.this);
                 ImageButton adjectivesBtn = (ImageButton) v.findViewById(R.id.adjectivesBtn);
+                adjectivesBtn.setOnClickListener(LearnFragment.this);
 
                 //open buttons based on level
-                if(userLevel > 0){
-                    phrasesBtn.setOnClickListener(LearnFragment.this);
+                if (userLevel > 0) {
                     TextView phrases = (TextView) v.findViewById(R.id.phrasesText);
                     phrases.setText(getResources().getString(R.string.Phrases));
                 }
-                if(userLevel > 1){
+                if (userLevel > 1) {
                     basics2Btn.setOnClickListener(LearnFragment.this);
                     TextView basics2 = (TextView) v.findViewById(R.id.basics2Text);
                     basics2.setText(getResources().getString(R.string.Basics2));
                 }
-                if(userLevel > 2){
-                    basics2Btn.setOnClickListener(LearnFragment.this);
+                if (userLevel > 2) {
                     TextView basics2 = (TextView) v.findViewById(R.id.animalsText);
                     basics2.setText(getResources().getString(R.string.Animals));
                 }
-                if(userLevel > 3){
-                    foodBtn.setOnClickListener(LearnFragment.this);
+                if (userLevel > 3) {
                     TextView food = (TextView) v.findViewById(R.id.foodText);
                     food.setText(getResources().getString(R.string.Food));
                 }
-                if(userLevel > 4){
-                    locationsBtn.setOnClickListener(LearnFragment.this);
+                if (userLevel > 4) {
                     TextView locations = (TextView) v.findViewById(R.id.locationsText);
                     locations.setText(getResources().getString(R.string.Locations));
                 }
-                if(userLevel > 5){
-                    adjectivesBtn.setOnClickListener(LearnFragment.this);
+                if (userLevel > 5) {
                     TextView adjectives = (TextView) v.findViewById(R.id.adjectivesText);
                     adjectives.setText(getResources().getString(R.string.Adjectives));
                 }
@@ -104,6 +104,7 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
                 //set progress bars
                 setProgressBars(v, userLanguage);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -132,29 +133,36 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
         ShadowTransformer mCardShadowTransformer;
         mViewPager = (ViewPager) dialogView.findViewById(R.id.viewPager);
         mCardAdapter = new CardPagerAdapter();
-        int lessonCount;
+        int lessonCount = 0;
         String lessonName = myLesson.getText().toString();
 
-        switch (v.getId()) {
-            case R.id.basicsBtn:
+        //dont open if locked
+        if (lessonName.equals(getResources().getString(R.string.locked))) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.needToComplete), Toast.LENGTH_SHORT).show();
+        } else {
+            //set lesson number
+            switch (v.getId()) {
+                case R.id.basicsBtn:
+                    lessonCount = 3;
+                    break;
+                case R.id.phrasesBtn:
+                    lessonCount = 2;
+                    break;
+            }
 
-                //add a card for the same number of the lesson count
-                lessonCount = 3;
+            //add a card for the same number of the lesson count
+            for( int i=0; i<lessonCount; i++ ) {
                 mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
-                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
-                mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
-                mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
-                mViewPager.setPageTransformer(false, mCardShadowTransformer);
+            }
 
-                break;
-            case R.id.phrasesBtn:
-                //do something
-                break;
+            //set card view
+            mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+            mViewPager.setPageTransformer(false, mCardShadowTransformer);
+            mCardShadowTransformer.enableScaling(true);
+            mViewPager.setAdapter(mCardAdapter);
+            mViewPager.setOffscreenPageLimit(3);
+            alertDialog.show();
         }
-
-        mViewPager.setAdapter(mCardAdapter);
-        mViewPager.setOffscreenPageLimit(3);
-        alertDialog.show();
 
     }
 
@@ -194,7 +202,7 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 lp.addRule(RelativeLayout.BELOW, myLesson.getId());
                 lp.addRule(RelativeLayout.RIGHT_OF, myProgressBar.getId());
-                lp.setMargins(5,0,0,0);
+                lp.setMargins(5, 0, 0, 0);
 
                 //add image and progress bar
                 ImageView myimage = new ImageView(getActivity());
@@ -206,7 +214,7 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
                 boolean LessonComplete = LevelPrefs.getBoolean(myLesson.getText().toString() + "Complete", false);
                 Log.d(myLesson.getText().toString() + "Complete ", String.valueOf(LessonComplete));
 
-                if(!LessonComplete){
+                if (!LessonComplete) {
                     //set lesson complete
                     SharedPreferences.Editor editor = LevelPrefs.edit();
                     editor.putBoolean(myLesson.getText().toString() + "Complete", true);
