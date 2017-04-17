@@ -1,64 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:fillViewport="true">
 
-
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/ProfilePic"
-        android:layout_gravity="center"
-        />
-
-    <Button
-        android:text="Change Profile Picture"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ChangePhotoButton"
-        android:theme="@style/ButtonStyle"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        />
+        android:orientation="vertical">
 
-    <Button
-    android:text="@string/translateLabel"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/TranslateActivityButton"
-    android:theme="@style/ButtonStyle"
-    android:layout_gravity="center"
-    android:layout_marginTop="20dp"
-    />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
 
-    <Button
-        android:text="@string/ChangeLanguage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ChangeLanguageButton"
-        android:theme="@style/ButtonStyle"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        />
+            <ImageView
+                android:id="@+id/ProfilePic"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="30dp"
+                android:layout_alignParentLeft="true" />
 
-    <Button
-        android:text="@string/SignOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/SignOutButton"
-        android:theme="@style/ButtonStyle"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        />
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/ProfilePic"
+                android:text="@string/nameLable"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/Black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:text="@string/stats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/StatsButton"
-        android:theme="@style/ButtonStyle"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        />
-</LinearLayout>
+            <TextView
+                android:id="@+id/levelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nameTextView"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ProfilePic"
+                android:text="@string/Level"
+                android:textColor="@color/Black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/levelText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/levelTextView"
+                android:layout_toRightOf="@+id/ProfilePic"
+                android:textColor="@color/Black"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/Gray"
+                android:layout_below="@+id/levelText"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/AchievementsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Achievements"
+            android:textColor="@color/Black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/CompleteYourFirstLesson"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_completeyourfirstlesson" />
+
+            <ImageView
+                android:id="@+id/ReachLevel5"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_reachlevel5" />
+
+            <ImageView
+                android:id="@+id/MasterALanguage"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_masteralanguage" />
+
+            <ImageView
+                android:id="@+id/Attend3MeetUps"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_attend3meetups" />
+
+            <ImageView
+                android:id="@+id/Attend10MeetUps"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_attend10meetups" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/CompleteALessonAfter11"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_completealessonafter11" />
+
+            <ImageView
+                android:id="@+id/TryMoreThanOneLanguage"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_trymorethanonelanguage" />
+
+            <ImageView
+                android:id="@+id/AddAFriend"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_addafriend" />
+
+            <ImageView
+                android:id="@+id/UseTheTranslator"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_usethetranslator" />
+
+            <ImageView
+                android:id="@+id/CompleteALessonBefore8"
+                android:layout_width="@dimen/achievements_size"
+                android:layout_height="@dimen/achievements_size"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/achievements_dark_completealessonbefore8" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="@color/Gray"
+            />
+
+        <Button
+            android:id="@+id/ChangePhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/ChangeProfilePicture"
+            android:theme="@style/ButtonStyle" />
+
+        <Button
+            android:id="@+id/TranslateActivityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/translateLabel"
+            android:theme="@style/ButtonStyle" />
+
+        <Button
+            android:id="@+id/ChangeLanguageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/ChangeLanguage"
+            android:theme="@style/ButtonStyle" />
+
+        <Button
+            android:id="@+id/StatsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/stats"
+            android:theme="@style/ButtonStyle" />
+
+        <Button
+            android:id="@+id/SignOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/SignOut"
+            android:theme="@style/ButtonStyle" />
+
+    </LinearLayout>
+</ScrollView>

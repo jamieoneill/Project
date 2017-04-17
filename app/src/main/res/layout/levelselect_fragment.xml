@@ -31,8 +31,8 @@
 
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/level_image"
+                android:layout_height="@dimen/level_image"
                 android:id="@+id/basicsBtn"
                 android:background="@drawable/books"
                 android:layout_centerHorizontal="true"/>
@@ -68,8 +68,8 @@
             >
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/level_image"
+                android:layout_height="@dimen/level_image"
                 android:id="@+id/phrasesBtn"
                 android:background="@drawable/talking"
                 />
@@ -105,8 +105,8 @@
             >
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/level_image"
+                android:layout_height="@dimen/level_image"
                 android:id="@+id/basics2Btn"
                 android:background="@drawable/notebook"
                 android:layout_centerHorizontal="true"/>
@@ -142,8 +142,8 @@
 
                 >
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/level_image"
+                    android:layout_height="@dimen/level_image"
                     android:id="@+id/animalsBtn"
                     android:background="@drawable/animals"
                     android:layout_centerHorizontal="true"/>
@@ -178,8 +178,8 @@
 
                 >
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/level_image"
+                    android:layout_height="@dimen/level_image"
                     android:id="@+id/foodBtn"
                     android:background="@drawable/apple"
                     android:layout_centerHorizontal="true"/>
@@ -214,8 +214,8 @@
                 >
 
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/level_image"
+                    android:layout_height="@dimen/level_image"
                     android:id="@+id/locationsBtn"
                     android:background="@drawable/location"
                     android:layout_alignParentTop="true"
@@ -253,8 +253,8 @@
 
                 >
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/level_image"
+                    android:layout_height="@dimen/level_image"
                     android:id="@+id/adjectivesBtn"
                     android:background="@drawable/blackboard"
                     android:layout_centerHorizontal="true"/>

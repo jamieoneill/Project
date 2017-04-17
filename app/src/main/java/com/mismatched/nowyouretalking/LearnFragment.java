@@ -199,7 +199,8 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
             //add a star to 100% lessons
             if (myProgressBar.getProgress() == 100) {
                 //add layout
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+               // RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(60,60);
                 lp.addRule(RelativeLayout.BELOW, myLesson.getId());
                 lp.addRule(RelativeLayout.RIGHT_OF, myProgressBar.getId());
                 lp.setMargins(5, 0, 0, 0);
