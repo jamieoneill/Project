@@ -52,6 +52,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -91,9 +92,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 //check for level in this language
                 SharedPreferences LevelPrefs = getActivity().getSharedPreferences("levels", Context.MODE_PRIVATE);
+                int languageCount = 0;
+
+                Map<String, ?> keys = getActivity().getSharedPreferences("levels", Context.MODE_PRIVATE).getAll();
+                for(Map.Entry<String,?> entry : keys.entrySet()){
+                    Log.d("map values",entry.getKey() + ": " +
+                            entry.getValue().toString());
+                    if(entry.getKey().contains("Level")){
+                        languageCount ++;
+                    }
+                }
+
                 int userLevel = LevelPrefs.getInt(userLanguage + "Level", 0);
                 TextView levelLabel = (TextView) view.findViewById(R.id.levelText);
                 levelLabel.setText(String.valueOf(userLevel));
+
+                //check Achievements
+                if(userLevel >= 5){
+                AchievementHelper AchievementHelperClass = new AchievementHelper();
+                AchievementHelperClass.UnlockAchievement("ReachLevel5", getActivity());
+                }
+                if(languageCount >=2 ){
+                    AchievementHelper AchievementHelperClass = new AchievementHelper();
+                    AchievementHelperClass.UnlockAchievement("TryMoreThanOneLanguage", getActivity());
+                }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

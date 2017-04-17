@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -160,4 +161,22 @@ public class AchievementHelper {
         UseTheTranslator.setOnClickListener(listener);
         CompleteALessonBefore8.setOnClickListener(listener);
     }
+
+    public void UnlockAchievement(String unlock, Activity activity){
+
+        //get Achievements
+        SharedPreferences Achievements = activity.getSharedPreferences("Achievements", MODE_PRIVATE);
+        Boolean thisAchievement = Achievements.getBoolean(unlock, false);
+
+        //if it hasn't been unlocked yet unlock it
+        if(!thisAchievement){
+        SharedPreferences.Editor editor = Achievements.edit();
+        editor.putBoolean(unlock, true);
+        editor.apply();
+
+        //toast
+        Toast.makeText(activity, activity.getString(R.string.achivementUnlocked), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

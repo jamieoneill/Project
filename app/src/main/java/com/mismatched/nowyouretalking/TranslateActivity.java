@@ -88,6 +88,10 @@ public class TranslateActivity extends AppCompatActivity implements TextToSpeech
                                 String translatedText = Translate.execute(originalText, Language.valueOf(fromLanguage), Language.valueOf(toLanguage));
                                 ResultLabel.setText(translatedText);
 
+                                //check Achievements
+                                AchievementHelper AchievementHelperClass = new AchievementHelper();
+                                AchievementHelperClass.UnlockAchievement("UseTheTranslator", TranslateActivity.this);
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

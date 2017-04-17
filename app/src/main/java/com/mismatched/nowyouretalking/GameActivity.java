@@ -31,8 +31,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  * Created by jamie on 28/02/2017.
@@ -135,6 +137,21 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (finalQuestionNumber == 10) {
+
+                    Date dt = new Date();
+                    int hours = dt.getHours();
+
+                    //check Achievements
+                    AchievementHelper AchievementHelperClass = new AchievementHelper();
+                    if(lesson.equals("Basics1")){
+                        AchievementHelperClass.UnlockAchievement("CompleteYourFirstLesson", GameActivity.this);
+                    }
+                    if(hours >= 23 && hours <= 2){
+                        AchievementHelperClass.UnlockAchievement("CompleteALessonAfter11", GameActivity.this);
+                    }
+                    if(hours >= 6 && hours <= 8){
+                        AchievementHelperClass.UnlockAchievement("CompleteALessonBefore8", GameActivity.this);
+                    }
 
                     //hide views
                     Button confirm = (Button) findViewById(R.id.checkAnswerBtn);
