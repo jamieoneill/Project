@@ -84,6 +84,29 @@
     <string name="Level">Level</string>
     <string name="locked">Locked</string>
     <string name="needToComplete">Locked, complete previous activities to open</string>
+    <string name="Achievements">Achievements</string>
+    <string name="ChangeProfilePicture">Change Profile Picture</string>
+    <string name="beginnerAchievement">Complete your first lesson</string>
+    <string name="onMyWayAchievement">Reach level 5</string>
+    <string name="theMasterAchievement">Master a language</string>
+    <string name="meetingNewPeopleAchievement">Attend 3 meet ups</string>
+    <string name="enjoyingTheCompanyAchievement">Attend 10 meet ups</string>
+    <string name="nightOwlAchievement">Complete a lesson after 10:00 pm</string>
+    <string name="mixItUpAchievement">Try more than one language</string>
+    <string name="gettingSocialAchievement">Add a friend </string>
+    <string name="speakToMeAchievement">Use the translator</string>
+    <string name="earlyRiserAchievement">Complete a lesson before 8:00 am</string>
+    <string name="beginnerTitle">BEGINNER</string>
+    <string name="onMyWayTitle">ON MY WAY</string>
+    <string name="theMasterTitle">THE MASTER</string>
+    <string name="meetingNewPeopleTitle">MEETING NEW PEOPLE</string>
+    <string name="enjoyingTheCompanyTitle">ENJOYING THE COMPANY</string>
+    <string name="nightOwlTitle">NIGHT OWL</string>
+    <string name="mixItUpTitle">MIX IT UP</string>
+    <string name="gettingSocialTitle">GETTING SOCIAL</string>
+    <string name="speakToMeTitle">SPEAK TO ME</string>
+    <string name="earlyRiserTitle">EARLY RISER</string>
+    <string name="achivementUnlocked">Achievement unlocked</string>
 
     <!-- text to display on lesson -->
     <!-- German -->

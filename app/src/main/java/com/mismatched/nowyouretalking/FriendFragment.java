@@ -88,6 +88,9 @@ public class FriendFragment  extends android.support.v4.app.Fragment  {
                                                 //add to contact list
                                                 phoneRef.child(getUserProfile.uid).child("Friends").child(child.getKey()).setValue(child.child("Name").getValue());
 
+                                                //check Achievements
+                                                AchievementHelper AchievementHelperClass = new AchievementHelper();
+                                                AchievementHelperClass.UnlockAchievement("AddAFriend", getActivity());
                                             }
                                         });
                                         builder.setNeutralButton(cancelString, new DialogInterface.OnClickListener() {

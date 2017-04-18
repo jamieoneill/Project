@@ -3,6 +3,7 @@ package com.mismatched.nowyouretalking;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,6 +140,54 @@ public class SocialFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+
+        //database ref
+        DatabaseReference myRef2 = database.getReference("PastMeetings");
+
+        final int[] numOfMeetings = {0};
+
+        // Read from the database
+        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (final DataSnapshot child : dataSnapshot.getChildren()) {
+
+                    //get users attending
+                    String Attending =  child.child("Attending").getValue().toString();
+
+                    //if user is attending display it
+                    if(Attending.contains(getUserProfile.uid)) {
+
+
+                        for (final DataSnapshot attendees : child.child("Attending").getChildren()) {
+                            //get the users in attending
+                            String name = attendees.getValue().toString();
+                            //get the num of meetings this user has attended
+                            if(name.equals(getUserProfile.uid)){
+                                numOfMeetings[0] = numOfMeetings[0] + 1;
+                            }
+                        }//end for
+                    }
+                }
+                //check Achievements
+                if(numOfMeetings[0] >=3){
+                        AchievementHelper AchievementHelperClass = new AchievementHelper();
+                        AchievementHelperClass.UnlockAchievement("Attend3MeetUps", getActivity());
+                }
+                if(numOfMeetings[0] >=10){
+                    AchievementHelper AchievementHelperClass = new AchievementHelper();
+                    AchievementHelperClass.UnlockAchievement("Attend10MeetUps", getActivity());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.i("database ", "Failed to read value.", error.toException());
             }
         });
 
