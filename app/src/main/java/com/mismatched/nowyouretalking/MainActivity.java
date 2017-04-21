@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.facebook.stetho.Stetho;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         NavbarFragment navbar = new NavbarFragment();
         fragmentTransaction.add(R.id.navbar_container, navbar, "Social");
         fragmentTransaction.commit();
+
+        // set toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
 

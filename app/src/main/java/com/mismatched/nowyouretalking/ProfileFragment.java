@@ -26,6 +26,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflating the layout for this fragment
         final View view = inflater.inflate(R.layout.profile_fragment, null);
+
+        //set title
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.Profile));
 
         // get reference
         database = FirebaseDatabase.getInstance();
@@ -136,8 +140,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         Button SignOutButton = (Button) view.findViewById(R.id.SignOutButton);
         SignOutButton.setOnClickListener(this);
 
-        Button statsButton = (Button) view.findViewById(R.id.StatsButton);
-        statsButton.setOnClickListener(this);
+        //Button statsButton = (Button) view.findViewById(R.id.StatsButton);
+        //statsButton.setOnClickListener(this);
 
         //check Achievements
         AchievementHelper AchievementHelperClass = new AchievementHelper();
@@ -206,12 +210,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), SignInActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.StatsButton:
+            /*case R.id.StatsButton:
 
                 //open stats
                 intent = new Intent(getActivity(), StatsActivity.class);
                 startActivity(intent);
-                break;
+                break; */
         }
     }
 

@@ -3,13 +3,15 @@ package com.mismatched.nowyouretalking;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -32,21 +34,18 @@ public class SocialFragment extends Fragment implements View.OnClickListener {
         // Inflating the layout for this fragment
         View v = inflater.inflate(R.layout.social_fragment, null);
 
+        //set title
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.Social));
+
         //set buttons
-        Button AddMeetActivityButton = (Button) v.findViewById(R.id.AddMeetActivityButton);
+        ImageButton AddMeetActivityButton = (ImageButton) v.findViewById(R.id.addBtn);
         AddMeetActivityButton.setOnClickListener(this);
-        ImageButton AddMeetActivityButton2 = (ImageButton) v.findViewById(R.id.AddMeetActivityButton2);
-        AddMeetActivityButton2.setOnClickListener(this);
 
-        Button FindMeetActivityButton = (Button) v.findViewById(R.id.FindMeetActivityButton);
+        ImageButton FindMeetActivityButton = (ImageButton) v.findViewById(R.id.findBtn);
         FindMeetActivityButton.setOnClickListener(this);
-        ImageButton FindMeetActivityButton2 = (ImageButton) v.findViewById(R.id.FindMeetActivityButton2);
-        FindMeetActivityButton2.setOnClickListener(this);
 
-        Button ManageMeetActivityButton = (Button) v.findViewById(R.id.ManageMeetActivityButton);
+        ImageButton ManageMeetActivityButton = (ImageButton) v.findViewById(R.id.manageBtn);
         ManageMeetActivityButton.setOnClickListener(this);
-        ImageButton ManageMeetActivityButton2 = (ImageButton) v.findViewById(R.id.ManageMeetActivityButton2);
-        ManageMeetActivityButton2.setOnClickListener(this);
 
         //database ref
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -57,6 +56,7 @@ public class SocialFragment extends Fragment implements View.OnClickListener {
        final int French = R.drawable.franceicon;
        final int Spanish = R.drawable.spainicon;
 
+        final LinearLayout nextMeetUpLayout = (LinearLayout) v.findViewById(R.id.nextLayout);
         final ImageView flagimage = (ImageView) v.findViewById(R.id.flagImage);
         final TextView meetTitle = (TextView) v.findViewById(R.id.meetupTitleLbl);
         final TextView meetDate = (TextView) v.findViewById(R.id.meetupDateLbl);
@@ -95,7 +95,6 @@ public class SocialFragment extends Fragment implements View.OnClickListener {
                     if(Attending.contains(getUserProfile.uid)) {
 
                         if (theMeetingDate[0].compareTo(PrevMeeting[0]) > 0) {
-                            System.out.println("meetingDate is after previous");
                             //set this as the next meet up
                             PrevMeeting[0] = theMeetingDate[0];
                             String Language = child.child("Language").getValue().toString();
@@ -121,28 +120,16 @@ public class SocialFragment extends Fragment implements View.OnClickListener {
                             meetLocation.setText(String.valueOf(locationHolder[0]));
                             meetTime.setText(String.valueOf(timeHolder[0]));
 
-                        } else if (theMeetingDate[0].compareTo(PrevMeeting[0]) < 0) {
-                            System.out.println("Date1 is before Date2");
-                            System.out.println(theMeetingDate[0].toString() + PrevMeeting[0].toString());
-                        } else if (theMeetingDate[0].compareTo(PrevMeeting[0]) == 0) {
-                            System.out.println("Date1 is equal to Date2");
-                        } else {
-                            System.out.println("How to get here?");
                         }
 
                     }else if (!Attending.contains(getUserProfile.uid) && titleHolder[0] == null){
-                        meetTitle.setText(getResources().getString(R.string.NoMeetups));
-
+                        nextMeetUpLayout.setVisibility(View.GONE);
                     }
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
-
 
         //database ref
         DatabaseReference myRef2 = database.getReference("PastMeetings");
@@ -161,7 +148,6 @@ public class SocialFragment extends Fragment implements View.OnClickListener {
 
                     //if user is attending display it
                     if(Attending.contains(getUserProfile.uid)) {
-
 
                         for (final DataSnapshot attendees : child.child("Attending").getChildren()) {
                             //get the users in attending
@@ -194,33 +180,20 @@ public class SocialFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
-
     @Override
     public void onClick(View v) {
         //start intents on click
         Intent intent;
         switch (v.getId()) {
-            case R.id.AddMeetActivityButton:
+            case R.id.addBtn:
                 intent = new Intent(getActivity(), MeetingActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.AddMeetActivityButton2:
-                intent = new Intent(getActivity(), MeetingActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.FindMeetActivityButton:
+            case R.id.findBtn:
                 intent = new Intent(getActivity(), MapsActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.FindMeetActivityButton2:
-                intent = new Intent(getActivity(), MapsActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.ManageMeetActivityButton:
-                intent = new Intent(getActivity(), ManageActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.ManageMeetActivityButton2:
+            case R.id.manageBtn:
                 intent = new Intent(getActivity(), ManageActivity.class);
                 startActivity(intent);
                 break;

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -44,6 +45,9 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflating the layout for this fragment
         final View v = inflater.inflate(R.layout.levelselect_fragment, null);
+
+        //set title
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.Learn));
 
         // get user details
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -192,24 +196,15 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
             int LessonScore2 = Prefs.getInt(userLanguage + myLesson.getText().toString() + "2", 0);
             int LessonScore3 = Prefs.getInt(userLanguage + myLesson.getText().toString() + "3", 0);
 
+            //// TODO: 21/04/2017 needs to change the dividing number based on lesson number 
             //sum of lessons displays
             int result = (LessonScore1 + LessonScore2 + LessonScore3) / 3;
             myProgressBar.setProgress(result * 10);
 
-            //add a star to 100% lessons
+            //change progress bar
             if (myProgressBar.getProgress() == 100) {
-                //add layout
-               // RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(60,60);
-                lp.addRule(RelativeLayout.BELOW, myLesson.getId());
-                lp.addRule(RelativeLayout.RIGHT_OF, myProgressBar.getId());
-                lp.setMargins(5, 0, 0, 0);
-
-                //add image and progress bar
-                ImageView myimage = new ImageView(getActivity());
-                myimage.setBackgroundResource(R.drawable.star);
+                //set progress bar
                 myProgressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.Gold), PorterDuff.Mode.SRC_IN);
-                parent.addView(myimage, lp);
 
                 //get lesson
                 boolean LessonComplete = LevelPrefs.getBoolean(myLesson.getText().toString() + "Complete", false);
