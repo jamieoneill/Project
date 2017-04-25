@@ -17,7 +17,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="5dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ProfilePic"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -174,52 +174,123 @@
             android:background="@color/Gray"
             />
 
-        <Button
-            android:id="@+id/ChangePhotoButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:text="@string/ChangeProfilePicture"
-            android:theme="@style/ButtonStyle" />
+            android:layout_gravity="center">
 
-        <Button
-            android:id="@+id/TranslateActivityButton"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/ChangePhotoLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="@string/translateLabel"
-            android:theme="@style/ButtonStyle" />
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp">
 
-        <Button
-            android:id="@+id/ChangeLanguageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="@string/ChangeLanguage"
-            android:theme="@style/ButtonStyle" />
+            <ImageButton
+                android:id="@+id/ChangePhotoButton"
+                android:layout_width="@dimen/social_image"
+                android:layout_height="@dimen/social_image"
+                android:background="@drawable/change_photo"
+                android:layout_centerHorizontal="true"/>
 
-        <!--
-        <Button
-            android:id="@+id/StatsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="@string/stats"
-            android:theme="@style/ButtonStyle" />
-            -->
+            <TextView
+                android:id="@+id/ChangePhotoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ChangePhotoButton"
+                android:layout_centerHorizontal="true"
+                android:text="@string/ChangeProfilePicture"
+                android:textColor="@color/Black"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/SignOutButton"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/TranslateActivityLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp">
+
+            <ImageButton
+                android:id="@+id/TranslateActivityButton"
+                android:layout_width="@dimen/social_image"
+                android:layout_height="@dimen/social_image"
+                android:background="@drawable/translate_image"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/TranslateActivityText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/TranslateActivityButton"
+                android:layout_centerHorizontal="true"
+                android:text="@string/translateLabel"
+                android:textColor="@color/Black"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/SignOut"
-            android:theme="@style/ButtonStyle" />
+            android:layout_gravity="center_horizontal">
+
+            <RelativeLayout
+                android:id="@+id/ChangeLanguageLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp">
+
+                <ImageButton
+                    android:id="@+id/ChangeLanguageButton"
+                    android:layout_width="@dimen/social_image"
+                    android:layout_height="@dimen/social_image"
+                    android:background="@drawable/change_language"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/ChangeLanguageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ChangeLanguageButton"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/ChangeLanguage"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/SignOutLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="20dp">
+
+                <ImageButton
+                    android:id="@+id/SignOutButton"
+                    android:layout_width="@dimen/social_image"
+                    android:layout_height="@dimen/social_image"
+                    android:background="@drawable/sign_out"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/SignOutText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/SignOutButton"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/SignOut"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

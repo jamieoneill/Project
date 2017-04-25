@@ -31,7 +31,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,11 +39,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -79,69 +76,59 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         final View view = inflater.inflate(R.layout.profile_fragment, null);
 
         //set title
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.Profile));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.Profile));
+
+        //get language
+        SharedPreferences Prefs = getActivity().getSharedPreferences("Prefs", MODE_PRIVATE);
+        userLanguage = Prefs.getString("currentLanguage", null);
 
         // get reference
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users/" + getUserProfile.uid);
 
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                userLanguage = dataSnapshot.child("Language").getValue(String.class);
+        //set name
+        TextView nameLabel = (TextView) view.findViewById(R.id.nameTextView);
+        nameLabel.setText(getUserProfile.name);
 
-                //set name
-                TextView nameLabel = (TextView) view.findViewById(R.id.nameTextView);
-                nameLabel.setText(getUserProfile.name);
+        //check for level in this language
+        SharedPreferences LevelPrefs = getActivity().getSharedPreferences("levels", Context.MODE_PRIVATE);
+        int languageCount = 0;
 
-                //check for level in this language
-                SharedPreferences LevelPrefs = getActivity().getSharedPreferences("levels", Context.MODE_PRIVATE);
-                int languageCount = 0;
-
-                Map<String, ?> keys = getActivity().getSharedPreferences("levels", Context.MODE_PRIVATE).getAll();
-                for(Map.Entry<String,?> entry : keys.entrySet()){
-                    Log.d("map values",entry.getKey() + ": " +
-                            entry.getValue().toString());
-                    if(entry.getKey().contains("Level")){
-                        languageCount ++;
-                    }
-                }
-
-                int userLevel = LevelPrefs.getInt(userLanguage + "Level", 0);
-                TextView levelLabel = (TextView) view.findViewById(R.id.levelText);
-                levelLabel.setText(String.valueOf(userLevel));
-
-                //check Achievements
-                if(userLevel >= 5){
-                AchievementHelper AchievementHelperClass = new AchievementHelper();
-                AchievementHelperClass.UnlockAchievement("ReachLevel5", getActivity());
-                }
-                if(languageCount >=2 ){
-                    AchievementHelper AchievementHelperClass = new AchievementHelper();
-                    AchievementHelperClass.UnlockAchievement("TryMoreThanOneLanguage", getActivity());
-                }
-
+        Map<String, ?> keys = getActivity().getSharedPreferences("levels", Context.MODE_PRIVATE).getAll();
+        for (Map.Entry<String, ?> entry : keys.entrySet()) {
+            Log.d("map values", entry.getKey() + ": " +
+                    entry.getValue().toString());
+            if (entry.getKey().contains("Level")) {
+                languageCount++;
             }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        }
+
+        int userLevel = LevelPrefs.getInt(userLanguage + "Level", 0);
+        TextView levelLabel = (TextView) view.findViewById(R.id.levelText);
+        levelLabel.setText(String.valueOf(userLevel));
+
+        //check Achievements
+        if (userLevel >= 5) {
+            AchievementHelper AchievementHelperClass = new AchievementHelper();
+            AchievementHelperClass.UnlockAchievement("ReachLevel5", getActivity());
+        }
+        if (languageCount >= 2) {
+            AchievementHelper AchievementHelperClass = new AchievementHelper();
+            AchievementHelperClass.UnlockAchievement("TryMoreThanOneLanguage", getActivity());
+        }
 
         //set buttons
-        Button changePhotoButton = (Button) view.findViewById(R.id.ChangePhotoButton);
+        ImageButton changePhotoButton = (ImageButton) view.findViewById(R.id.ChangePhotoButton);
         changePhotoButton.setOnClickListener(this);
 
-        Button TranslateActivityButton = (Button) view.findViewById(R.id.TranslateActivityButton);
+        ImageButton TranslateActivityButton = (ImageButton) view.findViewById(R.id.TranslateActivityButton);
         TranslateActivityButton.setOnClickListener(this);
 
-        Button changeLanguageButton = (Button) view.findViewById(R.id.ChangeLanguageButton);
+        ImageButton changeLanguageButton = (ImageButton) view.findViewById(R.id.ChangeLanguageButton);
         changeLanguageButton.setOnClickListener(this);
 
-        Button SignOutButton = (Button) view.findViewById(R.id.SignOutButton);
+        ImageButton SignOutButton = (ImageButton) view.findViewById(R.id.SignOutButton);
         SignOutButton.setOnClickListener(this);
-
-        //Button statsButton = (Button) view.findViewById(R.id.StatsButton);
-        //statsButton.setOnClickListener(this);
 
         //check Achievements
         AchievementHelper AchievementHelperClass = new AchievementHelper();
@@ -198,6 +185,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         myRef.child("Language").setValue(languages[which]);
 
+                        //set language locally
+                        SharedPreferences Prefs = getActivity().getSharedPreferences("Prefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = Prefs.edit();
+                        editor.putString("currentLanguage", String.valueOf(languages[which]));
+                        editor.apply();
+
                     }
                 });
                 builder.show();
@@ -210,12 +203,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), SignInActivity.class);
                 startActivity(intent);
                 break;
-            /*case R.id.StatsButton:
-
-                //open stats
-                intent = new Intent(getActivity(), StatsActivity.class);
-                startActivity(intent);
-                break; */
         }
     }
 
@@ -312,11 +299,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 //set circle style
                 RoundedBitmapDrawable roundedImage = RoundedBitmapDrawableFactory.create(activity.getResources(), userImage);
-                roundedImage.setCornerRadius(Math.max(userImage.getWidth(), userImage.getHeight()) / 2.0f);
 
                 //set image to view
-                ImageView imgView = viewToFill;
-                imgView.setImageDrawable(roundedImage);
+                viewToFill.setImageDrawable(roundedImage);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -331,11 +316,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                         //set circle style
                         RoundedBitmapDrawable roundedImage = RoundedBitmapDrawableFactory.create(activity.getResources(), userImage);
-                        roundedImage.setCornerRadius(Math.max(userImage.getWidth(), userImage.getHeight()) / 2.0f);
 
                         //set image to view
-                        ImageView imgView = viewToFill;
-                        imgView.setImageDrawable(roundedImage);
+                        viewToFill.setImageDrawable(roundedImage);
                     }
                 });
             }
@@ -381,7 +364,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             //set circle style
             RoundedBitmapDrawable roundedImage = RoundedBitmapDrawableFactory.create(activity.getResources(), userimage);
-            roundedImage.setCornerRadius(Math.max(userimage.getWidth(), userimage.getHeight()) / 2.0f);
 
             //set to imageview
             viewToFill.setImageDrawable(roundedImage);

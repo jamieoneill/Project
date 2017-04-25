@@ -2,6 +2,7 @@ package com.mismatched.nowyouretalking;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -104,6 +105,12 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                                     public void onClick(DialogInterface dialog, int which) {
                                         myRef.child(uid).child("Language").setValue(languages[which]);
                                         myRef.child(uid).child(languages[which]+"Level").setValue(0);
+
+                                        //set language locally
+                                        SharedPreferences Prefs = getSharedPreferences("Prefs", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = Prefs.edit();
+                                        editor.putString("currentLanguage", String.valueOf(languages[which]));
+                                        editor.apply();
 
                                         //start main after user picks
                                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
