@@ -178,14 +178,21 @@ public class GameActivity extends AppCompatActivity {
                     //set messages
                     TextView endScore = (TextView) findViewById(R.id.endScore);
                     endScore.setText(score + "/10");
+                    ImageView resultImage = (ImageView) findViewById(R.id.resultImage) ;
 
                     TextView endMessage = (TextView) findViewById(R.id.endMessage);
                     if (score == 10) {
                         endMessage.setText(getResources().getString(R.string.EndMessageGood));
+                        resultImage.setBackgroundResource(R.drawable.result_1);
                     } else if (score < 10 && score > 6) {
                         endMessage.setText(getResources().getString(R.string.EndMessageMiddle));
-                    } else if (score < 7) {
+                        resultImage.setBackgroundResource(R.drawable.result_2);
+                    } else if (score < 7 && score > 3) {
                         endMessage.setText(getResources().getString(R.string.EndMessageBad));
+                        resultImage.setBackgroundResource(R.drawable.result_3);
+                    }else if (score < 4 && score >= 0) {
+                        endMessage.setText(getResources().getString(R.string.EndMessageWorst));
+                        resultImage.setBackgroundResource(R.drawable.result_4);
                     }
 
                     Button leaveGameBtn = (Button) findViewById(R.id.leaveGameBtn);

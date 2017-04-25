@@ -51,6 +51,7 @@
     <string name="EndMessageGood">Great Job</string>
     <string name="EndMessageMiddle">Really close, keep trying</string>
     <string name="EndMessageBad">Too bad, you need practice \nKeep trying</string>
+    <string name="EndMessageWorst">You have a lot of practice to do!</string>
     <string name="ChangeLanguage">Change Language</string>
     <string name="SignOut">Sign Out</string>
     <string name="Message">Messages</string>
