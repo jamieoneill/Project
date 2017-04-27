@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -57,26 +58,9 @@ public class GameActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final String lesson = extras.getString("Lesson");
 
-        // get user details
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference userRef = database.getReference("Users/" + getUserProfile.uid);
-
-        //get language and level
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                final String userLanguage = dataSnapshot.child("Language").getValue(String.class);
-
-                //get question list
-                getQuestionList(lesson, userLanguage);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        //get language
+        SharedPreferences Prefs = GameActivity.this.getSharedPreferences("Prefs", MODE_PRIVATE);
+        final String userLanguage = Prefs.getString("currentLanguage", null);
 
         //set progress bar
         final ProgressBar pb = (ProgressBar) findViewById(R.id.CompletionProgressBar);
@@ -85,6 +69,8 @@ public class GameActivity extends AppCompatActivity {
         //hide layouts
         hideAllViews();
 
+        //get question list
+        getQuestionList(lesson, userLanguage);
     }
 
     private void checkAnswer(int questionNumber, String correctAnswer, final String answerGiven, final String[] questionInfo, final String[] falseInfo, final String userlanguage, final String lesson) {
