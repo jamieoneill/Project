@@ -15,7 +15,7 @@
     <string name="locationLable">Location</string>
     <string name="dateLable">Date</string>
     <string name="timeLable">Time</string>
-    <string name="languageLable">Language</string>
+    <string name="languageLable">Language:</string>
     <string name="minLevelLable">Minimum Level</string>
     <string name="maxLevelLable">Maximum Level</string>
     <string name="attendeesLable">No. of Attendees</string>
@@ -82,7 +82,7 @@
     <string name="Locations">Locations</string>
     <string name="Adjectives">Adjectives</string>
     <string name="Congratulations">Congratulations</string>
-    <string name="Level">Level</string>
+    <string name="Level">Level:</string>
     <string name="locked">Locked</string>
     <string name="needToComplete">Locked, complete previous activities to open</string>
     <string name="Achievements">Achievements</string>
@@ -108,6 +108,10 @@
     <string name="speakToMeTitle">SPEAK TO ME</string>
     <string name="earlyRiserTitle">EARLY RISER</string>
     <string name="achivementUnlocked">Achievement unlocked</string>
+    <string name="details">Details</string>
+    <string name="Confirm">Confirm</string>
+    <string name="MyMeetUps">My Meet Ups</string>
+    <string name="AttendingMeetUps">Attending Meet Ups</string>
 
     <!-- text to display on lesson -->
     <!-- German -->

@@ -13,6 +13,13 @@
         <item name="android:windowBackground">@drawable/splashscreen</item>
     </style>
 
+    <!-- Meeting text style -->
+    <style name="AddTextStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">?attr/editTextColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- timepicker -->
     <style name="TimeTheme" parent="android:Theme.Holo.Light"></style>
 

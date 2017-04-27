@@ -18,7 +18,7 @@ android:layout_margin="10dp">
     android:id="@+id/myMeetUpLayout">
 
     <TextView
-        android:text="My Meet ups"
+        android:text="@string/MyMeetUps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/myMeetUpLable"
@@ -33,12 +33,13 @@ android:layout_margin="10dp">
         android:id="@+id/attendingMeetUpLayout">
 
     <TextView
-        android:text="Attending Meet ups"
+        android:text="@string/AttendingMeetUps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/attendingMeetupLable"
         android:textColor="?attr/editTextColor"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"/>
     </LinearLayout>
 
 

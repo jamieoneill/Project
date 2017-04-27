@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -63,9 +64,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     //set storage
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private String userLanguage;
 
     // get user info from profile class
     final UserProfileActivity.getUserProfile getUserProfile = new UserProfileActivity().new getUserProfile();
@@ -73,17 +72,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflating the layout for this fragment
-        final View view = inflater.inflate(R.layout.profile_fragment, null);
+        View view = inflater.inflate(R.layout.profile_fragment, null);
 
         //set title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.Profile));
 
         //get language
         SharedPreferences Prefs = getActivity().getSharedPreferences("Prefs", MODE_PRIVATE);
-        userLanguage = Prefs.getString("currentLanguage", null);
+        String userLanguage = Prefs.getString("currentLanguage", null);
 
         // get reference
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users/" + getUserProfile.uid);
 
         //set name
@@ -103,9 +102,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         }
 
+        //set level text
         int userLevel = LevelPrefs.getInt(userLanguage + "Level", 0);
-        TextView levelLabel = (TextView) view.findViewById(R.id.levelText);
-        levelLabel.setText(String.valueOf(userLevel));
+        TextView levelLabel = (TextView) view.findViewById(R.id.languageText);
+        levelLabel.setText(userLanguage);
+
+        //set language text
+        TextView languageLabel = (TextView) view.findViewById(R.id.levelText);
+        languageLabel.setText(String.valueOf(userLevel));
 
         //check Achievements
         if (userLevel >= 5) {
