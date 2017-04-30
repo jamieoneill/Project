@@ -8,4 +8,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="achievements_size">40dp</dimen>
     <dimen name="level_image">80dp</dimen>
+    <dimen name="social_image">100dp</dimen>
 </resources>

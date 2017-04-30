@@ -11,11 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -56,26 +58,9 @@ public class GameActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final String lesson = extras.getString("Lesson");
 
-        // get user details
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference userRef = database.getReference("Users/" + getUserProfile.uid);
-
-        //get language and level
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                final String userLanguage = dataSnapshot.child("Language").getValue(String.class);
-
-                //get question list
-                getQuestionList(lesson, userLanguage);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        //get language
+        SharedPreferences Prefs = GameActivity.this.getSharedPreferences("Prefs", MODE_PRIVATE);
+        final String userLanguage = Prefs.getString("currentLanguage", null);
 
         //set progress bar
         final ProgressBar pb = (ProgressBar) findViewById(R.id.CompletionProgressBar);
@@ -84,6 +69,8 @@ public class GameActivity extends AppCompatActivity {
         //hide layouts
         hideAllViews();
 
+        //get question list
+        getQuestionList(lesson, userLanguage);
     }
 
     private void checkAnswer(int questionNumber, String correctAnswer, final String answerGiven, final String[] questionInfo, final String[] falseInfo, final String userlanguage, final String lesson) {
@@ -96,22 +83,26 @@ public class GameActivity extends AppCompatActivity {
         }
 
         //set result view
-        RelativeLayout resultView = (RelativeLayout) findViewById(R.id.resultLayout);
-        resultView.setVisibility(View.VISIBLE);
-        TextView resultHolder = (TextView) findViewById(R.id.resultHolder);
-        TextView answerHolder = (TextView) findViewById(R.id.correctAnswerHolder);
-
-        //set text in result
-        answerHolder.setText(correctAnswer);
+        Toast toast = new Toast(GameActivity.this);
+        LayoutInflater inflater = GameActivity.this.getLayoutInflater();
+        View customToastroot;
+        TextView messageText;
+        TextView resultText;
 
         if (answerGiven.equals(correctAnswer)) {
 
             //set result
-            resultView.setBackgroundResource(R.drawable.rounded_textview_green);
-            resultHolder.setTextColor(getResources().getColor(R.color.DarkGreen));
-            answerHolder.setTextColor(getResources().getColor(R.color.DarkGreen));
-            resultHolder.setText(getResources().getString(R.string.CorrectAnswer));
+            customToastroot = inflater.inflate(R.layout.toast_green, null);
+            messageText = (TextView) customToastroot.findViewById(R.id.toastMessage);
+            messageText.setText(getResources().getString(R.string.CorrectAnswer));
+            resultText = (TextView) customToastroot.findViewById(R.id.resultMessage);
+            resultText.setText(correctAnswer);
 
+            //show result
+            toast.setView(customToastroot);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
 
             //add a score
             score++;
@@ -119,10 +110,17 @@ public class GameActivity extends AppCompatActivity {
             scoreLbl.setText(String.valueOf(score));
         } else {
             //set result
-            resultView.setBackgroundResource(R.drawable.rounded_textview_red);
-            resultHolder.setTextColor(getResources().getColor(R.color.Red));
-            answerHolder.setTextColor(getResources().getColor(R.color.Red));
-            resultHolder.setText(getResources().getString(R.string.WrongAnswer));
+            customToastroot = inflater.inflate(R.layout.toast_red, null);
+            messageText = (TextView) customToastroot.findViewById(R.id.toastMessage);
+            messageText.setText(getResources().getString(R.string.WrongAnswer));
+            resultText = (TextView) customToastroot.findViewById(R.id.resultMessage);
+            resultText.setText(correctAnswer);
+
+            //show result
+            toast.setView(customToastroot);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
         }
 
         //update progress and question
@@ -131,11 +129,7 @@ public class GameActivity extends AppCompatActivity {
         questionNumber = questionNumber + 1;
 
         final Button confirm = (Button) findViewById(R.id.checkAnswerBtn);
-        confirm.setText(getResources().getString(R.string.Continue));
         final int finalQuestionNumber = questionNumber;
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 if (finalQuestionNumber == 10) {
 
                     Date dt = new Date();
@@ -154,11 +148,9 @@ public class GameActivity extends AppCompatActivity {
                     }
 
                     //hide views
-                    Button confirm = (Button) findViewById(R.id.checkAnswerBtn);
                     confirm.setVisibility(View.GONE);
                     TextView goalLbl = (TextView) findViewById(R.id.goalLable);
                     goalLbl.setVisibility(View.GONE);
-                    ProgressBar pb = (ProgressBar) findViewById(R.id.CompletionProgressBar);
                     pb.setProgress(0);
                     TextView scoreLbl = (TextView) findViewById(R.id.scoreLable);
                     scoreLbl.setText(null);
@@ -172,14 +164,21 @@ public class GameActivity extends AppCompatActivity {
                     //set messages
                     TextView endScore = (TextView) findViewById(R.id.endScore);
                     endScore.setText(score + "/10");
+                    ImageView resultImage = (ImageView) findViewById(R.id.resultImage) ;
 
                     TextView endMessage = (TextView) findViewById(R.id.endMessage);
                     if (score == 10) {
                         endMessage.setText(getResources().getString(R.string.EndMessageGood));
+                        resultImage.setBackgroundResource(R.drawable.result_1);
                     } else if (score < 10 && score > 6) {
                         endMessage.setText(getResources().getString(R.string.EndMessageMiddle));
-                    } else if (score < 7) {
+                        resultImage.setBackgroundResource(R.drawable.result_2);
+                    } else if (score < 7 && score > 3) {
                         endMessage.setText(getResources().getString(R.string.EndMessageBad));
+                        resultImage.setBackgroundResource(R.drawable.result_3);
+                    }else if (score < 4 && score >= 0) {
+                        endMessage.setText(getResources().getString(R.string.EndMessageWorst));
+                        resultImage.setBackgroundResource(R.drawable.result_4);
                     }
 
                     Button leaveGameBtn = (Button) findViewById(R.id.leaveGameBtn);
@@ -216,9 +215,6 @@ public class GameActivity extends AppCompatActivity {
                     confirm.setText(getResources().getString(R.string.Check));
                     loadNextQuestion(finalQuestionNumber, questionInfo, falseInfo, userlanguage, lesson);
                 }
-            }
-        });
-
 
     }
 
@@ -576,6 +572,8 @@ public class GameActivity extends AppCompatActivity {
                             customToastroot = inflater.inflate(R.layout.toast_green, null);
                             messageText = (TextView) customToastroot.findViewById(R.id.toastMessage);
                             messageText.setText(getResources().getString(R.string.correct));
+                            TextView resultText = (TextView) customToastroot.findViewById(R.id.resultMessage);
+                            resultText.setVisibility(View.GONE);
 
                             if (count[0] == 1) {
                                 //this is the second selected button
@@ -603,7 +601,6 @@ public class GameActivity extends AppCompatActivity {
                                     customToastroot = inflater.inflate(R.layout.toast_red, null);
                                     messageText = (TextView) customToastroot.findViewById(R.id.toastMessage);
                                     messageText.setText(getResources().getString(R.string.incorrect));
-
                                 }
 
                                 //change button back
@@ -809,7 +806,6 @@ public class GameActivity extends AppCompatActivity {
         RelativeLayout buttonQuestionView = (RelativeLayout) findViewById(R.id.buttonQuestionLayout);
         RelativeLayout translateQuestionView = (RelativeLayout) findViewById(R.id.translateQuestionLayout);
         LinearLayout missingQuestionView = (LinearLayout) findViewById(R.id.missingQuestionLayout);
-        RelativeLayout resultView = (RelativeLayout) findViewById(R.id.resultLayout);
         RelativeLayout endGameView = (RelativeLayout) findViewById(R.id.endGameLayout);
         LinearLayout translateImageQuestionLayout = (LinearLayout) findViewById(R.id.translateImageQuestionLayout);
 
@@ -819,7 +815,6 @@ public class GameActivity extends AppCompatActivity {
         translateQuestionView.setVisibility(View.GONE);
         missingQuestionView.setVisibility(View.GONE);
         translateImageQuestionLayout.setVisibility(View.GONE);
-        resultView.setVisibility(View.GONE);
         endGameView.setVisibility(View.GONE);
     }
 }

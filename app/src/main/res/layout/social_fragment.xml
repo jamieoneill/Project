@@ -1,142 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-
-    <ImageButton
-        app:layout_widthPercent="50%"
-        app:layout_heightPercent="40%"
-        android:src="@drawable/find_header_image"
-        android:id="@+id/FindMeetActivityButton2"
-        android:scaleType="centerCrop"
-        android:background="@android:color/transparent"
-
-        />
-
-    <Button
-        android:text="@string/findMeetUp"
-        app:layout_widthPercent="53%"
-        app:layout_heightPercent="6%"
-        android:id="@+id/FindMeetActivityButton"
-        android:theme="@style/IconButtonStyle"
-        android:drawableLeft="@drawable/ic_find_meet"
-        android:layout_marginTop="-4dp"
-        android:layout_marginLeft="-4dp"
-        android:textSize="12sp"
-        android:layout_below="@id/FindMeetActivityButton2"
-
-       />
-
-    <ImageButton
-        app:layout_widthPercent="50%"
-        app:layout_heightPercent="40%"
-        android:src="@drawable/people_header_image"
-        android:id="@+id/AddMeetActivityButton2"
-        android:scaleType="fitXY"
-        android:background="@android:color/transparent"
-        android:layout_toRightOf="@id/FindMeetActivityButton"
-        android:layout_alignLeft="@+id/AddMeetActivityButton"
-        android:layout_alignRight="@+id/AddMeetActivityButton"
-        />
-
-    <Button
-        android:text="@string/addMeetUp"
-        app:layout_widthPercent="53%"
-        app:layout_heightPercent="6%"
-        android:id="@+id/AddMeetActivityButton"
-        android:theme="@style/IconButtonStyle"
-        android:drawableLeft="@drawable/ic_add_meet"
-        android:layout_marginTop="-4dp"
-        android:layout_marginRight="-4dp"
-        android:textSize="12sp"
-        android:layout_below="@id/AddMeetActivityButton2"
-        android:layout_toRightOf="@id/FindMeetActivityButton2"
-        />
-
-
-    <ImageButton
-        app:layout_widthPercent="50%"
-        app:layout_heightPercent="40%"
-        android:src="@drawable/edit_header_image"
-        android:id="@+id/ManageMeetActivityButton2"
-        android:scaleType="fitXY"
-        android:layout_below="@+id/FindMeetActivityButton"
-        android:padding="0dp"
-        />
-
-    <Button
-        android:text="@string/manageMeetUp"
-        app:layout_widthPercent="52%"
-        app:layout_heightPercent="6%"
-        android:id="@+id/ManageMeetActivityButton"
-        android:theme="@style/IconButtonStyle"
-        android:drawableLeft="@drawable/ic_edit_meet"
-        android:textSize="12sp"
-        android:layout_below="@id/ManageMeetActivityButton2"
-        android:layout_marginTop="-4dp"
-        android:layout_marginLeft="-4dp"
-        />
+    android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/findLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/AddMeetActivityButton"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/ManageMeetActivityButton">
-
-        <TextView
-            android:text="My next Meet up:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/nextLbl"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/Black"/>
-
-
-        <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/flagImage"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="80dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/meetupTitleLbl"
-        android:layout_below="@id/flagImage"
         android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        android:textColor="@color/Black"/>
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/findBtn"
+            android:layout_width="@dimen/social_image"
+            android:layout_height="@dimen/social_image"
+            android:background="@drawable/find_a_meet" />
 
         <TextView
+            android:id="@+id/findText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/meetupTimeLbl"
-            android:layout_below="@id/meetupTitleLbl"
+            android:layout_below="@id/findBtn"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/Black"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/meetupDateLbl"
-            android:layout_below="@id/meetupTimeLbl"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/Black"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/meetupLocationLbl"
-            android:layout_below="@id/meetupDateLbl"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/Black"/>
+            android:text="@string/findMeetUp"
+            android:textColor="@color/Black"
+            android:textStyle="bold" />
     </RelativeLayout>
 
-</android.support.percent.PercentRelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/findLayout"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/middleLayout"
+        android:baselineAligned="false">
+
+    <RelativeLayout
+        android:id="@+id/addLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        >
+
+        <ImageButton
+            android:id="@+id/addBtn"
+            android:layout_width="@dimen/social_image"
+            android:layout_height="@dimen/social_image"
+            android:background="@drawable/add_a_meet"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:id="@+id/addText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addBtn"
+            android:layout_centerHorizontal="true"
+            android:text="@string/addMeetUp"
+            android:textColor="@color/Black"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+        <RelativeLayout
+        android:id="@+id/manageLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginRight="20dp">
+
+        <ImageButton
+            android:id="@+id/manageBtn"
+            android:layout_width="@dimen/social_image"
+            android:layout_height="@dimen/social_image"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/manage_a_meet" />
+
+        <TextView
+            android:id="@+id/manageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/manageBtn"
+            android:layout_centerHorizontal="true"
+            android:text="@string/manageMeetUp"
+            android:textColor="@color/Black"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nextLayout"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/middleLayout"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:id="@+id/nextLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/MyNextMeetup"
+            android:textColor="@color/Black"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/flagImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/meetupTitleLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/Black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/meetupTimeLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/Black" />
+
+        <TextView
+            android:id="@+id/meetupDateLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/Black" />
+
+        <TextView
+            android:id="@+id/meetupLocationLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/Black" />
+    </LinearLayout>
+
+</RelativeLayout>

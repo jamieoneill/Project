@@ -6,27 +6,27 @@
     <DatePicker
         android:id="@+id/date_picker"
         android:layout_width="match_parent"
-        android:layout_weight="4"
+        android:layout_weight="6"
         android:layout_height="0dp"
         android:theme="@style/DateTheme"
         />
 
     <TimePicker
         android:id="@+id/time_picker"
-        android:layout_weight="4"
+        android:layout_weight="8"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:theme="@style/TimeTheme"
         />
 
     <Button
-        android:text="Confirm"
+        android:text="@string/Confirm"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:id="@+id/datetimeButton"
-        android:layout_weight="1"
+        android:layout_weight=".3"
         android:layout_gravity="center"
-        android:theme="@style/ButtonStyle"
+        android:theme="@style/JoinButtonStyle"
         />
 
 </LinearLayout>

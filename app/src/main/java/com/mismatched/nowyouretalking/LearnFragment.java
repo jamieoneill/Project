@@ -8,23 +8,17 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -45,71 +39,60 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
         // Inflating the layout for this fragment
         final View v = inflater.inflate(R.layout.levelselect_fragment, null);
 
-        // get user details
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference userRef = database.getReference("Users/" + getUserProfile.uid);
+        //set title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.Learn));
 
-        //get language and level
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        //get language
+        SharedPreferences Prefs = getActivity().getSharedPreferences("Prefs", MODE_PRIVATE);
+        userLanguage = Prefs.getString("currentLanguage", null);
 
-                userLanguage = dataSnapshot.child("Language").getValue(String.class);
+        //check for level in this language
+        LevelPrefs = getActivity().getSharedPreferences("levels", Context.MODE_PRIVATE);
+        userLevel = LevelPrefs.getInt(userLanguage + "Level", 0);
 
-                //check for level in this language
-                LevelPrefs = getActivity().getSharedPreferences("levels", Context.MODE_PRIVATE);
-                userLevel = LevelPrefs.getInt(userLanguage + "Level", 0);
+        //set buttons
+        ImageButton basicsBtn = (ImageButton) v.findViewById(R.id.basicsBtn);
+        basicsBtn.setOnClickListener(LearnFragment.this);
+        ImageButton phrasesBtn = (ImageButton) v.findViewById(R.id.phrasesBtn);
+        phrasesBtn.setOnClickListener(LearnFragment.this);
+        ImageButton basics2Btn = (ImageButton) v.findViewById(R.id.basics2Btn);
+        basics2Btn.setOnClickListener(LearnFragment.this);
+        ImageButton foodBtn = (ImageButton) v.findViewById(R.id.foodBtn);
+        foodBtn.setOnClickListener(LearnFragment.this);
+        ImageButton locationsBtn = (ImageButton) v.findViewById(R.id.locationsBtn);
+        locationsBtn.setOnClickListener(LearnFragment.this);
+        ImageButton adjectivesBtn = (ImageButton) v.findViewById(R.id.adjectivesBtn);
+        adjectivesBtn.setOnClickListener(LearnFragment.this);
 
-                //set buttons
-                ImageButton basicsBtn = (ImageButton) v.findViewById(R.id.basicsBtn);
-                basicsBtn.setOnClickListener(LearnFragment.this);
-                ImageButton phrasesBtn = (ImageButton) v.findViewById(R.id.phrasesBtn);
-                phrasesBtn.setOnClickListener(LearnFragment.this);
-                ImageButton basics2Btn = (ImageButton) v.findViewById(R.id.basics2Btn);
-                basics2Btn.setOnClickListener(LearnFragment.this);
-                ImageButton foodBtn = (ImageButton) v.findViewById(R.id.foodBtn);
-                foodBtn.setOnClickListener(LearnFragment.this);
-                ImageButton locationsBtn = (ImageButton) v.findViewById(R.id.locationsBtn);
-                locationsBtn.setOnClickListener(LearnFragment.this);
-                ImageButton adjectivesBtn = (ImageButton) v.findViewById(R.id.adjectivesBtn);
-                adjectivesBtn.setOnClickListener(LearnFragment.this);
+        //open buttons based on level
+        if (userLevel > 0) {
+            TextView phrases = (TextView) v.findViewById(R.id.phrasesText);
+            phrases.setText(getResources().getString(R.string.Phrases));
+        }
+        if (userLevel > 1) {
+            basics2Btn.setOnClickListener(LearnFragment.this);
+            TextView basics2 = (TextView) v.findViewById(R.id.basics2Text);
+            basics2.setText(getResources().getString(R.string.Basics2));
+        }
+        if (userLevel > 2) {
+            TextView basics2 = (TextView) v.findViewById(R.id.animalsText);
+            basics2.setText(getResources().getString(R.string.Animals));
+        }
+        if (userLevel > 3) {
+            TextView food = (TextView) v.findViewById(R.id.foodText);
+            food.setText(getResources().getString(R.string.Food));
+        }
+        if (userLevel > 4) {
+            TextView locations = (TextView) v.findViewById(R.id.locationsText);
+            locations.setText(getResources().getString(R.string.Locations));
+        }
+        if (userLevel > 5) {
+            TextView adjectives = (TextView) v.findViewById(R.id.adjectivesText);
+            adjectives.setText(getResources().getString(R.string.Adjectives));
+        }
 
-                //open buttons based on level
-                if (userLevel > 0) {
-                    TextView phrases = (TextView) v.findViewById(R.id.phrasesText);
-                    phrases.setText(getResources().getString(R.string.Phrases));
-                }
-                if (userLevel > 1) {
-                    basics2Btn.setOnClickListener(LearnFragment.this);
-                    TextView basics2 = (TextView) v.findViewById(R.id.basics2Text);
-                    basics2.setText(getResources().getString(R.string.Basics2));
-                }
-                if (userLevel > 2) {
-                    TextView basics2 = (TextView) v.findViewById(R.id.animalsText);
-                    basics2.setText(getResources().getString(R.string.Animals));
-                }
-                if (userLevel > 3) {
-                    TextView food = (TextView) v.findViewById(R.id.foodText);
-                    food.setText(getResources().getString(R.string.Food));
-                }
-                if (userLevel > 4) {
-                    TextView locations = (TextView) v.findViewById(R.id.locationsText);
-                    locations.setText(getResources().getString(R.string.Locations));
-                }
-                if (userLevel > 5) {
-                    TextView adjectives = (TextView) v.findViewById(R.id.adjectivesText);
-                    adjectives.setText(getResources().getString(R.string.Adjectives));
-                }
-
-                //set progress bars
-                setProgressBars(v, userLanguage);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        //set progress bars
+        setProgressBars(v, userLanguage);
 
         return v;
     }
@@ -151,7 +134,7 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
             }
 
             //add a card for the same number of the lesson count
-            for( int i=0; i<lessonCount; i++ ) {
+            for (int i = 0; i < lessonCount; i++) {
                 mCardAdapter.addCardItem(addMyCard(mCardAdapter, lessonName, lessonCount, userLanguage));
             }
 
@@ -192,24 +175,15 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
             int LessonScore2 = Prefs.getInt(userLanguage + myLesson.getText().toString() + "2", 0);
             int LessonScore3 = Prefs.getInt(userLanguage + myLesson.getText().toString() + "3", 0);
 
+            //// TODO: 21/04/2017 needs to change the dividing number based on lesson number 
             //sum of lessons displays
             int result = (LessonScore1 + LessonScore2 + LessonScore3) / 3;
             myProgressBar.setProgress(result * 10);
 
-            //add a star to 100% lessons
+            //change progress bar
             if (myProgressBar.getProgress() == 100) {
-                //add layout
-               // RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(60,60);
-                lp.addRule(RelativeLayout.BELOW, myLesson.getId());
-                lp.addRule(RelativeLayout.RIGHT_OF, myProgressBar.getId());
-                lp.setMargins(5, 0, 0, 0);
-
-                //add image and progress bar
-                ImageView myimage = new ImageView(getActivity());
-                myimage.setBackgroundResource(R.drawable.star);
+                //set progress bar
                 myProgressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.Gold), PorterDuff.Mode.SRC_IN);
-                parent.addView(myimage, lp);
 
                 //get lesson
                 boolean LessonComplete = LevelPrefs.getBoolean(myLesson.getText().toString() + "Complete", false);

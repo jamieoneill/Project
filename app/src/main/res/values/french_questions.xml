@@ -56,7 +56,7 @@
         <item>Maria,you,are,a,woman,man,and,drinks,boy</item>
         <item>Une,femme,et,un,homme,fille,es,enfant,tu</item>
         <item>A,girl,he,bread,she,it</item>
-        <item>1Fille,2girl,3Enfant,4boy,5es,6are,7a,8une</item>
+        <item>1Fille,2girl,3Garçon,4boy,5es,6are,7a,8une</item>
         <item>1et,2and,3woman,4Fille,5you,6tu,7Enfant,8child</item>
     </string-array>
 
@@ -82,7 +82,7 @@
         <item>is,girl,it,are,water,drinking,A</item>
         <item>none,none,none</item>
         <item>1une,2a,3Enfant,4child,5ce,6it,7drinks,8boit</item>
-        <item>1Je,2ich,3il,4he,5es,6are,7she,8elle</item>
+        <item>1Je,2I,3il,4he,5es,6are,7she,8elle</item>
         <item>es,suis,none,none</item>
         <item>She,is,a,woman,and,boy,girl,child</item>
         <item>none,none,none</item>
@@ -100,7 +100,7 @@
         <item>ButtonQuestion,s\'il vous plait, Please</item>
         <item>ButtonQuestion,Thanks, Merci</item>
         <item>TranslateQuestion,Yes hello,Oui bonjour</item>
-        <item>ButtonQuestion,Nein, danke, Non merci</item>
+        <item>ButtonQuestion,No Thanks, Non merci</item>
         <item>TranslateQuestion,Bye,Au revoir</item>
         <item>TranslateQuestion,Thank you Emma,Merci emma</item>
     </string-array>
@@ -111,7 +111,7 @@
         <item>Yes,hello,bye,no,well</item>
         <item>none,none,none</item>
         <item>No,yes,please,hello,bye</item>
-        <item>You,are,welcome,well,see,goodbye</item>
+        <item>you,are,welcome,well,see,goodbye,Please</item>
         <item>Merci,s\'il vous plait,non,oui,bonjour</item>
         <item>none,none,none</item>
         <item>No,thank,you,later,are,exactly,bye</item>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -10,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
-
 
         <LinearLayout
             android:orientation="horizontal"
@@ -35,7 +33,7 @@
 
             <Button
                 android:text="@string/speak"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/speechToText"
                 android:theme="@style/ButtonStyle"
@@ -83,7 +81,7 @@
 
         <Button
             android:text="@string/enter"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/translateButton"
             android:theme="@style/ButtonStyle"
@@ -116,9 +114,5 @@
             android:background="@drawable/circle_button"
             />
 
-
-
     </LinearLayout>
-
-
 </RelativeLayout>

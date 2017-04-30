@@ -1,210 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:baselineAligned="false"
+        android:layout_margin="24dp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
             <TextView
-                android:text="@string/titleLable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/TitleLable"
-                android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/titleLable"
+                android:theme="@style/AddTextStyle" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
                 android:id="@+id/TitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
                 android:hint="@string/titleLable"
-                android:layout_weight="1" />
-
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
             <TextView
-                android:text="@string/locationLable"
+                android:id="@+id/LocationLable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/LocationLable"
-                android:textColor="?attr/editTextColor"
-                android:layout_gravity="center_vertical"
-                android:layout_weight=".3"/>
+                android:text="@string/locationLable"
+                android:theme="@style/AddTextStyle" />
 
             <fragment
                 android:id="@+id/place_autocomplete_fragment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-                android:layout_weight="1"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
 
-            <TextView
-                android:text="@string/dateLable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/DateLable"
-                android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
-
-            <Button
-                android:text="@string/dateButtonLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/DateButton"
-                android:layout_weight="1"
-                android:theme="@style/ButtonStyle"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <TextView
-                android:text="@string/languageLable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/LanguageLable"
-                android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/LanguageSpinner"
-                android:entries="@array/language_array"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <TextView
-                android:text="@string/minLevelLable"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/DateLable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dateLable"
+                    android:theme="@style/AddTextStyle" />
+
+                <Button
+                    android:id="@+id/DateButton"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dateButtonLabel"
+                    android:theme="@style/ButtonStyle" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/LanguageLable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/languageLable"
+                    android:theme="@style/AddTextStyle" />
+
+                <Spinner
+                    android:id="@+id/LanguageSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/language_array"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/LevelsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/details"
+            android:theme="@style/AddTextStyle" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
                 android:id="@+id/MinLevelLable"
-                android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
-
-            <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/minLevelLable"
+                android:layout_weight="1"
+                />
+
+            <Spinner
                 android:id="@+id/MinLevelSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:entries="@array/onetotwenty_array"
-                android:layout_weight="1" />
-
-
+                android:layout_weight="1"
+                />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:text="@string/maxLevelLable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/MaxLevelLable"
-                android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
-
-            <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/maxLevelLable"
+                android:layout_weight="1"
+                />
+
+            <Spinner
                 android:id="@+id/MaxLevelSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:entries="@array/onetotwenty_array"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:text="@string/attendeesLable"
+                android:id="@+id/GuestsLable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/GuestsLable"
-                android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
+                android:text="@string/attendeesLable"
+                android:layout_weight="1"
+                />
 
             <Spinner
+                android:id="@+id/GuestsSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/GuestsSpinner"
                 android:entries="@array/twototwenty_array"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
             <TextView
-                android:text="@string/noteLable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/NoteLable"
-                android:textColor="?attr/editTextColor"
-                android:layout_weight="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/noteLable"
+                android:theme="@style/AddTextStyle" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
                 android:id="@+id/NoteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
                 android:hint="@string/noteLable"
-                android:layout_weight="1" />
+                android:inputType="textMultiLine" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
-            <Button
-                android:text="@string/addMeetingButtonLabel"
+            <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
                 android:id="@+id/AddMeetButton"
-                android:theme="@style/ButtonStyle"
-                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addMeetingButtonLabel"
+                android:layout_gravity="bottom"
+                android:theme="@style/JoinButtonStyle"
                 />
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </LinearLayout>
 
     </LinearLayout>

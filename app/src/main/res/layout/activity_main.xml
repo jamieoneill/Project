@@ -6,25 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:fitsSystemWindows="true"
     tools:context="com.mismatched.nowyouretalking.MainActivity"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="@android:color/white"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         <LinearLayout
             android:id="@+id/fragment_container"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
+            android:layout_below="@+id/toolbar"
             >
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/navbar_container"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         />
-
 
 </RelativeLayout>

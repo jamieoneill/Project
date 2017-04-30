@@ -1,85 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:background="#ffffff"
-    tools:context="com.mismatched.nowyouretalking.NavbarFragment"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mismatched.nowyouretalking.NavbarFragment">
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/Gray" />
 
-<android.support.percent.PercentRelativeLayout
-    android:id="@+id/InnerRelativeLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/Black"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:context="com.mismatched.nowyouretalking.NavbarFragment"
+        android:baselineAligned="false">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/slider_bar"
-        android:id="@+id/highligherImage"
-        android:layout_alignLeft="@+id/SocialButton"
-        android:layout_alignRight="@+id/SocialButton"
-        android:layout_marginBottom="-2dp"
-        />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
+        <ImageButton
+            android:id="@+id/SocialButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_social_selected"
+            android:layout_centerHorizontal="true"
+            />
 
-    <Button
-        android:text="@string/Social"
-        app:layout_widthPercent="25%"
-        android:layout_height="wrap_content"
-        android:id="@+id/SocialButton"
-        android:theme="@style/IconButtonStyle"
-        android:drawableRight="@drawable/ic_social"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/highligherImage"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/SocialButton"
+                android:text="@string/Social"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/Black"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-    <Button
-        android:text="@string/Learn"
-        app:layout_widthPercent="25%"
-        android:layout_height="wrap_content"
-        android:id="@+id/LearnButton"
-        android:theme="@style/IconButtonStyle"
-        android:drawableRight="@drawable/ic_learn"
-        android:layout_toRightOf="@id/SocialButton"
-        android:layout_below="@id/highligherImage"
-        />
+            <ImageButton
+                android:id="@+id/LearnButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_learn"
+                android:layout_centerHorizontal="true"
+                />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/LearnButton"
+                android:text="@string/Learn"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/Black"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-    <Button
-        android:text="@string/Profile"
-        app:layout_widthPercent="25%"
-        android:layout_height="wrap_content"
-        android:id="@+id/ProfileButton"
-        android:layout_weight="1"
-        android:theme="@style/IconButtonStyle"
-        android:drawableRight="@drawable/ic_profile"
-        android:layout_toRightOf="@id/LearnButton"
-        android:layout_below="@id/highligherImage"
-        />
+            <ImageButton
+                android:id="@+id/ProfileButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_profile"
+                android:layout_centerHorizontal="true"
+                />
 
-    <Button
-        android:text="@string/Messages"
-        app:layout_widthPercent="25%"
-        android:layout_height="wrap_content"
-        android:id="@+id/MessagingActivityButton"
-        android:layout_weight="1"
-        android:theme="@style/IconButtonStyle"
-        android:drawableRight="@drawable/ic_message"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/highligherImage"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ProfileButton"
+                android:text="@string/Profile"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/Black"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-</android.support.percent.PercentRelativeLayout>
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/MessagingActivityButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_message"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/MessagingActivityButton"
+                android:text="@string/Message"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/Black"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
