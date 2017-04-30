@@ -112,6 +112,7 @@
     <string name="Confirm">Confirm</string>
     <string name="MyMeetUps">My Meet Ups</string>
     <string name="AttendingMeetUps">Attending Meet Ups</string>
+    <string name="MyNextMeetup">My next Meet up:</string>
 
     <!-- text to display on lesson -->
     <!-- German -->

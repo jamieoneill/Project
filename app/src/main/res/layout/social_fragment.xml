@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/White">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/findLayout"
@@ -36,7 +35,8 @@
         android:layout_below="@id/findLayout"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/middleLayout">
+        android:id="@+id/middleLayout"
+        android:baselineAligned="false">
 
     <RelativeLayout
         android:id="@+id/addLayout"
@@ -108,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="My next Meet up:"
+            android:text="@string/MyNextMeetup"
             android:textColor="@color/Black"
             android:textStyle="bold" />
 
