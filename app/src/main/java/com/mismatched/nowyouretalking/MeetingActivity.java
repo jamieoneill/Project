@@ -1,10 +1,6 @@
 package com.mismatched.nowyouretalking;
 
-import android.app.DatePickerDialog;
-import android.app.DialogFragment;
-import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -14,16 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
@@ -33,9 +24,7 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -158,7 +147,7 @@ public class MeetingActivity extends AppCompatActivity  {
             public void onClick(View v) {
 
                 //split time from date
-                String timeanddate = dateButton.getText().toString();;
+                String timeanddate = dateButton.getText().toString();
                 String[] parts = timeanddate.split(" ");
                 String time = parts[0];
                 String date = parts[1];
@@ -177,8 +166,7 @@ public class MeetingActivity extends AppCompatActivity  {
 
                 //check for empty values
                 if (Title.isEmpty() || Location.contains("Search") || MeetingDate.contains("Date")) {
-                    Toast.makeText(MeetingActivity.this, "Please fill all fields",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeetingActivity.this, R.string.fillFields, Toast.LENGTH_SHORT).show();
                 } else {
 
                     //write to database
@@ -210,7 +198,7 @@ public class MeetingActivity extends AppCompatActivity  {
         myRef.child(key).child("Attending").child(attend.getKey()).setValue(getUserProfile.uid);
 
         //tell user it has been added
-        Toast.makeText(MeetingActivity.this, Title + " meet up has been created", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MeetingActivity.this, Title + R.string.MeetupCreated, Toast.LENGTH_SHORT).show();
 
         // return to main
         Intent intent = new Intent(MeetingActivity.this, MainActivity.class);
@@ -265,7 +253,5 @@ public class MeetingActivity extends AppCompatActivity  {
 
             return result;
         }
-
     }
-
 }

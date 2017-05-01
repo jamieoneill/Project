@@ -30,7 +30,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * Created by jamie on 29/11/2016.
  */
@@ -107,7 +106,7 @@ public class Message extends AppCompatActivity {
 
                 }
                 else{
-                    Toast.makeText(Message.this, "Cannot send empty message", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Message.this, R.string.EmptyMessage, Toast.LENGTH_SHORT).show();
                 }
             }
 

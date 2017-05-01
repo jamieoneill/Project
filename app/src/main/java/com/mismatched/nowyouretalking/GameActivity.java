@@ -429,7 +429,6 @@ public class GameActivity extends AppCompatActivity {
                                     break;
                                 } else if (i < exsistingArray.length - 1 && !currentword.equals(addedText)) {
                                     //do nothing in word that is not equal
-                                    Log.d("nothing ", " ");
                                 } else {
                                     //add word to line
                                     textLine.append(" " + addedText);

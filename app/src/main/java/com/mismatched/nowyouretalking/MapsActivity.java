@@ -320,14 +320,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 }
                                 //if user is already attending
                                 if (myList.contains(user.getUid())) {
-                                    Toast.makeText(MapsActivity.this, "You are already attending this meet up",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MapsActivity.this, R.string.AlreadyAttending, Toast.LENGTH_SHORT).show();
                                 } else {
                                     // add the user to attending for the marker selected
                                     myRef.child(marker.getTag().toString()).child("Attending").push().setValue(user.getUid());
 
                                     //tell user it has been added
-                                    Toast.makeText(MapsActivity.this, "Meet up added", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MapsActivity.this, R.string.MeetupAdded, Toast.LENGTH_LONG).show();
 
                                     //change activity to break database updating loop
                                     Intent intent = new Intent(MapsActivity.this, ManageActivity.class);
@@ -444,13 +443,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     case Activity.RESULT_OK:
 
                             //tell user to to zoom in on map
-                            Toast toast=Toast.makeText(MapsActivity.this, "Click here to zoom to your location", Toast.LENGTH_SHORT);
+                            Toast toast=Toast.makeText(MapsActivity.this, R.string.clickToZoom, Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.END| Gravity.TOP, 20, 210);
                             toast.show();
                 break;
 
                     case Activity.RESULT_CANCELED:
-                        Toast.makeText(MapsActivity.this, "Location not turned on", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MapsActivity.this, R.string.LocationNotOn, Toast.LENGTH_SHORT).show();
                         break;
                     default:
                     {
