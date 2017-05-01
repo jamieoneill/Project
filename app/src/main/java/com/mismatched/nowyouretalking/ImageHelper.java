@@ -8,44 +8,52 @@ public class ImageHelper {
 
     public int getImageForView(String imageText){
 
-
         // image order... English or German or Spanish or French
-        if (imageText.equals("Man")|| imageText.equals("Mann") || imageText.equals("Hombre") || imageText.equals("Homme")){
+        switch (imageText) {
+            case "Man":
+            case "Mann":
+            case "Hombre":
+            case "Homme": {
 
-            int Selected = R.drawable.man;
+                return R.drawable.man;
+            }
+            case "Boy":
+            case "Junge":
+            case "el nino":
+            case "Garçon": {
 
-            return Selected;
-        }else if (imageText.equals("Boy")|| imageText.equals("Junge") || imageText.equals("el nino") || imageText.equals("Garçon")){
+                return R.drawable.boy;
+            }
+            case "Woman":
+            case "Frau":
+            case "Mujer":
+            case "Femme": {
 
-            int Selected = R.drawable.boy;
+                return R.drawable.woman;
+            }
+            case "Bread":
+            case "Brot":
+            case "El pan":
+            case "Pain": {
 
-            return Selected;
-        }
-        else if (imageText.equals("Woman")|| imageText.equals("Frau")|| imageText.equals("Mujer") || imageText.equals("Femme")){
+                return R.drawable.bread;
+            }
+            case "Water":
+            case "Wasser":
+            case "Agua":
+            case "Eau": {
 
-            int Selected = R.drawable.woman;
+                return R.drawable.water;
+            }
+            case "Girl":
+            case "Madchen":
+            case "Nina":
+            case "Fille": {
 
-            return Selected;
-        }
-        else if (imageText.equals("Bread")|| imageText.equals("Brot")|| imageText.equals("El pan")|| imageText.equals("Pain")){
-
-            int Selected = R.drawable.bread;
-
-            return Selected;
-        } else if (imageText.equals("Water")|| imageText.equals("Wasser") || imageText.equals("Agua") || imageText.equals("Eau")){
-
-            int Selected = R.drawable.water;
-
-            return Selected;
-        }
-        else if (imageText.equals("Girl")|| imageText.equals("Madchen") || imageText.equals("Nina") || imageText.equals("Fille")){
-
-            int Selected = R.drawable.girl;
-
-            return Selected;
-        }
-        else{
-            return 0;
+                return R.drawable.girl;
+            }
+            default:
+                return 0;
         }
 
     }

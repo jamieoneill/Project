@@ -10,7 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mismatched.nowyouretalking.StatsActivity">
 
-
     <TextView
         android:text="@string/MeetupsAttended"
         android:layout_width="wrap_content"

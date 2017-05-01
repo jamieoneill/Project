@@ -95,8 +95,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         Map<String, ?> keys = getActivity().getSharedPreferences("levels", Context.MODE_PRIVATE).getAll();
         for (Map.Entry<String, ?> entry : keys.entrySet()) {
-            Log.d("map values", entry.getKey() + ": " +
-                    entry.getValue().toString());
             if (entry.getKey().contains("Level")) {
                 languageCount++;
             }
@@ -259,7 +257,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             //upload image to storage
             Uri file = Uri.fromFile(new File(imgDecodableString));
             UploadTask uploadTask = imageRef.putFile(file);
-            Toast.makeText(getActivity(), "Profile picture updated.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.PictureUpdated, Toast.LENGTH_LONG).show();
 
             //save user's image to local
             try {
@@ -268,15 +266,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(getActivity(), "failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.failed, Toast.LENGTH_LONG).show();
                 }
             });
         } else {
-            Toast.makeText(getActivity(), "Canceled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.Canceled, Toast.LENGTH_SHORT).show();
         }
     }
 

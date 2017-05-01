@@ -75,7 +75,7 @@ public class SignInActivity  extends AppCompatActivity implements GoogleApiClien
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Toast.makeText(SignInActivity.this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, getResources().getString(R.string.welcomeUser) + " " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
                     // set User table as reference
                     FirebaseDatabase database = FirebaseDatabase.getInstance();

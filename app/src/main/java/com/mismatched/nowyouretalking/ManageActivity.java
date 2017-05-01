@@ -154,7 +154,7 @@ public class ManageActivity extends AppCompatActivity {
 
                                         if (Host.equals(getUserProfile.name)){
                                             //delete whole meet up
-                                            Toast.makeText(ManageActivity.this, "Meet up has been deleted" , Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ManageActivity.this, R.string.MeetupDeleted , Toast.LENGTH_SHORT).show();
                                             myRef.child(meetup).removeValue();
 
                                             //hide meetup for now. will not display on next load
@@ -163,7 +163,7 @@ public class ManageActivity extends AppCompatActivity {
                                         else {
 
                                             //remove the user from selected meet up
-                                            Toast.makeText(ManageActivity.this, "Removed from meet up", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ManageActivity.this, R.string.RemovedFromMeetup, Toast.LENGTH_SHORT).show();
                                             myRef.child(meetup).child("Attending").child(finalUserKey).removeValue();
 
                                             //hide meetup for now. will not display on next load

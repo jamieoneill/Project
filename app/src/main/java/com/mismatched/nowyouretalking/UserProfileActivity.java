@@ -1,9 +1,7 @@
 package com.mismatched.nowyouretalking;
 
-
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,7 +17,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
     //get user profile
     final UserProfileActivity.getUserProfile getUserProfile = new UserProfileActivity.getUserProfile();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -187,7 +187,6 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
 
                 //get lesson
                 boolean LessonComplete = LevelPrefs.getBoolean(myLesson.getText().toString() + "Complete", false);
-                Log.d(myLesson.getText().toString() + "Complete ", String.valueOf(LessonComplete));
 
                 if (!LessonComplete) {
                     //set lesson complete
