@@ -112,7 +112,7 @@
         <item>ButtonQuestion,Bitte, You are welcome</item>
         <item>ButtonQuestion,Thanks, Danke</item>
         <item>TranslateQuestion,Yes hello,Ja hallo</item>
-        <item>ButtonQuestion,Nein, danke, No thank you</item>
+        <item>ButtonQuestion,Nein danke, No thank you</item>
         <item>TranslateQuestion,Bye,Tschuss</item>
         <item>TranslateQuestion,Thank you Emma,Danke emma</item>
     </string-array>

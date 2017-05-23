@@ -120,7 +120,7 @@
     <string name="clickToZoom">Click here to zoom to your location</string>
     <string name="LocationNotOn">Location not turned on</string>
     <string name="fillFields">Please fill all fields</string>
-    <string name="MeetupCreated"> Meet up has been created</string>
+    <string name="MeetupCreated">Meet up has been created</string>
     <string name="EmptyMessage">Cannot send empty message</string>
     <string name="PictureUpdated">Profile picture updated</string>
     <string name="failed">Failed</string>

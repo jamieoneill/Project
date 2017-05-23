@@ -424,7 +424,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mLastLocation != null) {
             double mLat = mLastLocation.getLatitude();
             double mLng = mLastLocation.getLongitude();
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLat, mLng), 10.0f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLat, mLng), 13.0f));
 
         }
 
