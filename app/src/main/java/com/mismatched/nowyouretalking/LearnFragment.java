@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -175,9 +174,21 @@ public class LearnFragment extends Fragment implements View.OnClickListener {
             int LessonScore2 = Prefs.getInt(userLanguage + myLesson.getText().toString() + "2", 0);
             int LessonScore3 = Prefs.getInt(userLanguage + myLesson.getText().toString() + "3", 0);
 
-            //// TODO: 21/04/2017 needs to change the dividing number based on lesson number 
+            //// TODO: 21/04/2017 needs to change the words if adding more languages to app
             //sum of lessons displays
-            int result = (LessonScore1 + LessonScore2 + LessonScore3) / 3;
+            int divider;
+            switch (myLesson.getText().toString()){
+                case "Basics":
+                    divider = 3;
+                    break;
+                case "Phrases":
+                    divider = 2;
+                    break;
+                default:
+                    divider = 3;
+                    break;
+            }
+            int result = (LessonScore1 + LessonScore2 + LessonScore3) / divider;
             myProgressBar.setProgress(result * 10);
 
             //change progress bar

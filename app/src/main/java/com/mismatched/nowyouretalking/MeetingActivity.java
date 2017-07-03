@@ -198,7 +198,7 @@ public class MeetingActivity extends AppCompatActivity  {
         myRef.child(key).child("Attending").child(attend.getKey()).setValue(getUserProfile.uid);
 
         //tell user it has been added
-        Toast.makeText(MeetingActivity.this, Title + R.string.MeetupCreated, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MeetingActivity.this, Title + " "  + getResources().getString(R.string.MeetupCreated), Toast.LENGTH_SHORT).show();
 
         // return to main
         Intent intent = new Intent(MeetingActivity.this, MainActivity.class);
